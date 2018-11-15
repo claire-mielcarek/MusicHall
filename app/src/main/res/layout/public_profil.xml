@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/body"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/photo"
+                android:layout_width="125dp"
+                android:layout_height="150dp"
+                android:src="@drawable/thug"
+                android:contentDescription="Photo de profil"/>
+
+            <TextView
+                android:id="@+id/prenom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/photo"
+                android:layout_toRightOf="@+id/photo"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#5678AA"
+                android:text="Prénom ici"/>
+
+            <TextView
+                android:id="@+id/nom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/prenom"
+                android:layout_alignStart="@+id/prenom"
+                android:layout_below="@+id/prenom"
+                android:textSize="13sp"
+                android:textColor="#5678AA"
+                android:text="Nom ici"/>
+
+            <View
+                android:id="@+id/cadre1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignStart="@+id/photo"
+                android:layout_alignLeft="@+id/photo"
+                android:layout_below="@+id/photo"
+                android:layout_alignTop="@+id/titre"
+                android:layout_alignBottom="@+id/motivation"
+
+                android:background="@drawable/cadre1bg"
+                />
+
+            <TextView
+                android:id="@+id/titre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/photo"
+                android:text="Informations public"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/ville"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_alignStart="@+id/photo"
+                android:layout_alignLeft="@+id/photo"
+                android:layout_below="@+id/titre"
+                android:text="Ville             : "
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/editville"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@+id/ville"
+                android:layout_toRightOf="@+id/ville"
+                android:layout_below="@+id/titre"
+                android:background="@drawable/edit_text_bg"
+                android:inputType="textAutoComplete"
+                android:text="Saint-Denis"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/ville"
+                android:layout_alignStart="@+id/ville"
+                android:layout_alignLeft="@+id/ville"
+                android:textSize="13sp"
+                android:text="Genre          : "/>
+
+            <RadioGroup
+                android:id="@+id/editgenre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/ville"
+                android:layout_toEndOf="@+id/genre"
+                android:layout_toRightOf="@+id/genre"
+                android:layout_alignStart="@+id/editville"
+                android:layout_alignLeft="@+id/editville"
+                android:checkedButton="@id/radiof"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radiof"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#555555"
+                    android:text="Femme"
+                    android:textSize="12sp"/>
+
+                <RadioButton
+                    android:id="@+id/radioi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#555555"
+                    android:text="Inconnu"
+                    android:textSize="12sp"/>
+
+                <RadioButton
+                    android:id="@+id/radioh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#555555"
+                    android:text="Homme"
+                    android:textSize="12sp"/>
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/niveau"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/genre"
+                android:layout_alignStart="@+id/genre"
+                android:layout_alignLeft="@+id/genre"
+                android:text="Niveau          : "
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/editniveau"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/niveau"
+                android:layout_toRightOf="@+id/niveau"
+                android:layout_alignStart="@+id/editgenre"
+                android:layout_alignLeft="@+id/editgenre"
+                android:layout_below="@+id/genre"
+                android:text="Débutant"
+                />
+
+
+            <SeekBar
+                android:id="@+id/editniveauseek"
+                android:layout_width="135dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:thumbTint="#555555"
+                android:progressTint="#444444"
+                android:layout_toEndOf="@+id/editniveau"
+                android:layout_toRightOf="@+id/editniveau"
+                android:layout_below="@+id/genre"
+                />
+
+            <TextView
+                android:id="@+id/motivation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/niveau"
+                android:layout_alignStart="@+id/niveau"
+                android:layout_alignLeft="@+id/niveau"
+                android:textSize="13sp"
+                android:text="Motivation  : "/>
+
+
+
+            <RadioGroup
+                android:id="@+id/choixmotivation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/editniveau"
+                android:layout_toEndOf="@+id/motivation"
+                android:layout_toRightOf="@+id/motivation"
+                android:layout_alignStart="@+id/editniveau"
+                android:layout_alignLeft="@+id/editniveau"
+                android:checkedButton="@id/radioa"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#444444"
+                    android:text="Amateur"/>
+
+                <RadioButton
+                    android:id="@+id/radiop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#444444"
+                    android:text="Professionel"/>
+            </RadioGroup>
+
+
+            <View
+                android:id="@+id/cadre2"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_alignStart="@+id/cadre1"
+                android:layout_alignLeft="@+id/cadre1"
+                android:layout_below="@+id/cadre1"
+                android:layout_alignTop="@+id/instru"
+                android:layout_alignBottom="@+id/listjouer"
+
+                android:background="@drawable/cadre2bg"
+                />
+
+            <TextView
+                android:id="@+id/instru"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/motivation"
+                android:layout_centerHorizontal="true"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="Instruments pratiqués"/>
+
+            <ListView
+                android:id="@+id/listinstru"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_alignLeft="@+id/motivation"
+                android:layout_alignStart="@+id/motivation"
+                android:layout_below="@+id/instru"
+                />
+
+            <TextView
+                android:id="@+id/ecouter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/listinstru"
+                android:layout_centerHorizontal="true"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="Genres musicals écoutés"/>
+
+            <ListView
+                android:id="@+id/listecouter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_alignLeft="@+id/listinstru"
+                android:layout_alignStart="@+id/listinstru"
+                android:layout_below="@+id/ecouter"
+                />
+
+            <TextView
+                android:id="@+id/jouer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/listecouter"
+                android:layout_centerHorizontal="true"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="Genres musicals joués"/>
+
+            <ListView
+                android:id="@+id/listjouer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_alignLeft="@+id/listecouter"
+                android:layout_alignStart="@+id/listecouter"
+                android:layout_below="@+id/jouer"
+                />
+
+        </RelativeLayout>
+</ScrollView>

@@ -17,7 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RechercheActivity"></activity>
+        <activity android:name=".ProfilActivity"/>
+        <activity android:name=".Connexion"/>
+        <activity android:name=".Inscription"/>
+        <activity android:name=".RechercheActivity"/>
     </application>
 
 </manifest>
