@@ -21,6 +21,7 @@
         <activity android:name=".Connexion"/>
         <activity android:name=".Inscription"/>
         <activity android:name=".RechercheActivity"/>
+        <activity android:name=".group.GroupActivity"/>
     </application>
 
 </manifest>

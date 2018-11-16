@@ -94,7 +94,8 @@ public class Inscription extends AppCompatActivity {
                             // envoie vers l'application
                             startActivity(new Intent(context, ProfilActivity.class));
                         }
-                    }else{   // probleme lors de la creation du compte
+                    }else{
+                        Log.d("ERROOOOOOOOOOR", String.valueOf(task.getException()));// probleme lors de la creation du compte
                         /*mail.setBackgroundResource(R.drawable.error_edit_text_bg);
                         mdp.setBackgroundResource(R.drawable.error_edit_text_bg);
                         mdp_confirm.setBackgroundResource(R.drawable.error_edit_text_bg);*/
