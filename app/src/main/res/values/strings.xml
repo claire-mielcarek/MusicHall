@@ -4,6 +4,9 @@
     <string name="group_page2">Chat</string>
     <string name="group_page3">Calendar</string>
 
+    // Pour la recherche
+    <string name="recherche_musicien">Recherche ton musicien</string>
+
 
     //Day's short keyword
     <string name="monday">M</string>

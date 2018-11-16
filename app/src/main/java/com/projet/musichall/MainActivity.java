@@ -85,6 +85,17 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }, 1000);
                                 break;
+
+                            case "recherche":
+                                handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent i = new Intent(MainActivity.this, RechercheActivity.class);
+                                        startActivity(i);
+                                    }
+                                }, 1000);
+                                break;
                             default:
                                 Toast.makeText(MainActivity.this, "Tu as choisi "+arrayName[index], Toast.LENGTH_SHORT).show();
                                 break;
