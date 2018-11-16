@@ -36,7 +36,7 @@ import java.util.ListIterator;
 
 
 
-public class ProfilActivity extends AppCompatActivity {
+public class ProfilActivity extends BaseActivity {
     /*private PrivateProfil public_profile;
     private PublicProfil private_profile;
     private PublicProfil portfolio;*/
@@ -51,9 +51,10 @@ public class ProfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_profil);
+        actionBar.setTitle(R.string.profile);
 
         // recupere le viewpager et lui attribut un nouvel adapteur
-        pager = (ViewPager) findViewById(R.id.viewpager);
+        pager = findViewById(R.id.viewpager);
         adapter = new FragmentSlideAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
 
