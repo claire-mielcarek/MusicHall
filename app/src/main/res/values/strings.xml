@@ -4,7 +4,12 @@
     <string name="group_page2">Chat</string>
     <string name="group_page3">Calendar</string>
 
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="search">Search</string>
+    <string name="group">Group</string>
 
+    <string name="you_sould_login">You should be logged to have access to this functionnality</string>
     //Day's short keyword
     <string name="monday">M</string>
     <string name="tuesday">T</string>

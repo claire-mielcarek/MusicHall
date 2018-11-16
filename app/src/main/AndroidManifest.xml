@@ -22,6 +22,13 @@
         <activity android:name=".Inscription"/>
         <activity android:name=".RechercheActivity"/>
         <activity android:name=".group.GroupActivity"/>
+        <activity android:name=".Menu"/>
+        <activity android:name=".ShouldLogin"/>
+        <activity
+        android:name="com.projet.musichall.BaseActivity"
+        android:screenOrientation="portrait" android:configChanges="orientation|keyboardHidden"
+        android:uiOptions="splitActionBarWhenNarrow"
+        android:label="WeTrip" />
     </application>
 
 </manifest>

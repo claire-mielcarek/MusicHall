@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 
 
-public class RechercheActivity extends AppCompatActivity {
+public class RechercheActivity extends BaseActivity {
 
     ListView listView;
 
@@ -22,10 +22,11 @@ public class RechercheActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recherche);
+        actionBar.setTitle(R.string.search);
 
-        listView = (ListView)findViewById(R.id.listView);
+        listView = findViewById(R.id.listView);
         //make an array of the objects according to a layout design
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, items);
         //set the adapter for listview
         listView.setAdapter(adapter);
