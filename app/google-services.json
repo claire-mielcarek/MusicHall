@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "165091479165",
+    "firebase_url": "https://musichall-5eae3.firebaseio.com",
+    "project_id": "musichall-5eae3",
+    "storage_bucket": "musichall-5eae3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165091479165:android:8843a36a747df8fc",
+        "android_client_info": {
+          "package_name": "com.projet.musichall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165091479165-0foq02fn1qqdnkn0frmphtrjkjgbts48.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.projet.musichall",
+            "certificate_hash": "8f4c785a5742809167e24ded46630677fcf817a2"
+          }
+        },
+        {
+          "client_id": "165091479165-pqb6f2nmu5j266vbq2rb9hoa663ljd89.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9tmc3UXj9JO4iLcMEs0RlhdhwLhBmQFA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165091479165-pqb6f2nmu5j266vbq2rb9hoa663ljd89.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
