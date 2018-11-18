@@ -14,7 +14,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
 import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
+import com.projet.musichall.Search.RechercheActivity;
+import com.projet.musichall.Search.SearchActivity;
 import com.projet.musichall.group.GroupActivity;
+import com.projet.musichall.login.Connexion;
+import com.projet.musichall.profil.ProfilActivity;
+
 
 public class Menu extends AppCompatActivity {
     String arrayName []= {
@@ -136,7 +141,7 @@ public class Menu extends AppCompatActivity {
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Intent i = new Intent(Menu.this, RechercheActivity.class);
+                                        Intent i = new Intent(Menu.this, SearchActivity.class);
                                         Menu.this.finish();
                                         startActivity(i);
                                     }

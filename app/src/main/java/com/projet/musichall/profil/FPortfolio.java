@@ -1,4 +1,4 @@
-package com.projet.musichall;
+package com.projet.musichall.profil;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,7 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+
+import com.projet.musichall.R;
+
 import java.util.ArrayList;
 
 

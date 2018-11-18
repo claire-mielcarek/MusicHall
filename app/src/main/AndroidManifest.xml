@@ -17,10 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProfilActivity"/>
-        <activity android:name=".Connexion"/>
-        <activity android:name=".Inscription"/>
-        <activity android:name=".RechercheActivity"/>
+        <activity android:name=".profil.ProfilActivity"/>
+        <activity android:name=".login.Connexion"/>
+        <activity android:name=".login.Inscription"/>
+        <activity android:name=".Search.RechercheActivity"/>
+        <activity android:name=".Search.SearchActivity"/>
+        <activity android:name=".Search.CriteresMusiciens"/>
+        <activity android:name=".Search.CriteresGroupe"/>
         <activity android:name=".group.GroupActivity"/>
         <activity android:name=".group.AddGroup"/>
         <activity android:name=".group.wall.AddPost"/>
