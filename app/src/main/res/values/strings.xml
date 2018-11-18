@@ -9,7 +9,7 @@
     <string name="search">Search</string>
     <string name="group">Group</string>
 
-    <string name="you_sould_login">You should be logged to have access to this functionnality</string>
+    <string name="you_should_login">You should be logged to have access to this functionnality</string>
     //Day's short keyword
     <string name="monday">M</string>
     <string name="tuesday">T</string>
@@ -18,4 +18,81 @@
     <string name="friday">F</string>
     <string name="saturday">S</string>
     <string name="sunday">S</string>
+
+    <string name="text_recherche">Qu est ce que tu recherche?</string>
+    <string name="groupes">Un groupe</string>
+    <string name="musiciens">Des musiciens</string>
+    <string name="recherche_musicien">Quelle musicien tu recherche</string>
+    <string name="signup">signup</string>
+    <string name="signin">signup</string>
+
+    <string-array name="instruments">
+        <item name="batterie">Batterie</item>
+        <item name="Cajon">Cajon</item>
+        <item name="Bodhran">Bodhran</item>
+        <item name="Bongos">Bongos</item>
+        <item name="Congas">Congas</item>
+        <item name="Derbouka">Derbouka</item>
+        <item name="Djembe">Djembe</item>
+        <item name="Guitare classique">Guitare classique</item>
+        <item name="Guitare jazz">Guitare jazz</item>
+        <item name="Guitare electrique">Guitare electrique</item>
+        <item name="Bass">Bass</item>
+        <item name="Piano">Piano</item>
+        <item name="Piano electrique">Piano electrique</item>
+        <item name="Synthetiseur">Synthetiseur</item>
+        <item name="Violon">Violon</item>
+        <item name="Alto">Alto</item>
+        <item name="Violoncelle">Violoncelle</item>
+        <item name="Contrebasse">Contrebasse</item>
+        <item name="harpe">Harpe</item>
+        <item name="Flute traversiere">Flute traversiere</item>
+        <item name="Flute de pan">Flute de pan</item>
+        <item name="Flute à bec">Flute à bec</item>
+        <item name="Whistle">Whistle</item>
+        <item name="Clarinette">Clarinette</item>
+        <item name="Accordeon">Accordéon</item>
+        <item name="Mandoline">Mandoline</item>
+        <item name="Banjo">Banjo</item>
+        <item name="Cornemuse">Cornemuse</item>
+        <item name="Uilleann pipe">Uilleann pipe</item>
+        <item name="Bouzouki grec">Bouzouki grec</item>
+        <item name="Bouzouki irlandais">Bouzouki irlandais</item>
+        <item name="Ukulele">Ukulele</item>
+        <item name="Guitalele">Guitalele</item>
+        <item name="Saxophone">Saxophone</item>
+        <item name="Trompette">Trompette</item>
+        <item name="Cor">Cor</item>
+        <item name="Tuba">Tuba</item>
+    </string-array>
+
+
+    <string-array name="genres">
+        <item name="Rock">Rock</item>
+        <item name="Heavy Metal">Heavy Metal</item>
+        <item name="Hard rock">Hard rock</item>
+        <item name="Punk rock">Punk rock</item>
+        <item name="Punk pop">Punk pop</item>
+        <item name="Jazz">Jazz</item>
+        <item name="Reggae">Reggae</item>
+        <item name="Ska">Ska</item>
+        <item name="Country">Country</item>
+        <item name="Blues">Blues</item>
+        <item name="Pop">Pop</item>
+        <item name="Musique classique">Musique classique</item>
+        <item name="Folk">Folk</item>
+        <item name="Traditionelle">Traditionelle</item>
+        <item name="Electro">Electro</item>
+        <item name="Gospel">Gospel</item>
+        <item name="Funk">Funk</item>
+        <item name="Musique du monde">Musique du monde</item>
+        <item name="Soul">Soul</item>
+        <item name="Rap">Rap</item>
+        <item name="Hip Hop">Hip Hop</item>
+        <item name="Salsa">Salsa</item>
+        <item name="Musique Latine">Musique Latine</item>
+        <item name="Rock alternatif">Rock alternatif</item>
+        <item name="Musique Experimentale">Musique Experimentale</item>
+    </string-array>
+
 </resources>

@@ -12,7 +12,7 @@
         android:id="@+id/indicateur_instrument"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Avec quelle instrument ?"
+        android:hint="Avec quel instrument ?"
         android:gravity="top"
         />
     <TextView
