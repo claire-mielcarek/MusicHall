@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
+
+import com.projet.musichall.Search.SearchActivity;
 import com.projet.musichall.group.GroupActivity;
 
 public class MainActivity extends BaseActivity {
@@ -99,7 +101,7 @@ public class MainActivity extends BaseActivity {
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Intent i = new Intent(MainActivity.this, RechercheActivity.class);
+                                        Intent i = new Intent(MainActivity.this, SearchActivity.class);
                                         startActivity(i);
                                     }
                                 }, 1000);

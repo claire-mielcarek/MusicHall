@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relLayout"
+    android:background="@color/white">
+
+
+
+    <TextView
+    android:id="@+id/indicateur_instrument"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:hint="Avec quelle instrument ?"
+    android:gravity="top"
+        />
+    <TextView
+    android:id="@+id/indicateur_niveau"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:hint="Avec quelle niveau ?"
+    android:layout_toRightOf="@+id/instruments"
+    android:layout_marginLeft="100dp"
+        />
+    <TextView
+    android:id="@+id/indicateur_motivation"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:hint="Avec quelle motivation ?"
+    android:layout_below="@+id/instruments"
+        />
+
+
+
+
+
+
+
+    <RadioGroup
+        android:id="@+id/instruments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/indicateur_instrument"
+        android:gravity="top">
+
+    <RadioButton
+        android:id="@+id/instruments1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Batterie"/>
+
+    <RadioButton
+        android:id="@+id/instruments2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Guitare"/>
+
+    <RadioButton
+        android:id="@+id/instruments3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Basse"/>
+
+        <RadioButton
+            android:id="@+id/instruments4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:hint="Piano"/>
+
+
+        <RadioButton
+            android:id="@+id/instruments5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Chant"/>
+    </RadioGroup>
+
+
+    <RadioGroup
+        android:id="@+id/motivation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/indicateur_motivation"
+        >
+
+        <RadioButton
+            android:id="@+id/amateur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Amateur"/>
+
+        <RadioButton
+            android:id="@+id/professionel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Professionel"/>
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/niveau"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/indicateur_niveau"
+        android:layout_marginLeft="180dp"
+        >
+
+        <RadioButton
+            android:id="@+id/debutant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Debutant"
+            />
+
+        <RadioButton
+            android:id="@+id/intermediaire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Intermediaire"
+            />
+
+        <RadioButton
+            android:id="@+id/expert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:hint="Expert"/>
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/indicateur_localisation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="A combien de kilomètre ?"
+        android:layout_below="@+id/motivation"
+
+
+        />
+
+    <SeekBar
+        android:id="@+id/valeurDistance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:thumbTint="#555555"
+        android:progressTint="#444444"
+        android:layout_below="@+id/indicateur_localisation"
+        />
+
+
+
+    <Button
+        android:id="@+id/lancerRecherche"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Lancer la recherche"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="320dp"
+        />
+
+</RelativeLayout>
