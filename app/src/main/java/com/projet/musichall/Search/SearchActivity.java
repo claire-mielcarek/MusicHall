@@ -9,9 +9,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.projet.musichall.BaseActivity;
 import com.projet.musichall.R;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
     TextView textView;
     Button musiciens;
     Button groupes;

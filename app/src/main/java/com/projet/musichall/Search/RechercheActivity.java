@@ -17,12 +17,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.projet.musichall.BaseActivity;
 import com.projet.musichall.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class RechercheActivity extends AppCompatActivity {
+public class RechercheActivity extends BaseActivity {
 
     ListView listView;
     EditText editText;

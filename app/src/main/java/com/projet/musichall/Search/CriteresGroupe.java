@@ -9,11 +9,12 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.projet.musichall.BaseActivity;
 import com.projet.musichall.R;
 
 import java.util.Date;
 
-public class CriteresGroupe extends AppCompatActivity {
+public class CriteresGroupe extends BaseActivity {
     RadioGroup instruments;
     RadioGroup niveau;
     RadioGroup motivation;
