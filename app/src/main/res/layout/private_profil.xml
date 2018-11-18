@@ -1,158 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/private_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/entete"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-                <com.github.siyamed.shapeimageview.CircularImageView
-                    android:id="@+id/photo"
-                    android:layout_width="125dp"
-                    android:layout_height="150dp"
-                    android:cropToPadding="true"
-                    android:src="@drawable/thug"
-                    android:contentDescription="Photo de profil"/>
-
-                <TextView
-                    android:id="@+id/prenom"
+                <LinearLayout
+                    android:id="@+id/entete"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/photo"
-                    android:layout_toRightOf="@+id/photo"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:text="Prénom ici"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="3">
 
-                <TextView
-                    android:id="@+id/nom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/prenom"
-                    android:layout_alignStart="@+id/prenom"
-                    android:layout_below="@+id/prenom"
-                    android:textSize="13sp"
-                    android:text="Nom ici"/>
+                        <com.github.siyamed.shapeimageview.CircularImageView
+                            android:id="@+id/photo"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:cropToPadding="true"
+                            android:src="@drawable/thug"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="3"
+                            android:contentDescription="Photo de profil"/>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+                                <TextView
+                                    android:id="@+id/prenom"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="bottom"
+                                    android:layout_weight="1"
+                                    android:paddingStart="15dp"
+                                    android:paddingEnd="15dp"
+                                    android:textSize="25sp"
+                                    android:textStyle="bold"
+                                    android:text="Prénom ici"/>
+
+                                <TextView
+                                    android:id="@+id/nom"
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:paddingStart="15dp"
+                                    android:paddingEnd="15dp"
+                                    android:textSize="13sp"
+                                    android:text="Nom ici"/>
+
+                        </LinearLayout>
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/titre"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:layout_marginTop="15dp"
-                    android:layout_below="@+id/photo"
-                    android:text="Informations privées"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="Informations privées"/>
 
-                <TextView
-                    android:id="@+id/mail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:layout_alignStart="@+id/photo"
-                    android:layout_alignLeft="@+id/photo"
-                    android:layout_below="@+id/titre"
-                    android:text="Adresse mail           : "
-                    android:textSize="13sp" />
-
-                <EditText
-                    android:id="@+id/editmail"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_toEndOf="@+id/mail"
-                    android:layout_toRightOf="@+id/mail"
-                    android:layout_below="@+id/titre"
-                    android:background="@drawable/edit_text_bg"
-                    android:text="example@gmail.com"
-                    android:inputType="textAutoComplete"
-                    android:textSize="13sp" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/mdp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_below="@+id/mail"
-                    android:layout_alignStart="@+id/mail"
-                    android:layout_alignLeft="@+id/mail"
-                    android:textSize="13sp"
-                    android:text="Mot de Passe          : "/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="bottom|center_horizontal"
+                            android:layout_marginTop="15dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            >
+                                <TextView
+                                    android:id="@+id/mail"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Adresse mail           : "
+                                    android:textSize="13sp" />
 
-                <EditText
-                    android:id="@+id/editmdp"
+                                <EditText
+                                    android:id="@+id/editmail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/edit_text_bg"
+                                    android:hint="example@gmail.com"
+                                    android:inputType="textEmailAddress"
+                                    android:textSize="13sp" />
+
+                        </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="top|center_horizontal"
+                                android:layout_marginTop="15dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                >
+                                    <TextView
+                                        android:id="@+id/mdp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="13sp"
+                                        android:text="Mot de Passe          : "/>
+
+                                    <EditText
+                                        android:id="@+id/editmdp"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginStart="10dp"
+                                        android:background="@drawable/edit_text_bg"
+                                        android:inputType="textPassword"
+                                        android:textSize="13sp"
+                                        android:hint=""
+                                        android:text="*********"/>
+                            </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="15dp"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            >
+                                <TextView
+                                    android:id="@+id/entetenaissance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Date de naissance : "
+                                    android:textSize="13sp" />
+
+                                <TextView
+                                    android:id="@+id/datenaissance"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginStart="10dp"
+                                    android:textSize="14sp"
+                                    android:text="Pas de date de naissance"
+                                    />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="15dp"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            >
+
+                                <TextView
+                                    android:id="@+id/entetemembre"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="13sp"
+                                    android:text="Membre depuis      : "/>
+
+                                <TextView
+                                    android:id="@+id/dateinscription"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginStart="10dp"
+                                    android:textSize="17sp"
+                                    />
+                        </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_bg"
-                    android:layout_marginTop="25dp"
-                    android:layout_below="@+id/mail"
-                    android:layout_toEndOf="@+id/mdp"
-                    android:layout_toRightOf="@+id/mdp"
-                    android:layout_alignStart="@+id/editmail"
-                    android:layout_alignLeft="@+id/editmail"
-                    android:inputType="textPassword"
-                    android:textSize="13sp"
-                    android:text="*********"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="3"
+                    android:gravity="center">
+                        <Button
+                            android:id="@+id/deco"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="7dp"
+                            android:paddingEnd="7dp"
+                            android:background="@drawable/button_connexion_bg"
+                            android:text="Deconnexion"/>
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/entetenaissance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:layout_below="@+id/mdp"
-                    android:layout_alignStart="@+id/mdp"
-                    android:layout_alignLeft="@+id/mdp"
-                    android:text="Date de naissance : "
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/datenaissance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
-                    android:layout_toEndOf="@+id/entetenaissance"
-                    android:layout_toRightOf="@+id/entetenaissance"
-                    android:layout_alignStart="@+id/editmdp"
-                    android:layout_alignLeft="@+id/editmdp"
-                    android:layout_below="@+id/mdp"
-                    android:textSize="17sp"
-                    android:text="17/01/1996"
-                    />
-
-                <TextView
-                    android:id="@+id/entetemembre"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:layout_below="@+id/entetenaissance"
-                    android:layout_alignStart="@+id/entetenaissance"
-                    android:layout_alignLeft="@+id/entetenaissance"
-                    android:textSize="13sp"
-                    android:text="Membre depuis      : "/>
-
-                <TextView
-                    android:id="@+id/dateinscription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
-                    android:layout_toEndOf="@+id/entetemembre"
-                    android:layout_toRightOf="@+id/entetemembre"
-                    android:layout_alignStart="@+id/datenaissance"
-                    android:layout_alignLeft="@+id/datenaissance"
-                    android:layout_below="@+id/datenaissance"
-                    android:textSize="17sp"
-                    android:text="07/06/1986"
-                    />
-        </RelativeLayout>
+        </LinearLayout>
 </ScrollView>
