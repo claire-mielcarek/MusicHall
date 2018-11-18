@@ -17,7 +17,7 @@ import android.view.MenuItem;
 
 public class BaseActivity extends AppCompatActivity {
 
-    ActionBar actionBar;
+    public ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

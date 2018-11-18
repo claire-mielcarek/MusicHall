@@ -4,22 +4,12 @@
     <string name="group_page2">Chat</string>
     <string name="group_page3">Calendar</string>
 
-    // Pour la recherche
-    <string name="recherche_musicien">Recherche ton musicien</string>
-    <string name="text_recherche">Qu est ce que tu recherche?</string>
-    <string name="groupes">Un groupe</string>
-    <string name="musiciens">Des musiciens</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="search">Search</string>
+    <string name="group">Group</string>
 
-
-    //Login
-    <string name="you_should_login">You should login</string>
-
-    <string name="group">Groupe</string>
-    <string name="home">MusicHall</string>
-    <string name="profile">profile</string>
-
-
-
+    <string name="you_sould_login">You should be logged to have access to this functionnality</string>
     //Day's short keyword
     <string name="monday">M</string>
     <string name="tuesday">T</string>

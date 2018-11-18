@@ -1,4 +1,4 @@
-package com.projet.musichall;
+package com.projet.musichall.profil;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.projet.musichall.R;
+
 import java.util.List;
 
 
@@ -16,13 +18,11 @@ import java.util.List;
 public class MyListAdapter extends BaseAdapter {
     private List<String> data;
     private Context context;
-    private int count;
 
 
 
     public MyListAdapter(Context context, List<String> noms){
         data = noms;
-        count = data.size();
         this.context = context;
     }
 
@@ -40,7 +40,7 @@ public class MyListAdapter extends BaseAdapter {
             if (list != null) {
                 // set image based on selected text
                 TextView textView = (TextView) list.findViewById(R.id.text_list_view);
-                textView.setText(data.get(position%count));    //.toCharArray(), 0, data[position].length()
+                textView.setText(data.get(position%data.size()));
             }
         }else{
             list = convertView;
@@ -55,7 +55,7 @@ public class MyListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return count;
+        return data.size();
     }
 
     @Override
