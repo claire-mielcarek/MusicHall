@@ -1,15 +1,27 @@
 <resources>
     <string name="app_name">MusicHall</string>
+
     <string name="group_page1">Wall</string>
+    <string name="group_page1_add_post">New Post</string>
+    <string name="group_page1_add_post_text">Type here your text</string>
+    <string name="group_page1_add_post_button">Create the post</string>
+
     <string name="group_page2">Chat</string>
     <string name="group_page3">Calendar</string>
 
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="search">Search</string>
+
     <string name="group">Group</string>
 
+    <string name="add_group">Create a group</string>
+    <string name="add_group_placeholder">Search a member</string>
+    <string name="add_group_name_placeholder">Name of the group</string>
+
+
     <string name="you_sould_login">You should be logged to have access to this functionnality</string>
+
     //Day's short keyword
     <string name="monday">M</string>
     <string name="tuesday">T</string>

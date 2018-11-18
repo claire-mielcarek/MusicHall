@@ -22,6 +22,8 @@
         <activity android:name=".Inscription"/>
         <activity android:name=".RechercheActivity"/>
         <activity android:name=".group.GroupActivity"/>
+        <activity android:name=".group.AddGroup"/>
+        <activity android:name=".group.wall.AddPost"/>
         <activity android:name=".Menu"/>
         <activity android:name=".ShouldLogin"/>
         <activity
