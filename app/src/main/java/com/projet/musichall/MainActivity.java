@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,18 +18,21 @@ import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
 import com.projet.musichall.group.GroupActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     Context context;
     private FirebaseAuth auth;
     private FirebaseUser user;
 
+    /*
     String arrayName []= {
+
             "accueil",
             "groupe",
             "recherche",
             "discussion",
             "profil"
     };
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +41,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+
+        actionBar.setTitle(R.string.home);
+
         // recupere l'objet permettant de gerer l'authantification d'un utilisateur
         auth = FirebaseAuth.getInstance();
         // recupere l'utilisateur pour savoir si celui-ci est connecte
         user = auth.getCurrentUser();
+        Log.d("[ TEST MENU ]", "MainActivity onCreated done");
 
-
+        /*
         CircleMenu circleMenu = (CircleMenu)findViewById(R.id.circle_menu);
         circleMenu.setMainMenu(Color.parseColor("#CDCDCD"),R.drawable.ic_menu,R.drawable.ic_cancel)
                 .addSubMenu(Color.parseColor("#CDCDCD"),R.drawable.ic_accueil)
@@ -102,8 +110,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+                */
     }
-
+/*
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
@@ -124,4 +133,5 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    */
 }
