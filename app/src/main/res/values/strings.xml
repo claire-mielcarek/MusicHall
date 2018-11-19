@@ -32,7 +32,7 @@
     <string name="text_recherche">Qu est ce que tu recherche?</string>
     <string name="groupes">Un groupe</string>
     <string name="musiciens">Des musiciens</string>
-    <string name="recherche_musicien">Quelle musicien tu recherche</string>
+    <string name="recherche_musicien">Quel est son nom ?</string>
     <string name="signup">signup</string>
     <string name="signin">signup</string>
 
@@ -103,6 +103,14 @@
         <item name="Musique Latine">Musique Latine</item>
         <item name="Rock alternatif">Rock alternatif</item>
         <item name="Musique Experimentale">Musique Experimentale</item>
+    </string-array>
+
+    <string-array name="niveaux">
+        <item name="Debutant">Débutant</item>
+        <item name="Intermediaire">Intermediaire</item>
+        <item name="Avance">Avance</item>
+        <item name="Expert">Expert</item>
+        <item name="Maitre">Maître</item>
     </string-array>
 
 </resources>

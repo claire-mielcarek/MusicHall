@@ -67,11 +67,11 @@ public class Menu extends AppCompatActivity {
             }
         });
         menu.setMainMenu(Color.parseColor("#CDCDCD"),R.drawable.ic_menu,R.drawable.ic_cancel)
-                .addSubMenu(Color.parseColor("#CDCDCD"),R.drawable.ic_accueil)
-                .addSubMenu(Color.parseColor("#CDCDCD"),R.drawable.ic_groupe)
-                .addSubMenu(Color.parseColor("#CDCDCD"),R.drawable.ic_recherche)
-                .addSubMenu(Color.parseColor("#CDCDCD"),R.drawable.ic_discussion)
-                .addSubMenu(Color.parseColor("#CDCDCD"),R.drawable.ic_profil)
+                .addSubMenu(Color.parseColor("#6083DA"),R.drawable.ic_accueil)
+                .addSubMenu(Color.parseColor("#FF5F8E38"),R.drawable.ic_groupe)
+                .addSubMenu(Color.parseColor("#FFFFCC00"),R.drawable.ic_recherche)
+                .addSubMenu(Color.parseColor("#855b3a"),R.drawable.ic_discussion)
+                .addSubMenu(Color.parseColor("#ff70a0"),R.drawable.ic_profil)
                 .setOnMenuSelectedListener(new OnMenuSelectedListener() {
                     @Override
                     public void onMenuSelected(int index) {

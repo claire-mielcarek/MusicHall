@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/text_recherche"
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:layout_centerHorizontal="true"/>
 
     <Button
@@ -25,6 +25,7 @@
         android:layout_marginTop="35dp"
         android:textSize="20dp"
         android:layout_below="@+id/text_recherche"
+        android:background="@drawable/button_connexion_bg"
         />
 
     <Button
@@ -35,7 +36,8 @@
         android:layout_centerHorizontal="true"
         android:hint="@string/musiciens"
         android:textSize="20dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="40dp"
+        android:background="@drawable/button_connexion_bg"/>
 
 
 
