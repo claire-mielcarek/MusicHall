@@ -12,70 +12,46 @@
     android:id="@+id/indicateur_instrument"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:hint="Avec quel instrument ?"
-    android:gravity="top"
+    android:hint="Quel est l'instrument qu'ils jouent ?"
+    android:layout_marginTop="20dp"
+    android:layout_below="@+id/valeurDistance"
         />
     <TextView
     android:id="@+id/indicateur_niveau"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:hint="Avec quelle niveau ?"
-    android:layout_toRightOf="@+id/instruments"
-    android:layout_marginLeft="100dp"
+    android:hint="Quel est leur niveau ?"
+    android:layout_marginLeft="175dp"
         />
     <TextView
     android:id="@+id/indicateur_motivation"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:hint="Avec quelle motivation ?"
-    android:layout_below="@+id/instruments"
+    android:hint="Quelle est leur motivation ?"
+
         />
-
-
-
-
-
-
-
-    <RadioGroup
-        android:id="@+id/instruments"
+    <TextView
+        android:id="@+id/affichageDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/indicateur_instrument"
-        android:gravity="top">
-
-    <RadioButton
-        android:id="@+id/instruments1"
+        android:layout_toRightOf="@+id/indicateur_localisation"
+        android:layout_marginTop="125dp"
+        android:hint="Valeur_Distance"
+        />
+    <TextView
+        android:id="@+id/musiqueEcoute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Batterie"/>
-
-    <RadioButton
-        android:id="@+id/instruments2"
+        android:hint="Quelle est le genre de musique qu'ils écoutent"
+        android:layout_below="@+id/instruments"
+        />
+    <TextView
+        android:id="@+id/musiqueJouer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Guitare"/>
-
-    <RadioButton
-        android:id="@+id/instruments3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Basse"/>
-
-        <RadioButton
-            android:id="@+id/instruments4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:hint="Piano"/>
-
-
-        <RadioButton
-            android:id="@+id/instruments5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Chant"/>
-    </RadioGroup>
+        android:hint="Quelle est le genre de musique qu'ils aiment jouer ?"
+        android:layout_below="@+id/musiqueEcoutee"
+        />
 
 
     <RadioGroup
@@ -99,35 +75,14 @@
 
     </RadioGroup>
 
-    <RadioGroup
+    <Spinner
         android:id="@+id/niveau"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/indicateur_niveau"
-        android:layout_marginLeft="180dp"
-        >
+        android:layout_marginLeft="180dp">
 
-        <RadioButton
-            android:id="@+id/debutant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Debutant"
-            />
-
-        <RadioButton
-            android:id="@+id/intermediaire"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Intermediaire"
-            />
-
-        <RadioButton
-            android:id="@+id/expert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:hint="Expert"/>
-    </RadioGroup>
+    </Spinner>
 
 
     <TextView
@@ -135,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="A combien de kilomètre ?"
-        android:layout_below="@+id/motivation"
+        android:layout_marginTop="95dp"
 
 
         />
@@ -150,6 +105,28 @@
         android:layout_below="@+id/indicateur_localisation"
         />
 
+
+    <Spinner
+        android:id="@+id/instruments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/indicateur_instrument"
+        ></Spinner>
+
+    <Spinner
+        android:id="@+id/musiqueEcoutee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/musiqueEcoute"
+        >
+    </Spinner>
+
+    <Spinner
+        android:id="@+id/musiqueJouee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/musiqueJouer"
+        ></Spinner>
 
 
     <Button
