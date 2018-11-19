@@ -136,6 +136,7 @@
         android:hint="Lancer la recherche"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="320dp"
+        android:background="@drawable/button_connexion_bg"
         />
 
 </RelativeLayout>

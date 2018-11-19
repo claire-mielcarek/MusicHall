@@ -16,7 +16,7 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/blue"
+        android:divider="@color/yellow"
         android:layout_marginTop="50dp">
 
     </ListView>

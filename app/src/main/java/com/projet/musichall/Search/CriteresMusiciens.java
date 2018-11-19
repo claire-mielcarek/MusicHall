@@ -23,10 +23,10 @@ import java.util.Date;
 public class CriteresMusiciens extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     RadioGroup motivation;
-    TextView indicteur_instruments;
-    TextView indicteur_niveau;
-    TextView indicteur_motivation;
-    TextView indicteur_localisation;
+    TextView indicateur_instruments;
+    TextView indicateur_niveau;
+    TextView indicateur_motivation;
+    TextView indicateur_localisation;
     SeekBar valeurDistance;
     Button lancerRecherche;
 
@@ -64,10 +64,10 @@ public class CriteresMusiciens extends BaseActivity implements AdapterView.OnIte
 
 
         motivation = (RadioGroup)findViewById(R.id.motivation);
-        indicteur_instruments = findViewById(R.id.indicateur_instrument);
-        indicteur_niveau = findViewById(R.id.indicateur_niveau);
-        indicteur_motivation = findViewById(R.id.indicateur_motivation);
-        indicteur_localisation = findViewById(R.id.indicateur_localisation);
+        indicateur_instruments = findViewById(R.id.indicateur_instrument);
+        indicateur_niveau = findViewById(R.id.indicateur_niveau);
+        indicateur_motivation = findViewById(R.id.indicateur_motivation);
+        indicateur_localisation = findViewById(R.id.indicateur_localisation);
         valeurDistance = findViewById(R.id.valeurDistance);
         lancerRecherche = findViewById(R.id.lancerRecherche);
 
