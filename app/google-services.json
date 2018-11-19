@@ -31,13 +31,21 @@
           }
         },
         {
+          "client_id": "165091479165-v975n8v6uf434qf1okd272eca9r3u280.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.projet.musichall",
+            "certificate_hash": "3955a5ca92d445c08c5747344acecfa626e7f446"
+          }
+        },
+        {
           "client_id": "165091479165-pqb6f2nmu5j266vbq2rb9hoa663ljd89.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBO73OVmz3w9TOHq0EnRQ5EszrR5GBH2aM"
+          "current_key": "AIzaSyC9tmc3UXj9JO4iLcMEs0RlhdhwLhBmQFA"
         }
       ],
       "services": {

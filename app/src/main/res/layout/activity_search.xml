@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relLayout"
+    android:layout_marginTop="5dp"
+    android:background="@color/white">
+
+
+    <TextView
+        android:id="@+id/text_recherche"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/text_recherche"
+        android:textSize="20dp"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/buttonGroupes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/groupes"
+        android:layout_marginTop="35dp"
+        android:textSize="20dp"
+        android:layout_below="@+id/text_recherche"
+        />
+
+    <Button
+        android:id="@+id/buttonMusiciens"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonGroupes"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/musiciens"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"/>
+
+
+
+</RelativeLayout>

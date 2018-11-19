@@ -5,24 +5,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.projet.musichall.group.calendar.GroupCalendarFragment;
 import com.projet.musichall.group.chat.GroupChatFragment;
 import com.projet.musichall.group.wall.GroupWallFragment;
 import com.projet.musichall.R;
 
 public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
-    final int PAGE_COUNT = 3;
+    private final int PAGE_COUNT = 3;
     private String tabTitles[];
     private Context context;
 
     public SampleFragmentPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
-        tabTitles = new String[]
-                {
+        tabTitles = new String[]{
                 context.getResources().getString(R.string.group_page1),
                 context.getResources().getString(R.string.group_page2),
                 context.getResources().getString(R.string.group_page3)
-                };
+        };
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.projet.musichall.group;
+package com.projet.musichall.group.calendar;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
