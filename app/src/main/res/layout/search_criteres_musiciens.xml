@@ -1,142 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/relLayout"
-    android:background="@color/white">
+    android:orientation="vertical">
 
-
-
-    <TextView
-    android:id="@+id/indicateur_instrument"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:hint="Quel est l'instrument qu'ils jouent ?"
-    android:layout_marginTop="20dp"
-    android:layout_below="@+id/valeurDistance"
-        />
-    <TextView
-    android:id="@+id/indicateur_niveau"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:hint="Quel est leur niveau ?"
-    android:layout_marginLeft="175dp"
-        />
-    <TextView
-    android:id="@+id/indicateur_motivation"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:hint="Quelle est leur motivation ?"
-
-        />
-    <TextView
-        android:id="@+id/affichageDistance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/indicateur_localisation"
-        android:layout_marginTop="125dp"
-        android:hint="Valeur_Distance"
-        />
-    <TextView
-        android:id="@+id/musiqueEcoute"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Quelle est le genre de musique qu'ils écoutent"
-        android:layout_below="@+id/instruments"
-        />
-    <TextView
-        android:id="@+id/musiqueJouer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Quelle est le genre de musique qu'ils aiment jouer ?"
-        android:layout_below="@+id/musiqueEcoutee"
-        />
-
-
-    <RadioGroup
-        android:id="@+id/motivation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/indicateur_motivation"
-        >
-
-        <RadioButton
-            android:id="@+id/amateur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Amateur"/>
-
-        <RadioButton
-            android:id="@+id/professionel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Professionel"/>
-
-    </RadioGroup>
-
-    <Spinner
-        android:id="@+id/niveau"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/indicateur_niveau"
-        android:layout_marginLeft="180dp">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-    </Spinner>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/relLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/indicateur_instrument"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Quel est l'instrument qu'ils jouent?"
+                    />
+
+                <Spinner
+                    android:id="@+id/instruments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    />
+
+            </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/indicateur_localisation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="A combien de kilomètre ?"
-        android:layout_marginTop="95dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/indicateur_niveau"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Quel est leur niveau ?"
+                    />
+
+                <Spinner
+                    android:id="@+id/niveau"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
+                </Spinner>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/indicateur_motivation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Quelle est leur motivation ?"
+                    />
+
+                <RadioGroup
+                    android:id="@+id/motivation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:checkedButton="@id/amateur"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    >
+
+                    <RadioButton
+                        android:id="@+id/amateur"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Amateur"/>
+
+                    <RadioButton
+                        android:id="@+id/professionel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Professionel"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/musiqueEcoute"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Quelle est le genre de musique qu'ils écoutent?"
+                    />
+
+                <Spinner
+                    android:id="@+id/musiqueEcoutee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                </Spinner>
+            </LinearLayout>
 
 
-        />
 
-    <SeekBar
-        android:id="@+id/valeurDistance"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/musiqueJouer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Quelle est le genre de musique qu'ils aiment jouer?"
+                    />
+
+                <Spinner
+                    android:id="@+id/musiqueJouee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    />
+
+             </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/indicateur_localisation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="A combien de kilomètre ?"
+                        />
+
+                    <SeekBar
+                        android:id="@+id/valeurDistance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:thumbTint="#555555"
+                        android:progressTint="#444444"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/affichageDistance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0"
+                    />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/search_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint="@string/recherche_musicien"
+                android:inputType="textAutoComplete"
+                android:background="@drawable/edit_text_bg"/>
+
+            <Button
+                android:id="@+id/lancerRecherche"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Lancer la recherche"
+                android:background="@drawable/button_connexion_bg"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:thumbTint="#555555"
-        android:progressTint="#444444"
-        android:layout_below="@+id/indicateur_localisation"
-        />
-
-
-    <Spinner
-        android:id="@+id/instruments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/indicateur_instrument"
-        />
-
-    <Spinner
-        android:id="@+id/musiqueEcoutee"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/musiqueEcoute"
         >
-    </Spinner>
 
-    <Spinner
-        android:id="@+id/musiqueJouee"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/musiqueJouer"
-        />
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/yellow">
+        </ListView>
+    </LinearLayout>
 
-
-    <Button
-        android:id="@+id/lancerRecherche"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Lancer la recherche"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="320dp"
-        android:background="@drawable/button_connexion_bg"
-        />
-
-</RelativeLayout>
+</LinearLayout>
