@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MusicHall</string>
+    <string name="facebook_app_id">735394053464841</string>
+    <string name="fb_login_protocol_scheme">fb735394053464841</string>
     <string name="group_page1">Wall</string>
     <string name="group_page1_add_post">New Post</string>
     <string name="group_page1_add_post_text">Type here your text</string>

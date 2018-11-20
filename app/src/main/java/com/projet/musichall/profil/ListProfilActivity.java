@@ -39,13 +39,6 @@ import java.util.List;
 
 
 public class ListProfilActivity extends BaseActivity {
-    /*new String[]{"Batterie", "Cajon", "Bodhran", "Bongos", "Congas", "Derbouka", "Djembe", "Guitare classique", "Guitare jazz", "Guitare electrique",
-    "Bass", "Piano", "Piano electrique", "Synthetiseur", "Violon", "Alto", "Violoncelle", "Contrebasse", "harpe", "Flute traversiere",
-    "Flute de pan", "Flute à bec", "Whistle", "Clarinette", "Accordeon", "Mandoline", "Banjo", "Cornemuse", "Uilleann pipe",
-    "Bouzouki grec", "Bouzouki irlandais", "Ukulele", "Guitalele", "Saxophone", "Trompette", "Cor", "Tuba"};*/
-    /*new String[]{"Rock", "Heavy Metal", "Hard rock", "Punk rock", "Punk pop", "Jazz","Reggae", "Ska", "Country", "Blues", "Pop",
-    "Musique classique", "Folk", "Traditionelle", "Electro", "Gospel", "Funk", "Musique du monde", "Soul", "Rap", "Hip Hop",
-    "Salsa", "Musique Latine", "Rock alternatif", "Musique Experimentale"};*/
     private String[] INSTRU;
     private String[] GENRE;
     private Context context;
