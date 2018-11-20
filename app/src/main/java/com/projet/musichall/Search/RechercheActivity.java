@@ -171,8 +171,6 @@ public class RechercheActivity extends BaseActivity {
                         android.R.layout.simple_list_item_1, android.R.id.text1, elementsRecherche);
                 //set the adapter for listview
                 listView.setAdapter(adapter);
-
-
             }
 
             @Override
