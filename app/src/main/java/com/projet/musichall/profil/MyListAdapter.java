@@ -14,7 +14,6 @@ import java.util.List;
 
 
 
-
 public class MyListAdapter extends BaseAdapter {
     private List<String> data;
     private Context context;

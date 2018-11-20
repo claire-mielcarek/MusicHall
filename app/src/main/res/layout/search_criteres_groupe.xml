@@ -152,7 +152,7 @@
                 android:inputType="textAutoComplete"
                 android:background="@drawable/edit_text_bg"/>
 
-            <Button
+            <!--Button
                 android:id="@+id/lancerRecherche"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
                 android:paddingRight="15dp"
                 android:text="Lancer la recherche"
                 android:background="@drawable/button_connexion_bg"
-                />
+                /-->
         </LinearLayout>
     </ScrollView>
 

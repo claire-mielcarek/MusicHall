@@ -120,16 +120,21 @@ public class ListProfilActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 DatabaseReference ref = null;
+                String titre = "  ";
 
-                if (type_liste == 1)
+                if (type_liste == 1) {
                     ref = database.child("Users").child(user.getUid()).child("instrus");
-                else if (type_liste == 2)
+                    titre = "Liste des instruments";
+                }else if (type_liste == 2) {
                     ref = database.child("Users").child(user.getUid()).child("genreEcoute");
-                else if (type_liste == 3)
+                    titre = "Liste des genres";
+                }else if (type_liste == 3) {
                     ref = database.child("Users").child(user.getUid()).child("genreJoue");
+                    titre = "Liste des genres";
+                }
 
                 if (ref != null) {
-                    MyButtonAdd(ref);
+                    MyButtonAdd(ref, titre);
                 }
             }
         });
@@ -170,10 +175,10 @@ public class ListProfilActivity extends BaseActivity {
     }
 
 
-    public void MyButtonAdd(final DatabaseReference refData) {
+    public void MyButtonAdd(final DatabaseReference refData, String titre) {
         final AlertDialog box;
         final AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-        dlgAlert.setTitle("Liste des instruments");
+        dlgAlert.setTitle(titre);
         dlgAlert.setIcon(android.R.drawable.ic_menu_add);
 
         if (type_liste == 1) {
