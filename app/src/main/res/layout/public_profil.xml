@@ -11,7 +11,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="10dp">
 
             <LinearLayout
                 android:id="@+id/entete"
@@ -257,7 +258,8 @@
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:onClick="appel_instru"
-                    android:text="Instruments pratiqués"/>
+                    android:text="Instruments pratiqués"
+                    style="@style/DefaultButton"/>
 
                 <Button
                     android:id="@+id/ecouter"
@@ -267,7 +269,8 @@
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:onClick="appel_ecouter"
-                    android:text="Genres musicals écoutés"/>
+                    android:text="Genres musicals écoutés"
+                    style="@style/DefaultButton"/>
 
                 <Button
                     android:id="@+id/jouer"
@@ -277,7 +280,8 @@
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:onClick="appel_jouer"
-                    android:text="Genres musicals joués"/>
+                    android:text="Genres musicals joués"
+                    style="@style/DefaultButton"/>
 
             </LinearLayout>
 

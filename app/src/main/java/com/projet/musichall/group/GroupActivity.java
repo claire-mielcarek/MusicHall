@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.projet.musichall.BaseActivity;
 import com.projet.musichall.R;
 import com.projet.musichall.group.wall.AddPost;
+import com.projet.musichall.profil.FragmentSlideAdapter;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -86,9 +87,6 @@ public class GroupActivity extends BaseActivity {
             }
         });
 
-        // Give the TabLayout the ViewPager
-        TabLayout tabLayout = findViewById(R.id.sliding_tabs);
-        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override

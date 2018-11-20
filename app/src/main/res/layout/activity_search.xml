@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:hint="@string/text_recherche"
+            android:text="@string/text_recherche"
             android:textSize="30dp"/>
     </LinearLayout>
 
@@ -39,7 +39,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textSize="20dp"
-            android:background="@drawable/button_connexion_bg"
+            style="@style/DefaultButton"
             />
 
         <Button
@@ -53,7 +53,7 @@
             android:layout_below="@+id/buttonGroupes"
             android:hint="@string/musiciens"
             android:textSize="20dp"
-            android:background="@drawable/button_connexion_bg"/>
+            style="@style/DefaultButton"/>
     </LinearLayout>
 
 

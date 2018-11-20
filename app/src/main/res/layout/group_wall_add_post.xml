@@ -18,7 +18,8 @@
             android:id="@+id/group_page1_add_post_create_post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/group_page1_add_post_button" />
+            android:text="@string/group_page1_add_post_button"
+            style="@style/DefaultButton"/>
 
     </LinearLayout>
 

@@ -35,8 +35,8 @@
     <string name="groupes">Un groupe</string>
     <string name="musiciens">Des musiciens</string>
     <string name="recherche_musicien">Quel est son nom ?</string>
-    <string name="signup">signup</string>
-    <string name="signin">signup</string>
+    <string name="signup">Sign up</string>
+    <string name="signin">Sign in</string>
 
     <string-array name="instruments">
         <item name="batterie">Batterie</item>
