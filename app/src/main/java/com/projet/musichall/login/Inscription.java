@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.projet.musichall.BaseActivity;
+import com.projet.musichall.MainActivity;
 import com.projet.musichall.R;
 import com.projet.musichall.profil.ProfilActivity;
 
@@ -140,7 +141,7 @@ public class Inscription extends BaseActivity {
                             database.child("Users").child(user.getUid()).child("ville").setValue(ville);  // TODO utiliser la localisation
 
                             // envoie vers l'application
-                            startActivity(new Intent(context, ProfilActivity.class));
+                            startActivity(new Intent(context, MainActivity.class));
                         }
                     }else{
                         Log.d("InscriptionMail", String.valueOf(task.getException()));// probleme lors de la creation du compte

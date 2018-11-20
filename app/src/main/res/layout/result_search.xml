@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cropToPadding="true"
+            android:src="@drawable/ic_profil"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
+            android:contentDescription="Photo de profil"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/nomc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:layout_weight="1"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:text="Nom complet"/>
+
+            <TextView
+                android:id="@+id/datem"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
+                android:textSize="13sp"
+                android:text="Date de membre"/>
+
+            <TextView
+                android:id="@+id/infos"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
+                android:textSize="13sp"
+                android:text="Amateru de niveau Intermediaire"/>
+
+        </LinearLayout>
+
+</LinearLayout>

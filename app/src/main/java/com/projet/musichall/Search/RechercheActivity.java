@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
+
 public class RechercheActivity extends BaseActivity {
 
     ListView listView;

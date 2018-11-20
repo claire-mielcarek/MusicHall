@@ -20,6 +20,7 @@ import com.projet.musichall.R;
 
 import java.util.Date;
 
+
 public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     RadioGroup motivation;
@@ -35,30 +36,6 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_criteres_groupe);
 
-        Spinner spinnerInstruments = findViewById(R.id.instruments);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.instruments, android.R.layout.simple_spinner_item );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerInstruments.setAdapter(adapter);
-        spinnerInstruments.setOnItemSelectedListener(this);
-
-        Spinner spinnerEcoute = findViewById(R.id.musiqueJouee);
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.genres, android.R.layout.simple_spinner_item );
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerEcoute.setAdapter(adapter2);
-        spinnerEcoute.setOnItemSelectedListener(this);
-
-        Spinner spinnerNiveau = findViewById(R.id.niveau);
-        ArrayAdapter<CharSequence> adapter4 = ArrayAdapter.createFromResource(this, R.array.niveaux, android.R.layout.simple_spinner_item );
-        adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerNiveau.setAdapter(adapter4);
-        spinnerNiveau.setOnItemSelectedListener(this);
-
-        motivation = (RadioGroup) findViewById(R.id.motivation);
-        indicteur_instruments = findViewById(R.id.indicateur_instrument);
-        indicteur_niveau = findViewById(R.id.indicateur_niveau);
-        indicteur_motivation = findViewById(R.id.indicateur_motivation);
-        indicteur_localisation = findViewById(R.id.indicateur_localisation);
-        lancerRecherche = findViewById(R.id.lancerRecherche);
         /*
         @Override
         protected void onStart () {
@@ -94,6 +71,39 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
             });
         }
         */
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Spinner spinnerInstruments = findViewById(R.id.instruments);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.instruments, android.R.layout.simple_spinner_item );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerInstruments.setAdapter(adapter);
+        spinnerInstruments.setOnItemSelectedListener(this);
+
+        Spinner spinnerEcoute = findViewById(R.id.musiqueJouee);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.genres, android.R.layout.simple_spinner_item );
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEcoute.setAdapter(adapter2);
+        spinnerEcoute.setOnItemSelectedListener(this);
+
+        Spinner spinnerNiveau = findViewById(R.id.niveau);
+        ArrayAdapter<CharSequence> adapter4 = ArrayAdapter.createFromResource(this, R.array.niveaux, android.R.layout.simple_spinner_item );
+        adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerNiveau.setAdapter(adapter4);
+        spinnerNiveau.setOnItemSelectedListener(this);
+
+
+
+        motivation = (RadioGroup) findViewById(R.id.motivation);
+        indicteur_instruments = findViewById(R.id.indicateur_instrument);
+        indicteur_niveau = findViewById(R.id.indicateur_niveau);
+        indicteur_motivation = findViewById(R.id.indicateur_motivation);
+        indicteur_localisation = findViewById(R.id.indicateur_localisation);
+        /*lancerRecherche = findViewById(R.id.lancerRecherche);
 
         lancerRecherche.setOnClickListener(new View.OnClickListener() {
 
@@ -103,7 +113,7 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
                 intent.putExtra("Search",0);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
     @Override

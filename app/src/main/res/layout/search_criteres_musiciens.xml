@@ -34,7 +34,7 @@
                     android:id="@+id/instruments"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     />
 
             </LinearLayout>
@@ -58,7 +58,7 @@
                     android:id="@+id/niveau"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2">
+                    android:layout_weight="1">
                 </Spinner>
 
             </LinearLayout>
@@ -82,7 +82,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:checkedButton="@id/amateur"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     >
@@ -185,7 +184,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="0"
+                    android:text="0 km"
                     />
             </LinearLayout>
 
@@ -198,7 +197,7 @@
                 android:inputType="textAutoComplete"
                 android:background="@drawable/edit_text_bg"/>
 
-            <Button
+            <!--Button
                 android:id="@+id/lancerRecherche"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -208,7 +207,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="Lancer la recherche"
                 android:background="@drawable/button_connexion_bg"
-                />
+                /-->
 
         </LinearLayout>
     </ScrollView>
@@ -217,6 +216,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         >
 
