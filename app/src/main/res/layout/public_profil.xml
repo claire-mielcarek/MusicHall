@@ -228,14 +228,12 @@
                             android:id="@+id/radioa"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:buttonTint="#444444"
                             android:text="Amateur"/>
 
                         <RadioButton
                             android:id="@+id/radiop"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:buttonTint="#444444"
                             android:text="Professionel"/>
                     </RadioGroup>
 

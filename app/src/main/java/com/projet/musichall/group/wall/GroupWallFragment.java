@@ -15,14 +15,22 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.projet.musichall.R;
 import com.projet.musichall.group.Post;
+import com.projet.musichall.group.postAuthorListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+
+/*
+ * TODO Trier les publications par ordre décroissants de date
+ * TODO Voir sur le post adapter comment on empêche de tout réafficher quand on add (sans doute override le notifyDataSetChanged)
+ */
+
 
 public class GroupWallFragment extends Fragment {
     ArrayList<Post> listItems = new ArrayList<>();
@@ -32,6 +40,10 @@ public class GroupWallFragment extends Fragment {
     private Map<String,Map<String,String>> posts;
     private String currentGroupId;
     private DatabaseReference data;
+    private String authorName;
+    private String date;
+    private String text;
+    private ArrayList<String> postAlreadyHere;
 
     @Nullable
     @Override
@@ -49,41 +61,24 @@ public class GroupWallFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        Bundle args = getArguments();
+        currentGroupId = args.getString("groupId");
+        Log.d("[ WALL_FRAGMENT ]", "groupId : "+currentGroupId);
+
         data = FirebaseDatabase.getInstance().getReference();
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        listItems.add(new Post("Claire", "Vel saepe sermonem vel consul.",dateFormat.format(date)));
-        listItems.add(new Post("Bob", "Quidem amicis iis sapientia si quidquid de vel de quidquid numero velint velimus statuerimus sunt.",dateFormat.format(date)));
-        listItems.add(new Post("Bastien", "Mon instrument c'est la batterie et je cherche quelqu'un avec qui jouer",dateFormat.format(date)));
-        listItems.add(new Post("Arthur", "Contingit nec et nec cautela et in lacertos quae pecudum rem contingit contingit grassatores terna rem montium nec circumspecta quae.",dateFormat.format(date)));
-        listItems.add(new Post("Claire", "Vel saepe sermonem vel consul.",dateFormat.format(date)));
-        listItems.add(new Post("Bob", "Quidem amicis iis sapientia si quidquid de vel de quidquid numero velint velimus statuerimus sunt.",dateFormat.format(date)));
-        listItems.add(new Post("Bastien", "Mon instrument c'est la batterie et je cherche quelqu'un avec qui jouer",dateFormat.format(date)));
-        listItems.add(new Post("Arthur", "Contingit nec et nec cautela et in lacertos quae pecudum rem contingit contingit grassatores terna rem montium nec circumspecta quae.",dateFormat.format(date)));
-        listItems.add(new Post("Claire", "Vel saepe sermonem vel consul.",dateFormat.format(date)));
-        listItems.add(new Post("Bob", "Quidem amicis iis sapientia si quidquid de vel de quidquid numero velint velimus statuerimus sunt.",dateFormat.format(date)));
-        listItems.add(new Post("Bastien", "Occideretur pretioso pretioso oblato nec ferebatur contactus Honoratum Clematius inter.",dateFormat.format(date)));
-        listItems.add(new Post("Arthur", "Contingit nec et nec cautela et in lacertos quae pecudum rem contingit contingit grassatores terna rem montium nec circumspecta quae.",dateFormat.format(date)));
-        listItems.add(new Post("Claire", "Vel saepe sermonem vel consul.",dateFormat.format(date)));
-        listItems.add(new Post("Bob", "Quidem amicis iis sapientia si quidquid de vel de quidquid numero velint velimus statuerimus sunt.",dateFormat.format(date)));
-        listItems.add(new Post("Bastien", "Mon instrument c'est la batterie et je cherche quelqu'un avec qui jouer",dateFormat.format(date)));
-        listItems.add(new Post("Arthur", "Contingit nec et nec cautela et in lacertos quae pecudum rem contingit contingit grassatores terna rem montium nec circumspecta quae.",dateFormat.format(date)));
-        listItems.add(new Post("Claire", "Vel saepe sermonem vel consul.",dateFormat.format(date)));
-        listItems.add(new Post("Bob", "Quidem amicis iis sapientia si quidquid de vel de quidquid numero velint velimus statuerimus sunt.",dateFormat.format(date)));
-        listItems.add(new Post("Bastien", "Mon instrument c'est la batterie et je cherche quelqu'un avec qui jouer",dateFormat.format(date)));
-        listItems.add(new Post("Arthur", "Contingit nec et nec cautela et in lacertos quae pecudum rem contingit contingit grassatores terna rem montium nec circumspecta quae.",dateFormat.format(date)));
-        listItems.add(new Post("Claire", "Vel saepe sermonem vel consul.",dateFormat.format(date)));
-        listItems.add(new Post("Bob", "Quidem amicis iis sapientia si quidquid de vel de quidquid numero velint velimus statuerimus sunt.",dateFormat.format(date)));
-        listItems.add(new Post("Bastien", "Mon instrument c'est la batterie et je cherche quelqu'un avec qui jouer",dateFormat.format(date)));
-        listItems.add(new Post("Arthur", "Contingit nec et nec cautela et in lacertos quae pecudum rem contingit contingit grassatores terna rem montium nec circumspecta quae.",dateFormat.format(date)));
 
         list = current_view.findViewById(R.id.group_publications);
         adapter = new PostAdapter(getActivity(), listItems);
-        list.setAdapter(adapter);
+
+        postAlreadyHere = new ArrayList<>();
 
 
         addPostListener();
+
+        list.setAdapter(adapter);
 
     }
 
@@ -93,7 +88,30 @@ public class GroupWallFragment extends Fragment {
             publications.addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    Log.d("[ WALL_DISPLAY ]", dataSnapshot.toString());
+                    DatabaseReference post =data.child("Publications").child(dataSnapshot.getValue().toString());
+                    post.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot post) {
+                            if (!postAlreadyHere.contains(post.getKey())){
+                                postAlreadyHere.add(post.getKey());
+                                //Log.d("[ WALL_DISPLAY_KEY ]", postAlreadyHere.toString());
+                                date = (String) post.child("date").getValue();
+                                String authorId = (String) post.child("author").getValue();
+                                text = (String) post.child("contenu").getValue();
+                                Log.d("[ WALL_ADAPTER ]", adapter.toString());
+                                data.child("Users").child(authorId).addListenerForSingleValueEvent(new postAuthorListener(text, date, listItems, adapter));
+                                //Log.d("[ WALL_DISPLAY ]", "date : " + date);
+                                //Log.d("[ WALL_DISPLAY ]", "author : " + authorName);
+                                //Log.d("[ WALL_DISPLAY ]", "text : " + text);
+                                //Log.d("[ WALL_DISPLAY ]", "post : " + post );
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
 
                 @Override

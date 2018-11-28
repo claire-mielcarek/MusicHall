@@ -65,6 +65,7 @@ public class GroupActivity extends BaseActivity {
         groupsNames = new ArrayList<>();
         groupsIds = new ArrayList<>();
 
+        viewPager = findViewById(R.id.viewpager);
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
@@ -72,9 +73,6 @@ public class GroupActivity extends BaseActivity {
         addGroupListener();
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        viewPager = findViewById(R.id.viewpager);
-        tabAdapter = new SampleFragmentPagerAdapter(getSupportFragmentManager(),GroupActivity.this);
-        viewPager.setAdapter(tabAdapter);
         //Detect when the current Fragment changed
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
@@ -161,6 +159,8 @@ public class GroupActivity extends BaseActivity {
                             if(currentGroupId == null){
                                 currentGroupId = group.getKey();
                                 currentGroupName = (String) group.child("nom").getValue();
+                                tabAdapter = new SampleFragmentPagerAdapter(getSupportFragmentManager(),GroupActivity.this, currentGroupId);
+                                viewPager.setAdapter(tabAdapter);
                                 getMyActionBar().setTitle(currentGroupName);
                             }
                             else {

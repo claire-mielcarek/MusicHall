@@ -58,4 +58,8 @@ public class PostAdapter extends BaseAdapter{
     public int getCount() {
         return datas.size();
     }
+
+    public PostAdapter() {
+        super();
+    }
 }
