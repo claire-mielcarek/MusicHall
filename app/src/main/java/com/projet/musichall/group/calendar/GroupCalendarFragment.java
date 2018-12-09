@@ -11,9 +11,15 @@ import android.view.ViewGroup;
 import com.projet.musichall.R;
 
 public class GroupCalendarFragment extends Fragment {
+    private String currentgroupId;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.group_calendar, container, false);
+    }
+
+    public void setCurrentgroupId(String currentgroupId) {
+        this.currentgroupId = currentgroupId;
     }
 }

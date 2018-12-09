@@ -1,6 +1,7 @@
-package com.projet.musichall.group.wall;
+package com.projet.musichall;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,9 @@ import android.widget.TextView;
 import com.projet.musichall.R;
 import com.projet.musichall.group.Post;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-//adapter.notifyDataSetChanged();
+import java.util.Date;
 
 public class PostAdapter extends BaseAdapter{
     private ArrayList<Post> datas;
@@ -25,11 +26,11 @@ public class PostAdapter extends BaseAdapter{
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Post p = datas.get(i);
+        Post p = (Post) getItem(i);
+        Log.d("[ POST_ADAPTER ]", p.toString());
         String writer = p.getWriter();
         String date = p.getDate();
         String content = p.getContent();
-
         if (view ==null){
             view = LayoutInflater.from(context).inflate(R.layout.post, viewGroup, false);
         }
@@ -56,10 +57,13 @@ public class PostAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
+        //Log.d("[POST_ADAPTER]", "posts : " + datas.toString());
         return datas.size();
     }
 
-    public PostAdapter() {
-        super();
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+        Log.d("[POST_ADAPTER]", "notifyDataSetChanged : " + datas.toString());
     }
 }

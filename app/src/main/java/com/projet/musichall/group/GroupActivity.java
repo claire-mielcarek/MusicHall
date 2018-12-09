@@ -2,9 +2,8 @@ package com.projet.musichall.group;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -14,7 +13,6 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,10 +20,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projet.musichall.BaseActivity;
 import com.projet.musichall.R;
+import com.projet.musichall.group.calendar.GroupCalendarFragment;
+import com.projet.musichall.group.chat.GroupChatFragment;
 import com.projet.musichall.group.wall.AddPost;
+import com.projet.musichall.group.wall.GroupWallFragment;
 import com.projet.musichall.profil.FragmentSlideAdapter;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class GroupActivity extends BaseActivity {
@@ -37,7 +40,8 @@ public class GroupActivity extends BaseActivity {
     private String currentGroupName;
     private DatabaseReference data;
 
-    private PagerAdapter tabAdapter;
+    private ValueEventListener groupListener;
+    private SampleFragmentPagerAdapter tabAdapter;
     private ViewPager viewPager;
 
     //Ids of the tab
@@ -66,6 +70,7 @@ public class GroupActivity extends BaseActivity {
         groupsIds = new ArrayList<>();
 
         viewPager = findViewById(R.id.viewpager);
+        viewPager.setOffscreenPageLimit(3);
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
@@ -98,7 +103,9 @@ public class GroupActivity extends BaseActivity {
         menu.add(Menu.NONE, ADD_GROUP, Menu.NONE, R.string.add_group).setIcon(R.drawable.ic_add).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         switch(tabId){
             case WALL_ID:
-                menu.add(Menu.NONE, WALL_ADD_POST, Menu.NONE, R.string.group_page1_add_post).setIcon(R.drawable.ic_add).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                if(this.currentGroupId != null) {
+                    menu.add(Menu.NONE, WALL_ADD_POST, Menu.NONE, R.string.group_page1_add_post).setIcon(R.drawable.ic_add).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                }
                 break;
             case CALENDAR_ID:
                 break;
@@ -133,23 +140,55 @@ public class GroupActivity extends BaseActivity {
                 }
 
                 break;
-            default: //Opening a group
+            case R.id.action_open_menu:
+                break;
+            default://Opening a group
+                String tmpId = this.currentGroupId;
+                String tmpName = this.currentGroupName;
+                Log.d("[MENU]", "item id : " + item.getItemId());
+                currentGroupId = this.groupsIds.remove(item.getItemId()-FIRST_GROUP_ID);
+                currentGroupName = this.groupsNames.remove(item.getItemId()-FIRST_GROUP_ID);
+                this.groupsIds.add(tmpId);
+                this.groupsNames.add(tmpName);
+
+                Log.d("[FRAGMENTS]", getSupportFragmentManager().getFragments().toString());
+                for (Fragment f : getSupportFragmentManager().getFragments() ) {
+                    if (f != null) {
+                        if (f instanceof GroupWallFragment) {
+                            Log.d("[FRAG]", "WALL");
+                            GroupWallFragment wallF = (GroupWallFragment) f;
+                            wallF.setCurrentGroupId(currentGroupId);
+                        } else if (f instanceof GroupChatFragment) {
+                            Log.d("[FRAG]", "CHAT");
+                            GroupChatFragment chatF = (GroupChatFragment) f;
+                            chatF.setCurrentgroupId(currentGroupId);
+                        } else if(f instanceof GroupCalendarFragment){
+                            Log.d("[FRAG]", "CALENDAR");
+                            GroupCalendarFragment calF = (GroupCalendarFragment)f;
+                            calF.setCurrentgroupId(currentGroupId);
+                        }
+                    }
+                }
+                Log.d("[CHANGE_GROUP]", " coucou ");
+                getMyActionBar().setTitle(currentGroupName);
+                invalidateOptionsMenu();
         }
         return true;
     }
 
     private void addGroupListener(){
 
-        data.addValueEventListener(new ValueEventListener() {
+        groupListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+                Log.d("[GROUP_LISTENER]", "data change");
                 String userId = dataSnapshot.child("Users").child(user.getUid()).getKey();
                 DataSnapshot groupsData = dataSnapshot.child("Groupes");
                 boolean isUserGroup = false;
                 for (DataSnapshot group: groupsData.getChildren()){
-                    if (!groupsIds.contains(group.getKey())) {
+                    if (!groupsIds.contains(group.getKey()) && !group.getKey().equals(currentGroupId)) {
                         for (DataSnapshot member : group.child("membres").getChildren()) {
                             if (userId.equals(member.getValue())) {
                                 isUserGroup = true;
@@ -179,6 +218,7 @@ public class GroupActivity extends BaseActivity {
                 // Failed to read value
                 Log.w("[ DATABASE ]", "Failed to read value.", error.toException());
             }
-        });
+        };
+        data.addValueEventListener(this.groupListener);
     }
 }

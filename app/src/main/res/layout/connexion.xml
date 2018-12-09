@@ -95,7 +95,7 @@
                 android:layout_marginTop="10dp"
                 android:paddingStart="7dp"
                 android:paddingEnd="7dp"
-                android:background="@drawable/button_connexion_bg"
+                android:background="@drawable/button_connexion"
                 android:onClick="connexionWithMail"
                 android:text="Se connecter"/>
         </LinearLayout>
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="7dp"
             android:paddingEnd="7dp"
-            android:background="@drawable/button_connexion_bg"
+            android:background="@drawable/button_connexion"
             android:onClick="inscription"
             android:text="S'inscrire"/>
 

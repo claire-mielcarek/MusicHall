@@ -35,8 +35,8 @@ public class AddGroup extends BaseActivity {
     String currentName;
     String currentFirstName;
     EditText editText;
-    String currentText;
-    String groupName;
+    String currentText = "";
+    String groupName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,11 +108,13 @@ public class AddGroup extends BaseActivity {
         addMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String[] splitStr = currentText.split("\\s+");
-                currentFirstName = splitStr[0];
-                currentName = splitStr[1];
+                if (!currentText.equals("")) {
+                    String[] splitStr = currentText.split("\\s+");
+                    currentFirstName = splitStr[0];
+                    currentName = splitStr[1];
 
-                addMember();
+                    addMember();
+                }
             }
         });
     }
@@ -130,16 +132,16 @@ public class AddGroup extends BaseActivity {
                     name = (String) user.child("nom").getValue();
                     firstName = (String)user.child("prenom").getValue();
                     if (name != null && firstName != null && !listMembersIds.contains(user.getKey())) {
-                        Log.d("[ ADD_MEMBER_TO_GROUP ]", user.toString());
-                        Log.d("[ ADD_MEMBER_TO_GROUP ]", name);
-                        Log.d("[ ADD_MEMBER_TO_GROUP ]", firstName);
+                        //Log.d("[ ADD_MEMBER_TO_GROUP ]", user.toString());
+                        //Log.d("[ ADD_MEMBER_TO_GROUP ]", name);
+                        // Log.d("[ ADD_MEMBER_TO_GROUP ]", firstName);
                         if (name.equals(currentName) && firstName.equals(currentFirstName)) {
                             currentTarget = user.getKey();
                             listItems.add(currentFirstName + " " + currentName);
                             listMembersIds.add(currentTarget);
                             listAdapter.notifyDataSetChanged();
-                            Log.d("[ MEMBER_ADDED ]", listItems.toString());
-                            Log.d("[ MEMBER_ADDED ]", listMembersIds.toString());
+                            // Log.d("[ MEMBER_ADDED ]", listItems.toString());
+                            // Log.d("[ MEMBER_ADDED ]", listMembersIds.toString());
                         }
                     }
                 }
@@ -159,20 +161,23 @@ public class AddGroup extends BaseActivity {
         createGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listMembersIds.add(user);
-                DatabaseReference newGroup = data.child("Groupes").push();
-                Map<String, String> newMembers= new HashMap<>();
-                DatabaseReference memberRef ;
-                for(int i=0; i<listMembersIds.size(); i++){
-                    //memberRef = data.child("Membres").push();
-                    //memberRef.setValue(listMembersIds.get(i));
-                    //newMembers.put("member"+i, listMembersIds.get(i));
-                    newGroup.child("membres").push().setValue(listMembersIds.get(i));
-                }
+                if(!groupName.equals("")) {
+                    listMembersIds.add(user);
+                    DatabaseReference newGroup = data.child("Groupes").push();
+                    Map<String, String> newMembers = new HashMap<>();
+                    DatabaseReference memberRef;
+                    for (int i = 0; i < listMembersIds.size(); i++) {
+                        //memberRef = data.child("Membres").push();
+                        //memberRef.setValue(listMembersIds.get(i));
+                        //newMembers.put("member"+i, listMembersIds.get(i));
+                        newGroup.child("membres").push().setValue(listMembersIds.get(i));
+                    }
 
-                //newGroup.child("membres").setValue(newMembers);
-                newGroup.child("nom").setValue(groupName);
-                AddGroup.this.finish();
+                    //newGroup.child("membres").setValue(newMembers);
+                    newGroup.child("nom").setValue(groupName);
+                    invalidateOptionsMenu();
+                    AddGroup.this.finish();
+                }
             }
         });
     }

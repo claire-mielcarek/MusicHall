@@ -28,17 +28,17 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="add"
+            android:text="@string/add"
             android:id="@+id/group_add_button"
             style="@style/DefaultButton"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create the group"
+            android:text="@string/create_group"
             android:textColor="@color/black"
             android:id="@+id/group_add_button_create_group"
-            android:background="@drawable/button_connexion_bg"
+            android:background="@drawable/button_connexion"
             android:layout_margin="10dp"/>
 
     </LinearLayout>

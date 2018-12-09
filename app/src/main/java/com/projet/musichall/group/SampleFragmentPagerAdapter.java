@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.projet.musichall.group.calendar.GroupCalendarFragment;
 import com.projet.musichall.group.chat.GroupChatFragment;
@@ -26,6 +27,7 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
                 context.getResources().getString(R.string.group_page2),
                 context.getResources().getString(R.string.group_page3)
         };
+        Log.d("[PAGER_ADAPTER]", "groupId : " + this.groupId);
     }
 
     @Override
@@ -41,16 +43,19 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
         if(position == 0){
             f = new GroupWallFragment();
             f.setArguments(args);
+            Log.d("[ADAPTER_WALL]", "group : "+this.groupId);
             return f;
         }
         else if (position == 1){
             f = new GroupChatFragment();
             f.setArguments(args);
+            Log.d("[ADAPTER_CHAT]", "group : "+this.groupId);
             return f;
         }
         else {
             f =new GroupCalendarFragment();
             f.setArguments(args);
+            Log.d("[ADAPTER_CALENDAR]", "group : "+this.groupId);
             return f;
         }
     }
@@ -60,5 +65,4 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
         // Generate title based on item position
         return tabTitles[position];
     }
-
 }

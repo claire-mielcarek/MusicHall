@@ -200,7 +200,7 @@
                             android:layout_height="wrap_content"
                             android:paddingStart="7dp"
                             android:paddingEnd="7dp"
-                            android:background="@drawable/button_connexion_bg"
+                            android:background="@drawable/button_connexion"
                             android:text="Deconnexion"/>
                 </LinearLayout>
 

@@ -171,7 +171,7 @@ public class MyCalendar extends LinearLayout {
                 days[i].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onDayClick(v);
+                        //onDayClick(v);
                     }
                 });
                 ++dayNumber;

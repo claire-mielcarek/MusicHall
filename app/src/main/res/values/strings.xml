@@ -6,6 +6,8 @@
     <string name="group_page1_add_post">New Post</string>
     <string name="group_page1_add_post_text">Type here your text</string>
     <string name="group_page1_add_post_button">Create the post</string>
+    <string name="add">Add</string>
+    <string name="create_group">Create the group</string>
 
     <string name="group_page2">Chat</string>
     <string name="group_page3">Calendar</string>

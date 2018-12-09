@@ -161,7 +161,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:text="Lancer la recherche"
-                android:background="@drawable/button_connexion_bg"
+                android:background="@drawable/button_connexion"
                 /-->
         </LinearLayout>
     </ScrollView>

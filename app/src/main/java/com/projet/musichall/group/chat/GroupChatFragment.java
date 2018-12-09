@@ -1,6 +1,5 @@
 package com.projet.musichall.group.chat;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +11,6 @@ import android.widget.ListView;
 
 import com.projet.musichall.R;
 import com.projet.musichall.group.Post;
-import com.projet.musichall.group.wall.PostAdapter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,6 +21,7 @@ public class GroupChatFragment extends Fragment {ArrayList<Post> listItems = new
     ChatAdapter adapter;
     ListView list;
     View current_view;
+    String currentgroupId;
     
     @Nullable
     @Override
@@ -66,5 +65,9 @@ public class GroupChatFragment extends Fragment {ArrayList<Post> listItems = new
         adapter = new ChatAdapter(getActivity(), listItems, "Claire");
         list.setAdapter(adapter);
 
+    }
+
+    public void setCurrentgroupId(String currentgroupId) {
+        this.currentgroupId = currentgroupId;
     }
 }

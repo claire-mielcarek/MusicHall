@@ -69,7 +69,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_connexion_bg"
+                android:background="@drawable/button_connexion"
                 android:onClick="try_inscription"
                 android:text="S'inscrire"/>
 

@@ -206,7 +206,7 @@
                 android:paddingRight="15dp"
                 android:layout_gravity="center_horizontal"
                 android:text="Lancer la recherche"
-                android:background="@drawable/button_connexion_bg"
+                android:background="@drawable/button_connexion"
                 /-->
 
         </LinearLayout>

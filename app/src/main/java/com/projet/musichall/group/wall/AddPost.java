@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.projet.musichall.BaseActivity;
 import com.projet.musichall.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AddPost extends BaseActivity {
@@ -25,6 +26,8 @@ public class AddPost extends BaseActivity {
     String groupId;
     EditText editText;
     String currentText;
+    SimpleDateFormat dateFormat = new SimpleDateFormat(
+            "HH:mm, dd MMMM yyyy");
 
 
     @Override
@@ -77,7 +80,7 @@ public class AddPost extends BaseActivity {
                 newPublication.child("author").setValue(userId);
                 newPublication.child("groupe").setValue(groupId);
                 newPublication.child("type").setValue("text");
-                newPublication.child("date").setValue(new Date().toString());
+                newPublication.child("date").setValue(dateFormat.format(new Date()));
 
                 DatabaseReference groupPublication = data.child("Groupes").child(groupId).child("publications").push();
                 groupPublication.setValue(newPublication.getKey());
