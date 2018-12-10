@@ -62,6 +62,7 @@ public class PrivateProfil extends Fragment {
         super.onStart();
 
         // database init
+
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         database = FirebaseDatabase.getInstance().getReference();

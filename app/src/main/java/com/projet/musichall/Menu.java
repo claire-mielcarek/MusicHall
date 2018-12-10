@@ -16,6 +16,7 @@ import com.hitomi.cmlibrary.OnMenuSelectedListener;
 import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
 import com.projet.musichall.Search.RechercheActivity;
 import com.projet.musichall.Search.SearchActivity;
+import com.projet.musichall.discussion.DiscussionActivity;
 import com.projet.musichall.group.GroupActivity;
 import com.projet.musichall.login.Connexion;
 import com.projet.musichall.profil.ProfilActivity;
@@ -148,14 +149,14 @@ public class Menu extends AppCompatActivity {
                                 }, 1000);
                                 break;
                             case "discussion":
-                                if(user != null) {
+                                if(user == null) {
                                 }
                                 else {
                                     handler = new Handler();
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Intent i = new Intent(Menu.this, MainActivity.class);
+                                            Intent i = new Intent(Menu.this, DiscussionActivity.class);
                                             Menu.this.finish();
                                             startActivity(i);
                                         }

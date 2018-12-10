@@ -25,6 +25,9 @@
         <activity android:name=".Search.SearchActivity"/>
         <activity android:name=".Search.CriteresMusiciens"/>
         <activity android:name=".Search.CriteresGroupe"/>
+        <activity android:name=".discussion.DiscussionActivity"/>
+        <activity android:name=".discussion.ProfilDiscussion"/>
+        <activity android:name=".discussion.Chat"/>
         <activity android:name=".group.GroupActivity"/>
         <activity android:name=".group.AddGroup"/>
         <activity android:name=".group.wall.AddPost"/>

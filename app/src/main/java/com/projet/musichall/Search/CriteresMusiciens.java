@@ -31,6 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projet.musichall.BaseActivity;
 import com.projet.musichall.R;
+import com.projet.musichall.discussion.Chat;
+import com.projet.musichall.discussion.ProfilDiscussion;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +40,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.transform.Result;
 
 
 public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnItemSelectedListener */{
@@ -299,6 +302,32 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        listView.setOnItemClickListener (new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+
+
+
+                String userName = adapter.getNoms().get(position);
+                String userFirstName = userName.split(" ")[0];
+                String userLastName = userName.split(" ")[1];
+                /*parent.getNoms().get.toString();*/
+
+                Intent intent = new Intent(CriteresMusiciens.this, ProfilDiscussion.class);
+
+                intent.putExtra("nom", userLastName);
+                intent.putExtra("prenom",userFirstName);
+
+                Toast.makeText(getApplicationContext(), userLastName,Toast.LENGTH_LONG).show();
+
+
+                startActivity(intent);
+
 
             }
         });
