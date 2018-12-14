@@ -25,7 +25,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:cropToPadding="true"
-                            android:src="@drawable/thug"
+                            android:src="@drawable/ic_profil"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="3"
                             android:contentDescription="Photo de profil"/>
@@ -75,14 +75,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
                     android:orientation="vertical"
                     android:layout_weight="1">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="bottom|center_horizontal"
-                            android:layout_marginTop="15dp"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             >
@@ -93,24 +93,31 @@
                                     android:text="Adresse mail           : "
                                     android:textSize="13sp" />
 
-                                <EditText
+                                <TextView
                                     android:id="@+id/editmail"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginStart="10dp"
-                                    android:background="@drawable/edit_text_bg"
-                                    android:hint="example@gmail.com"
-                                    android:inputType="textEmailAddress"
+                                    android:text="example@gmail.com"
                                     android:textSize="13sp" />
+
+                                <com.github.siyamed.shapeimageview.CircularImageView
+                                    android:id="@+id/edbutm"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginStart="10dp"
+                                    android:contentDescription="Changer votre adresse mail"
+                                    android:src="@android:drawable/ic_menu_edit" />
 
                         </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:gravity="top|center_horizontal"
-                                android:layout_marginTop="15dp"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
                                 android:layout_weight="1"
                                 android:orientation="horizontal"
                                 >
@@ -121,23 +128,30 @@
                                         android:textSize="13sp"
                                         android:text="Mot de Passe          : "/>
 
-                                    <EditText
+                                    <TextView
                                         android:id="@+id/editmdp"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
                                         android:layout_marginStart="10dp"
-                                        android:background="@drawable/edit_text_bg"
-                                        android:inputType="textPassword"
                                         android:textSize="13sp"
-                                        android:hint=""
                                         android:text="*********"/>
+
+                                    <com.github.siyamed.shapeimageview.CircularImageView
+                                        android:id="@+id/edbutp"
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_gravity="center"
+                                        android:contentDescription="Changer votre mot de passe"
+                                        android:src="@android:drawable/ic_menu_edit" />
                             </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="10dp"
                             android:gravity="center"
                             android:layout_weight="1"
                             android:orientation="horizontal"
@@ -164,7 +178,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginTop="15dp"
-                            android:gravity="center"
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             >

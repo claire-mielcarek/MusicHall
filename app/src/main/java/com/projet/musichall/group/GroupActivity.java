@@ -24,7 +24,7 @@ import com.projet.musichall.group.calendar.GroupCalendarFragment;
 import com.projet.musichall.group.chat.GroupChatFragment;
 import com.projet.musichall.group.wall.AddPost;
 import com.projet.musichall.group.wall.GroupWallFragment;
-import com.projet.musichall.profil.FragmentSlideAdapter;
+import com.projet.musichall.profile.FragmentSlideAdapter;
 
 import java.security.acl.Group;
 import java.util.ArrayList;

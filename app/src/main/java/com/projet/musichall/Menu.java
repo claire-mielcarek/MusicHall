@@ -3,10 +3,13 @@ package com.projet.musichall;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -14,16 +17,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
 import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
-import com.projet.musichall.Search.RechercheActivity;
 import com.projet.musichall.Search.SearchActivity;
 import com.projet.musichall.discussion.DiscussionActivity;
 import com.projet.musichall.group.GroupActivity;
 import com.projet.musichall.login.Connexion;
-import com.projet.musichall.profil.ProfilActivity;
+import com.projet.musichall.profile.ProfilActivity;
 
 
 public class Menu extends AppCompatActivity {
-    String arrayName []= {
+    private final String arrayName[] = {
             "accueil",
             "groupe",
             "recherche",
@@ -77,10 +79,11 @@ public class Menu extends AppCompatActivity {
                     @Override
                     public void onMenuSelected(int index) {
                         Handler handler;
-                        switch(arrayName[index]){
+                        switch(arrayName[index]) {
                             case "profil":
                                 handler = new Handler();
-                                if (user != null)
+                                if (user != null){
+                                    launch_sound(R.raw.test_android);
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
@@ -89,7 +92,7 @@ public class Menu extends AppCompatActivity {
                                             startActivity(i);
                                         }
                                     }, 1000);
-                                else{
+                                }else{
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
@@ -169,5 +172,16 @@ public class Menu extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void launch_sound(int idRes){
+        SoundPool soundPool = new SoundPool(20, AudioManager.STREAM_MUSIC, 0);
+        soundPool.load(this, idRes, 1);
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                soundPool.play(sampleId, 1.f, 1.f, 1, 0, 1.0f);
+            }
+        });
     }
 }

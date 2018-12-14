@@ -1,6 +1,7 @@
 package com.projet.musichall.Search;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.List;
 
 
 public class ResultPresentation extends BaseAdapter {
+    private List<String> uids;
     private List<String> noms;
     private List<String> dates_membre;
     private List<String> infos;
@@ -23,10 +25,11 @@ public class ResultPresentation extends BaseAdapter {
 
 
 
-    public ResultPresentation(Context context, List<String> noms, List<String> dates_membre, List<String> infos){
+    public ResultPresentation(Context context, List<String> noms, List<String> dates_membre, List<String> infos, List<String> ids){
         this.noms = noms;
         this.dates_membre = dates_membre;
         this.infos = infos;
+        uids = ids;
         this.context = context;
     }
 
@@ -35,7 +38,7 @@ public class ResultPresentation extends BaseAdapter {
         View list;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (convertView == null){
+        //if (convertView == null){
             list = new View(context);
 
             // get layout from mobile.xml
@@ -49,13 +52,13 @@ public class ResultPresentation extends BaseAdapter {
                 TextView info = (TextView) list.findViewById(R.id.infos);
 
                 //avatar.setImageBitmap(avatars.get(position%avatars.size()));
-                nom_complet.setText(noms.get(position%noms.size()));
-                date_membre.setText(dates_membre.get(position%dates_membre.size()));
-                info.setText(infos.get(position%infos.size()));
+                nom_complet.setText(noms.get(position));
+                date_membre.setText(dates_membre.get(position));
+                info.setText(infos.get(position));
             }
-        }else{
+        /*}else{
             list = convertView;
-        }
+        }*/
 
         return list;
     }
@@ -70,6 +73,10 @@ public class ResultPresentation extends BaseAdapter {
 
     public List<String> getInfos() {
         return infos;
+    }
+
+    public List<String> getIds(){
+        return uids;
     }
 
     @Override

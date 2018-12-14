@@ -36,7 +36,7 @@
     <string name="text_recherche">Qui recherches-tu?</string>
     <string name="groupes">Un groupe</string>
     <string name="musiciens">Des musiciens</string>
-    <string name="recherche_musicien">Quel est son nom ?</string>
+    <string name="recherche_musicien">Nom</string>
     <string name="signup">Sign up</string>
     <string name="signin">Sign in</string>
 

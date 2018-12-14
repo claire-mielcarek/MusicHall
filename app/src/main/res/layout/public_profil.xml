@@ -25,7 +25,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:cropToPadding="true"
-                    android:src="@drawable/thug"
+                    android:src="@drawable/ic_profil"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="3"
                     android:contentDescription="Photo de profil"/>
@@ -134,7 +134,6 @@
                             android:id="@+id/radiof"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:buttonTint="#555555"
                             android:text="Femme"
                             android:textSize="12sp"/>
 
@@ -142,7 +141,6 @@
                             android:id="@+id/radioi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:buttonTint="#555555"
                             android:text="Inconnu"
                             android:textSize="12sp"/>
 
@@ -150,7 +148,6 @@
                             android:id="@+id/radioh"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:buttonTint="#555555"
                             android:text="Homme"
                             android:textSize="12sp"/>
 
@@ -193,7 +190,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:thumbTint="#555555"
                             android:progressTint="#444444"
                             />
                     </LinearLayout>

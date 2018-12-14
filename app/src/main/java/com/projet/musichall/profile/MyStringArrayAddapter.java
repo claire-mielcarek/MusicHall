@@ -1,4 +1,4 @@
-package com.projet.musichall.profil;
+package com.projet.musichall.profile;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.projet.musichall.profil;
+package com.projet.musichall.profile;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 
 public class FragmentSlideAdapter  extends FragmentPagerAdapter {
-    private static final int NUM_PAGES = 2;
+    private static final int NUM_PAGES = 3;
 
     public FragmentSlideAdapter(FragmentManager fm) {
         super(fm);
@@ -19,6 +19,8 @@ public class FragmentSlideAdapter  extends FragmentPagerAdapter {
                 return PrivateProfil.newInstance();
             case 1:
                 return PublicProfil.newInstance();
+            case 2:
+                return FPortfolio.newInstance();
             default:
                 return null;
         }
@@ -35,6 +37,8 @@ public class FragmentSlideAdapter  extends FragmentPagerAdapter {
         String name = "Privée";
         if (position == 1)
             name = "Public";
+        else if (position == 2)
+            name = "Portfolio";
         return name;
     }
 }
