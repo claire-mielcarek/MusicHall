@@ -1,11 +1,15 @@
 package com.projet.musichall;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -21,6 +25,7 @@ import java.util.ArrayList;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.projet.musichall.group.wall.AddPost;
 
 
 public class MainActivity extends BaseActivity {
@@ -30,27 +35,24 @@ public class MainActivity extends BaseActivity {
     ArrayList<Post> listItems = new ArrayList<>();
     PostAdapter adapter;
     ListView list;
-    View current_view;
-    private String currentGroupId;
     private DatabaseReference data;
     private String date;
     private String text;
     private ArrayList<String> postAlreadyHere = new ArrayList<>();
     private boolean isAlreadyInstantiated;
     DatabaseReference publications;
-    ChildEventListener publicationsListener;
+    final private int ADD_POST = 3;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        setContentView(R.layout.group_wall);
+        setContentView(R.layout.activity_main);
         Log.d("[WALL_CREATE_VIEW]", "onCreate");
         isAlreadyInstantiated = false;
         postAlreadyHere = new ArrayList<>();
         listItems = new ArrayList<>();
-
 
         actionBar.setTitle(R.string.home);
 
@@ -62,9 +64,10 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("[WALL_FRAGMENT]", "onStart");
+        Log.d("[HOME_ACTIVITY]", "onStart");
 
         if(!this.isAlreadyInstantiated) {
+            Log.d("[HOME_ACTIVITY]", "screen wasn't instantiated");
             this.isAlreadyInstantiated = true;
 
             data = FirebaseDatabase.getInstance().getReference();
@@ -76,22 +79,28 @@ public class MainActivity extends BaseActivity {
 
             addPostListener();
 
-            //list.setAdapter(adapter);
+            list.setAdapter(adapter);
         }
     }
 
-    private void addPostListener(){
-        /*
-        data.child("Publications").orderByChild("date").addValueEventListener(
-                new ValueEventListener() {
+    private void addPostListener() {
+        Log.d("[HOME_ACTIVITY]", "add post listener");
+
+        data.child("Publications").addChildEventListener(
+                new ChildEventListener() {
+
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        DatabaseReference post =data.child("Publications").child(dataSnapshot.getValue().toString());
-                        post.addValueEventListener(new ValueEventListener() {
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        DatabaseReference publication =data.child("Publications").child(dataSnapshot.getKey());
+                        publication.addValueEventListener(new ValueEventListener() {
+
                             @Override
                             public void onDataChange(@NonNull DataSnapshot post) {
-                                if (!postAlreadyHere.contains(post.getKey())){
-                                    date = (String) post.child("date").getValue();
+                                Log.d("[HOME_ACTIVITY]", "read a publication");
+                                Log.d("[HOME_ACTIVITY]", post.toString());
+                                if (post.child("groupe").getValue().toString().equals("public") &&
+                                        !postAlreadyHere.contains(post.getKey())){
+                                    date = post.child("date").getValue().toString();
                                     String authorId = (String) post.child("author").getValue();
                                     text = (String) post.child("contenu").getValue();
                                     Log.d("[ WALL_DISPLAY ]", "nouveau post");
@@ -108,11 +117,52 @@ public class MainActivity extends BaseActivity {
                     }
 
                     @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                }
-            });
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        if(user != null) {
+            menu.add(Menu.FIRST, ADD_POST, android.view.Menu.NONE, R.string.add_post).setIcon(R.drawable.ic_add).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         }
-        */
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        Intent i;
+        switch (item.getItemId()) {
+            case ADD_POST:
+                i = new Intent(this, AddPost.class);
+                i.putExtra("userId", user.getUid());
+                i.putExtra("groupId","public");
+                startActivity(i);
+            break;
+            case R.id.action_open_menu:
+                break;
+            default:
+        }
+        return true;
     }
 }

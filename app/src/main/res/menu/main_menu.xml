@@ -6,7 +6,9 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
     android:id="@+id/action_open_menu"
     android:icon="@drawable/ic_menu"
     android:title="Menu"
-    app:showAsAction="ifRoom" />
+    app:showAsAction="ifRoom"
+    android:orderInCategory="3"
+    />
 
 
 </menu>
