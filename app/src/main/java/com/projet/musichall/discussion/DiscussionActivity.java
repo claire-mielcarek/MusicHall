@@ -57,7 +57,12 @@ public class DiscussionActivity extends BaseActivity {
 
     String[] userWithDiscussion;
 
+    String nomDiscussion;
 
+    String nomSender;
+    String prenomSender;
+
+    String[] nameDiscussion;
 
     private String TAG;
 
@@ -104,8 +109,11 @@ public class DiscussionActivity extends BaseActivity {
 
 
                 String userName = adapterView.getItemAtPosition(position).toString();
+                String userFirstName = userName.split(" ")[0];
+                String userLastName = userName.split(" ")[1];
                 Intent intent = new Intent(DiscussionActivity.this, Chat.class);
-                intent.putExtra("nom",userName);
+                intent.putExtra("nom",userLastName);
+                intent.putExtra("prenom",userFirstName);
                 startActivity(intent);
 
 
@@ -136,35 +144,123 @@ public class DiscussionActivity extends BaseActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                int counter=0;
-                DataSnapshot ref;
+                int counter = 0;
+                int count = 0;
+                String userId = dataSnapshot.child("Users").child(user.getUid()).getKey();
 
+                DataSnapshot ref;
+                DataSnapshot ref2;
+
+                //Snapshot pour obtenir tous les users
                 DataSnapshot userSnapshot = dataSnapshot.child("Users");
-                Iterator<DataSnapshot> it = userSnapshot.getChildren().iterator();
-                userWithDiscussion = new String[(int) userSnapshot.getChildrenCount()];
-                while (it.hasNext()) {
-                    ref = it.next();
-                    userWithDiscussion[counter] = String.valueOf(ref.child("prenom").getValue());
-                    userWithDiscussion[counter] += " " + String.valueOf(ref.child("nom").getValue());
-                    userWithDiscussion[counter] += " \n Ville : " + String.valueOf(ref.child("ville").getValue());
-                    userWithDiscussion[counter] += " \n Dernier message : "; //+ String.valueOf(ref.child("message").getValue());
-                    //userWithDiscussion[counter] += " " + String.valueOf(ref.child("instrus").getValue());
-                    counter = counter + 1;
+
+                //Snapshot pour obtenir les conversations de l'utilisateur
+                DataSnapshot discussionOfUser = dataSnapshot.child("conversation");
+                //DataSnapshot discussionOfUser = dataSnapshot.child("conversation").getKey()
+
+
+
+                //TODO revoir la taille alloué pour les strings
+                nameDiscussion = new String[(int) discussionOfUser.getChildrenCount()*50];
+
+
+                // On récupère le prénom et le nom du user courant
+                for (DataSnapshot user : userSnapshot.getChildren()) {
+                    //ref = it.next();
+
+                    if (userId.equals(String.valueOf(user.getKey()))) {
+                        nomSender = String.valueOf(user.child("nom").getValue());
+                        prenomSender = String.valueOf(user.child("prenom").getValue());
+                        //Log.d("utilisateur courant est", prenomSender + ("_") + nomSender);
+
+                    }
                 }
 
 
+                // On récupère le nom des interlocuteur avec qui le user courant parle à l'aide de la clef
+                for (DataSnapshot discussion : discussionOfUser.getChildren()) {
+
+                    if (discussion.getKey().split("-")[0].equals(prenomSender + ("_") + nomSender)) {
+                        nameDiscussion[count] = discussion.getKey().split("-")[1];
+                        Log.d("nom de l'interlocuteur", nameDiscussion[count]);
+                        count = count + 1;
+                    }
+                    if(discussion.getKey().split("-")[1].equals(prenomSender + ("_") + nomSender)){
+                        nameDiscussion[count] = discussion.getKey().split("-")[0];
+                        count = count + 1;
+                    }
+
+
+                }
+                //Initialisation de la string contenant les informations des users(avec une discussion)
+                userWithDiscussion = new String[count];
+                int finNameDiscussion = count;
+                count = 0;
+                //Testons maintenant les noms des interlocuteurs connu de l'utilisateur avec la table des users pour récupérer leurs infos
+                //Tant qu'il y a encore des noms qui n'ont pas été vérifiés on test
+                while (finNameDiscussion != 0){
+                    for (DataSnapshot user : userSnapshot.getChildren()) {
+                        if ((String.valueOf(user.child("prenom").getValue()) + "_" + String.valueOf(user.child("nom").getValue()))
+                                .equals(nameDiscussion[count])) {
+                            Log.d("son nom a été teste", String.valueOf(user.child("prenom").getValue()));
+                            userWithDiscussion[count] = String.valueOf(user.child("prenom").getValue());
+                            userWithDiscussion[count] += " " + String.valueOf(user.child("nom").getValue());
+                            //TODO Voir les informations qu'on veut mettre plus tard
+
+                            //Log.d("On a récuperé ", userWithDiscussion[count]);
+
+                            count = count + 1;
+                            finNameDiscussion = finNameDiscussion-1;
+
+                        }
+                    }
+                }
+
+
+
+                // Pour chacun des noms d'interlocuteur de l'utilisateur inscrit dans son onglet discussion
+                // Vérifier si le nom à afficher correspond
+
+
+
+                //  (String.valueOf(ref2.child("interlocuteur").getValue()))) {
+                // if(discussionTest.equals(discussionTest2)) {
+                //if(String.valueOf(ref.child("nom").getValue()).equals(String.valueOf(mDatabase.child("Users")
+                // .child(user.getUid()).child("conversation").getKey()))){
+
+                //userWithDiscussion[counter] = String.valueOf(user.child("prenom").getValue());
+                //userWithDiscussion[counter] += " " + String.valueOf(user.child("nom").getValue());
+                //userWithDiscussion[counter] += " " + String.valueOf(ref2.getKey());
+
+                //userWithDiscussion[counter] += " \n Ville : " + String.valueOf(ref.child("ville").getValue());
+                //userWithDiscussion[counter] += " \n Dernier message : "; //+ String.valueOf(ref.child("message").getValue());
+                //userWithDiscussion[counter] += " " + String.valueOf(ref.child("instrus").getValue());
+
+                //}
+                //}
+
+
+
                 listItems = new ArrayList<>(Arrays.asList(userWithDiscussion));
+                Log.d("on a dans la liste", String.valueOf(listItems));
+
                 //make an array of the objects according to a layout design
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
                         android.R.layout.simple_list_item_1, android.R.id.text1, userWithDiscussion);
                 //set the adapter for listview
                 listView.setAdapter(adapter);
 
-                }
+
+
+
+
+            }
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                throw databaseError.toException();
             }
         });
 
@@ -173,5 +269,7 @@ public class DiscussionActivity extends BaseActivity {
 
 
 
+
     }
 }
+

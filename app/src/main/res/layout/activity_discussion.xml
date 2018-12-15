@@ -12,8 +12,8 @@
         android:textColor="@color/black"
         android:hint="Discussions"
         android:textSize="20dp"
-        android:paddingLeft="115dp"
         android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
         />
 
 
@@ -30,15 +30,7 @@
         android:paddingTop="25dp"
         android:paddingBottom="60dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/bouton_recherche"
-        android:hint="Voulez vous démarrer une nouvelle discussion ?"
-        android:gravity="bottom"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="20dp"/>
+
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
@@ -51,8 +43,20 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="15dp"
-        app:fabSize="mini"
-        />
+        app:fabSize="mini">
+
+
+    </android.support.design.widget.FloatingActionButton>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/bouton_recherche"
+        android:hint="Voulez vous démarrer une nouvelle discussion ?"
+        android:gravity="bottom"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"/>
 
 
 </RelativeLayout>

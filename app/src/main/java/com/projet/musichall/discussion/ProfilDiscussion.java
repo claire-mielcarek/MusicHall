@@ -100,7 +100,13 @@ public class ProfilDiscussion extends BaseActivity {
         if (otherUser.getAvatar() != null)
             avatar.setImageBitmap(otherUser.getAvatar());
         nom.setText(otherUser.getNom());
+        //Récupération du nom pour l'intent
+        nomS = otherUser.getNom();
+
         prenom.setText(otherUser.getPrenom());
+        //Récuparation du prénom
+        prenomS = otherUser.getPrenom();
+        Log.d("on a son prenom", prenomS);
         ville.setText(otherUser.getVille());
         genre.setText(otherUser.getGenre());
         niveau.setText(otherUser.getNameNiveau());
@@ -139,8 +145,6 @@ public class ProfilDiscussion extends BaseActivity {
                 if (user != null) {
                     data = FirebaseDatabase.getInstance().getReference();
                     // Ajout de la notion de conversation de l'user avec la personne recherchée
-                    DatabaseReference newDiscussion = data.child("Users").child(user.getUid()).child("conversation");
-                    newDiscussion.push().setValue(nomS);
                     // Ajout de la notion de conversation pour la personne recherchée (avec celui qui a débuté la discussion)
                     //DatabaseReference  newDiscussion2 = data.child("Users").child()
 

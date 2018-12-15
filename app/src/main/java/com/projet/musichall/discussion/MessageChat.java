@@ -5,32 +5,33 @@ import java.util.Date;
 public class MessageChat {
 
     private String messageText;
-    private String messageUser;
+    private String nomSender;
     private long messageTime;
 
     public MessageChat(String messageText, String messageUser){
         this.messageText = messageText;
-        this.messageUser = messageUser;
+        this.nomSender = messageUser;
 
         messageTime =  new Date().getTime();
 
     }
 
-    @Override
-    public String toString() {
+    /*@Override
+    public String afficher() {
         return "Message{" +
                 " writer ='" + messageUser + '\'' +
                 ", date ='" + messageTime + '\'' +
                 ", content ='" + messageText + '\'' +
                 '}';
     }
+    */
 
-    public String getMessageUser() {
-        return messageUser;
+    public String getNomSender() {
+        return nomSender;
     }
 
-    public void setMessageUser(String messageUser) {
-        this.messageUser = messageUser;
+    public void setNomSender(String messageUser) {
+        this.nomSender = messageUser;
     }
 
     public long getMessageTime() {

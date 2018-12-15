@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="normal|bold"
-        android:id="@+id/message_user"
+        android:id="@+id/nom_user"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true" />
@@ -29,7 +29,7 @@
         android:id="@+id/message_text"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/message_user"
+        android:layout_below="@id/nom_user"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="10sp" />
 
