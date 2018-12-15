@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projet.musichall.group.Post;
 import com.projet.musichall.group.postAuthorListener;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -56,7 +57,9 @@ public class MainActivity extends BaseActivity {
 
         actionBar.setTitle(R.string.home);
 
+        // recupere l'objet permettant de gerer l'authantification d'un utilisateur
         auth = FirebaseAuth.getInstance();
+        // recupere l'utilisateur pour savoir si celui-ci est connecte
         user = auth.getCurrentUser();
         Log.d("[ TEST MENU ]", "MainActivity onCreated done");
     }

@@ -31,6 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projet.musichall.BaseActivity;
 import com.projet.musichall.R;
+import com.projet.musichall.discussion.Chat;
+import com.projet.musichall.discussion.ProfilDiscussion;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +40,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.transform.Result;
 
 
 public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnItemSelectedListener */{
@@ -46,11 +49,7 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
     private FirebaseUser user;
     private DatabaseReference database;
     private boolean first = true;
-    private int numbre_radio = 0;
-    private boolean[] first_entries = new boolean[]{true, true, true, true, true, true, true};  // avoid bad modifications on firebase
-    //TextView indicateur_instruments;
-    //TextView indicateur_niveau;
-    //TextView indicateur_localisation;
+    private boolean ok = false;
     TextView affichageDistance;
     RadioGroup motivation;
     SeekBar valeurDistance;
@@ -59,12 +58,13 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
     Spinner spinnerJoue;
     Spinner spinnerNiveau;
     EditText search_name;
-    Button lancerRecherche;
+    //Button lancerRecherche;
 
     //Array list
     ArrayList<String> listItemsNoms;
     ArrayList<String> listItemsDates;
     ArrayList<String> listItemsInfos;
+    ArrayList<String> ids;
     List<String> liste_temp;
     ResultPresentation adapter;
 
@@ -77,7 +77,6 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_criteres_musiciens);
-
     }
 
     @Override
@@ -103,12 +102,12 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String val = String.valueOf(parent.getItemAtPosition(position));
-                if (!first_entries[0]) {
+                if (ok) {  //!first_entries[0]
                     if (user != null) {
-                        database.child("Users").child(user.getUid()).child("info_recherche").child("instru").setValue(val);
+                        database.child("Users").child(user.getUid()).child("info_recherche").child("utilisateur").child("instru").setValue(val);
                     }
                 }
-                first_entries[0] = false;
+                //first_entries[0] = false;
             }
 
             @Override
@@ -118,7 +117,7 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
         });
         //spinnerInstruments.setOnItemSelectedListener(this);
 
-        spinnerEcoute = findViewById(R.id.musiqueJouee);
+        spinnerEcoute = findViewById(R.id.musiqueEcoutee);
         liste_temp = ToList(getResources().getStringArray(R.array.genres));
         liste_temp.add(0, "Tout");
         final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, liste_temp);     // ArrayAdapter.createFromResource(this, R.array.genres, android.R.layout.simple_spinner_item );
@@ -128,12 +127,12 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String val = String.valueOf(parent.getItemAtPosition(position));
-                if (!first_entries[1]) {
+                if (ok) {   //!first_entries[1]
                     if (user != null) {
-                        database.child("Users").child(user.getUid()).child("info_recherche").child("musique_ecoutee").setValue(val);
+                        database.child("Users").child(user.getUid()).child("info_recherche").child("utilisateur").child("musique_ecoutee").setValue(val);
                     }
                 }
-                first_entries[1] = false;
+                //first_entries[1] = false;
             }
 
             @Override
@@ -143,7 +142,7 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
         });
         //spinnerEcoute.setOnItemSelectedListener(this);
 
-        spinnerJoue = findViewById(R.id.musiqueEcoutee);
+        spinnerJoue = findViewById(R.id.musiqueJouee);
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, liste_temp);        //ArrayAdapter.createFromResource(this, R.array.genres, android.R.layout.simple_spinner_item );
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerJoue.setAdapter(adapter3);
@@ -151,12 +150,11 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String val = String.valueOf(parent.getItemAtPosition(position));
-                if (!first_entries[2]) {
+                if (ok) {
                     if (user != null) {
-                        database.child("Users").child(user.getUid()).child("info_recherche").child("musique_jouee").setValue(val);
+                        database.child("Users").child(user.getUid()).child("info_recherche").child("utilisateur").child("musique_jouee").setValue(val);
                     }
                 }
-                first_entries[2] = false;
             }
 
             @Override
@@ -176,12 +174,12 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String val = String.valueOf(parent.getItemAtPosition(position));
-                if (!first_entries[3]) {
+                if (ok) {    //!first_entries[3]
                     if (user != null) {
-                        database.child("Users").child(user.getUid()).child("info_recherche").child("niveau").setValue(val);
+                        database.child("Users").child(user.getUid()).child("info_recherche").child("utilisateur").child("niveau").setValue(val);
                     }
                 }
-                first_entries[3] = false;
+                //first_entries[3] = false;
             }
 
             @Override
@@ -217,7 +215,7 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (user != null) {
-                    database.child("Users").child(user.getUid()).child("info_recherche").child("distance").setValue(seekBar.getProgress());
+                    database.child("Users").child(user.getUid()).child("info_recherche").child("utilisateur").child("distance").setValue(seekBar.getProgress());
                 }
             }
         });
@@ -226,14 +224,14 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 String select = checkedId == R.id.amateur?"Amateur":"Professionel";
-                Log.d("Check Radio Group", first_entries[5]+"");
-                if (!first_entries[5] && numbre_radio > 3) {
+                //Log.d("Check Radio Group", first_entries[5]+"");
+                if (ok) {   /*!first_entries[5] && numbre_radio > 2*/
                     if (user != null) {
-                        database.child("Users").child(user.getUid()).child("info_recherche").child("motivation").setValue(select);
+                        database.child("Users").child(user.getUid()).child("info_recherche").child("utilisateur").child("motivation").setValue(select);
                     }
                 }
-                numbre_radio = numbre_radio+1;
-                first_entries[5] = false;
+                /*numbre_radio = numbre_radio+1;
+                first_entries[5] = false;*/
             }
         });
 
@@ -251,7 +249,7 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
             public void afterTextChanged(Editable s) {
                 /*if (!first_entries[6]) {
                    **/if (user != null) {
-                        database.child("Users").child(user.getUid()).child("info_recherche").child("nom").setValue(s.toString());
+                        database.child("Users").child(user.getUid()).child("info_recherche").child("utilisateur").child("nom").setValue(s.toString());
                     }
                 /*}
                 first_entries[6] = false;*/
@@ -275,7 +273,7 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
                 DataSnapshot users, info_current_user;
                 if (user != null) {
                     // get first data to search users
-                    info_current_user = dataSnapshot.child("Users").child(user.getUid()).child("info_recherche");
+                    info_current_user = dataSnapshot.child("Users").child(user.getUid()).child("info_recherche").child("utilisateur");
                     if (first) {
                         getDataFromFirebase(info_current_user);
                         first = false;
@@ -285,21 +283,47 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
                     listItemsNoms = new ArrayList<>();
                     listItemsDates = new ArrayList<>();
                     listItemsInfos = new ArrayList<>();
+                    ids = new ArrayList<>();
 
                     // now apply search algorithm
                     users = dataSnapshot.child("Users");
                     getResultFromFirebase(users, info_current_user);
 
-                    //make an array of the objects according to a layout design
-                    adapter = new ResultPresentation(context, listItemsNoms, listItemsDates, listItemsInfos);                                 //new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
-                    //set the adapter for listview
+                    // make an array of the objects according to a layout design
+                    adapter = new ResultPresentation(context, listItemsNoms, listItemsDates, listItemsInfos, ids);                                 //new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
+                    // set the adapter for listview
                     listView.setAdapter(adapter);
+
+                    // allow to widget's listeners to modify firebase data
+                    ok = true;
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        listView.setOnItemClickListener (new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                String key = adapter.getIds().get(position);
+                String userName = adapter.getNoms().get(position);
+                String userFirstName = userName.split(" ")[0];
+                String userLastName = userName.split(" ")[1];
+                /*parent.getNoms().get.toString();*/
+
+                Intent intent = new Intent(CriteresMusiciens.this, ProfilDiscussion.class);
+
+                intent.putExtra("id", key);
+                intent.putExtra("nom", userLastName);
+                intent.putExtra("prenom",userFirstName);
+
+                Toast.makeText(getApplicationContext(), userLastName,Toast.LENGTH_LONG).show();
+
+                startActivity(intent);
             }
         });
     }
@@ -321,7 +345,7 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
         if (current_user.child("distance").exists())
             valeurDistance.setProgress(Integer.valueOf(String.valueOf(current_user.child("distance").getValue())));
         motivation.clearCheck();
-        if (current_user.child("motivation").getValue() == "Amateur")
+        if (String.valueOf(current_user.child("motivation").getValue()).equals("Amateur"))
             motivation.check(R.id.amateur);
         else motivation.check(R.id.professionel);
         if (current_user.child("instru").exists())
@@ -332,15 +356,14 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
             spinnerEcoute.setSelection(getPositionSpinner(spinnerEcoute, String.valueOf(current_user.child("musique_ecoutee").getValue())));
         if (current_user.child("musique_jouee").exists())
             spinnerJoue.setSelection(getPositionSpinner(spinnerJoue, String.valueOf(current_user.child("musique_jouee").getValue())));
-        if (current_user.child("name").exists())
+        if (current_user.child("nom").exists())
             search_name.setText(String.valueOf(current_user.child("nom").getValue()));
-        Log.d("INFO GET DATA", String.valueOf(current_user.child("nom").getValue()));
     }
 
     private void getResultFromFirebase(DataSnapshot users, DataSnapshot current_user){
         List<String> sort_name = new ArrayList<>();   // sort results by priority
-        List<String> sort_all_condition = new ArrayList<>();
-        List<String> sort_sub_spinner = new ArrayList<>();
+        /*List<String> sort_all_condition = new ArrayList<>();
+        List<String> sort_sub_spinner = new ArrayList<>();*/
         DataSnapshot one_user;
         String sprenom1, snom1, sville1, smotivation1, sniveau1, resultat;
         boolean memeMusiqueJouee, memeMusiqueEcoutee, memeInstru;
@@ -350,7 +373,7 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
 
         // get search data of current user    // TODO faire recherche avec ville
         sname = String.valueOf(current_user.child("nom").getValue());
-        sdistance = String.valueOf(current_user.child("distance").getValue());
+        //sdistance = String.valueOf(current_user.child("distance").getValue());
         smotivation2 = String.valueOf(current_user.child("motivation").getValue());
         sniveau2 = String.valueOf(current_user.child("niveau").getValue());
         smusiqueEcoutee2 = String.valueOf(current_user.child("musique_ecoutee").getValue());
@@ -366,18 +389,17 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
             sville1 = String.valueOf(one_user.child("ville").getValue());
             smotivation1 = String.valueOf(one_user.child("motivation").getValue());
             sniveau1 = String.valueOf(one_user.child("niveau").getValue());
-            memeMusiqueEcoutee = !smusiqueEcoutee2.equals("Tout")? InChildrenValue(one_user.child("genreEcoute"), smusiqueEcoutee2) : true;
-            memeInstru = !sinstru2.equals("Tout")? InChildrenValue(one_user.child("instrus"), sinstru2): true;
-            memeMusiqueJouee = !smusiqueJouee2.equals("Tout")? InChildrenValue(one_user.child("genreJoue"), smusiqueJouee2): true;
+            memeMusiqueEcoutee = (smusiqueEcoutee2.equals("Tout") || InChildrenValue(one_user.child("genreEcoute"), smusiqueEcoutee2));
+            memeInstru = (sinstru2.equals("Tout") || InChildrenValue(one_user.child("instrus"), sinstru2));
+            memeMusiqueJouee = (smusiqueJouee2.equals("Tout") || InChildrenValue(one_user.child("genreJoue"), smusiqueJouee2));
 
-            cond_name = sprenom1.toLowerCase().matches("[a-zA-Z0-9]*"+sname.toLowerCase()+"[a-zA-Z0-9]*") || snom1.toLowerCase().matches("[a-zA-Z0-9]*"+sname.toLowerCase()+"[a-zA-Z0-9]*");
-            cond_with_spinner = smotivation1.equals(smotivation2) && (!sniveau2.equals("Tout")? sniveau1.equals(sniveau2):true) && memeInstru && memeMusiqueEcoutee && memeMusiqueJouee;
-            cond_without_spinner = smotivation1.equals(smotivation2) && sniveau1.equals(sniveau2);
+            cond_name = sprenom1.toLowerCase().matches(sname.toLowerCase()+"[a-zA-Z0-9]*") || snom1.toLowerCase().matches(sname.toLowerCase()+"[a-zA-Z0-9]*");
+            cond_with_spinner = smotivation1.equals(smotivation2) && (sniveau2.equals("Tout") || sniveau1.equals(sniveau2)) && memeInstru && memeMusiqueEcoutee && memeMusiqueJouee;
+            //cond_without_spinner = smotivation1.equals(smotivation2) && sniveau1.equals(sniveau2);
 
             // get user's information if match with search name
-            Log.d("INFO RECHERCHE", "[a-zA-Z0-9 *]"+sname.toLowerCase()+"[a-zA-Z0-9 *] "+" : "+sprenom1.toLowerCase()+" "+snom1.toLowerCase()+" : "+" [a-zA-Z0-9 *]"+sname.toLowerCase()+"[a-zA-Z0-9 *]");
-
-            if (cond_with_spinner && cond_name) {
+            if (cond_with_spinner && cond_name && !sname.isEmpty()) {
+                ids.add(one_user.getKey());  // store the key to load selected user data later
                 resultat = sprenom1 + " " + snom1;
                 sort_name.add(resultat);
                 resultat = "Membre depuis le " + String.valueOf(one_user.child("dateMembre").getValue());
@@ -385,50 +407,10 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
                 resultat = smotivation1;
                 resultat += " de niveau " + sniveau1;
                 resultat += " habitant la ville de " + sville1;
+                Log.d("INFO RECHERCHE", "Prenom : "+sprenom1+" Nom : "+snom1);
                 sort_name.add(resultat);
             }
-
-            /*if (cond_name) {
-                resultat = sprenom1 + " " + snom1;
-                sort_name.add(resultat);
-                resultat = "Membre depuis le " + String.valueOf(one_user.child("dateMembre").getValue());
-                sort_name.add(resultat);
-                resultat = smotivation1;
-                resultat += " de niveau " + sniveau1;
-                resultat += " habitant la ville de " + sville1;
-                sort_name.add(resultat);
-            } else {
-
-                // get user's information if match with all search conditions
-                if (cond_with_spinner) {
-                    resultat = sprenom1 + " " + snom1;
-                    sort_all_condition.add(resultat);
-                    resultat = "Membre depuis le " + String.valueOf(one_user.child("dateMembre").getValue());
-                    sort_all_condition.add(resultat);
-                    resultat = smotivation1;
-                    resultat += " de niveau " + sniveau1;
-                    resultat += " habitant la ville de " + sville1;
-                    sort_all_condition.add(resultat);
-                } else {
-
-                    // get user's information if match with 'motivation' and 'niveau'
-                    if (cond_without_spinner) {
-                        resultat = sprenom1 + " " + snom1;
-                        sort_sub_spinner.add(resultat);
-                        resultat = "Membre depuis le " + String.valueOf(one_user.child("dateMembre").getValue());
-                        sort_sub_spinner.add(resultat);
-                        resultat = smotivation1;
-                        resultat += " de niveau " + sniveau1;
-                        resultat += " habitant la ville de " + sville1;
-                        sort_sub_spinner.add(resultat);
-                    }
-                }
-            }*/
         }
-
-        Log.d("INFO RECHERCHE", "Taille name : "+sort_name.size());
-        Log.d("INFO RECHERCHE", "Taille all condition: "+sort_all_condition.size());
-        Log.d("INFO RECHERCHE", "Taille without spinner: "+sort_sub_spinner.size());
 
         // get results by type
         for (int i = 0; i<sort_name.size(); i+=3) {
@@ -437,17 +419,11 @@ public class CriteresMusiciens extends BaseActivity/* implements AdapterView.OnI
             listItemsInfos.add(sort_name.get(i+2));
         }
 
-        /*for (int i = 0; i<sort_all_condition.size(); i+=3) {
-            listItemsNoms.add(sort_all_condition.get(i));
-            listItemsDates.add(sort_all_condition.get(i+1));
-            listItemsInfos.add(sort_all_condition.get(i+2));
-        }
 
-        for (int i = 0; i < sort_sub_spinner.size(); i+=3) {
-            listItemsNoms.add(sort_sub_spinner.get(i));
-            listItemsDates.add(sort_sub_spinner.get(i+1));
-            listItemsInfos.add(sort_sub_spinner.get(i+2));
-        }*/
+        Log.d("INFO RECHERCHE", "Taille name : "+sort_name.size());
+        Log.d("INFO RECHERCHE", "Taille name : "+listItemsNoms.size());
+        Log.d("INFO RECHERCHE", "Taille dates: "+listItemsDates.size());
+        Log.d("INFO RECHERCHE", "Taille infos: "+listItemsInfos.size());
     }
 
     // usesull function

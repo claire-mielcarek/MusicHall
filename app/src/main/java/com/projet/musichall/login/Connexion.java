@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,9 +33,11 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.projet.musichall.BaseActivity;
 import com.projet.musichall.R;
-import com.projet.musichall.profil.ProfilActivity;
+import com.projet.musichall.profile.ProfilActivity;
 
 
 
@@ -45,11 +46,15 @@ public class Connexion extends BaseActivity {
     private static final int RC_SIGN_IN = 10;
     private static final String EMAIL = "email";
     private static final String PUBLIC_PROFILE = "public_profile";
+    private boolean changeData;
+    private boolean mail;
+    private String newData;
     private LoginButton loginButton;
     private SignInButton signButton;
     private CallbackManager callbackManager;
     private FirebaseAuth auth;
     private FirebaseUser user;
+    private DatabaseReference database;
     private Context context;
 
 
@@ -59,8 +64,15 @@ public class Connexion extends BaseActivity {
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 
+        // get the context
+        changeData = getIntent().getBooleanExtra("ChangeData", false);
+        mail = getIntent().getBooleanExtra("Mail", false);
+        if (changeData)
+            newData = getIntent().getStringExtra("Value");
+
         // permet de connaitre l'utilisateur connecte
         auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance().getReference("Users");
         context = this;
         actionBar.setTitle(R.string.signin);
 
@@ -71,6 +83,11 @@ public class Connexion extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        Button inscription = findViewById(R.id.inscription);
+
+        // hide the sign up button
+        if (changeData)
+            inscription.setVisibility(View.INVISIBLE);
 
         // initialisation button connexion facebook
         loginButton = (LoginButton) findViewById(R.id.login_button);
@@ -125,6 +142,8 @@ public class Connexion extends BaseActivity {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("Connexion Facebook", "signInWithCredentialFacebook:success");
                     user = auth.getCurrentUser();
+                    if (changeData)
+                        changeDataFunction(newData);
                     startActivity(new Intent(context, ProfilActivity.class));
                 } else {
                     // If sign in fails, display a message to the user.
@@ -152,6 +171,10 @@ public class Connexion extends BaseActivity {
                 if (task.isSuccessful()){
                     user = auth.getCurrentUser();
                     Log.d("Connexion", "signInWithMail:success : "+user.getUid());
+                    // get all user's data
+
+                    if (changeData)
+                        changeDataFunction(newData);
                     startActivity(new Intent(context, ProfilActivity.class));
                 }else{
                     // debug
@@ -185,12 +208,31 @@ public class Connexion extends BaseActivity {
         dlgAlert.create().show();
     }
 
-    public void connexionWithGoogle(View v){  // Configure Google Sign In
-
-    }
-
-    public void connexionWithFacebook(View v){
-
+    public void changeDataFunction(final String value){
+        if (mail) {
+            user.updateEmail(value).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        database.child(user.getUid()).child("mail").setValue(value);
+                        Log.d("CHANGE DATA", "User email address updated.");
+                    }else{
+                        Log.d("CHANGE DATA", "User email address update failed.");
+                    }
+                }
+            });
+        }else{
+            user.updatePassword(value).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Log.d("CHANGE DATA", "User password updated.");
+                    }else{
+                        Log.d("CHANGE DATA", "User password update failed.");
+                    }
+                }
+            });
+        }
     }
 
     public void connexionWithTwitter(View v){
@@ -219,14 +261,17 @@ public class Connexion extends BaseActivity {
                 assert account != null;
                 AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
                 Log.d("Connexion","Connexion a firebase avec un credential");
-                auth.signInWithCredential(credential)
+                logInFirebase(credential);
+                /*auth.signInWithCredential(credential)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d("Connexion", "signInWithCredentialGoogle:success");
-                                    FirebaseUser user = auth.getCurrentUser();
+                                    user = auth.getCurrentUser();
+                                    if (changeData)
+                                        changeDataFunction(newData);
                                     startActivity(new Intent(context, ProfilActivity.class));
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -234,7 +279,7 @@ public class Connexion extends BaseActivity {
                                     Toast.makeText(context, "Authentication Failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        });
+                        });*/
             }catch (ApiException e){
                 Log.w("Connexion", "Connexion Google failed", e);
             }

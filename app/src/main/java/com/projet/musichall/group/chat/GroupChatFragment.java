@@ -17,7 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class GroupChatFragment extends Fragment {ArrayList<Post> listItems = new ArrayList<>();
+public class GroupChatFragment extends Fragment {
+    ArrayList<Post> listItems = new ArrayList<>();
     ChatAdapter adapter;
     ListView list;
     View current_view;

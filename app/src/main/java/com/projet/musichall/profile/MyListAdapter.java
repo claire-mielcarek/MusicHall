@@ -1,12 +1,10 @@
-package com.projet.musichall.profil;
+package com.projet.musichall.profile;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.projet.musichall.R;
 
@@ -32,7 +30,6 @@ public class MyListAdapter extends BaseAdapter {
 
         if (convertView == null){
             list = new View(context);
-
             // get layout from mobile.xml
             list = inflater.inflate(R.layout.simple_list_view, null);
 

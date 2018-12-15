@@ -16,8 +16,8 @@
         android:radius="0dp"
         />
 
-     <solid
-         android:color="#AA0000"
-         />
+    <solid
+        android:color="#00AA00"
+        />
 
 </shape>

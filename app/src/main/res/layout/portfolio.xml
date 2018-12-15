@@ -1,41 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/portfolio"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#999999"
-    android:layout_weight="1">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/titre_folio"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:paddingBottom="20dp"
-        android:text="Portfolio"/>
+        android:layout_weight="1">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="40dp"
-        android:layout_below="@+id/titre_folio"
-        android:background="@drawable/recyclerbg"
-        android:scrollbars="horizontal"
-        />
+        <!--TextView
+            android:id="@+id/titre_folio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:text="Portfolio"/-->
 
-    <ImageButton
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignBottom="@+id/recycler"
-        android:layout_alignEnd="@+id/recycler"
-        android:layout_alignRight="@+id/recycler"
-        android:background="@drawable/addbg"
-        android:contentDescription="Ajouter un element au portfolio"
-        android:src="@drawable/ic_add"
-        android:tint="@android:color/black" />
+        <GridView
+            android:id="@+id/grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:scrollbars="vertical"
+            android:numColumns="4"
+            android:verticalSpacing="3dp"
+            android:horizontalSpacing="3dp"
+            android:gravity="center"
+            />
 
-</RelativeLayout>
+            <!--android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                /-->
+
+    </LinearLayout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="4">
+
+        <ImageButton
+            android:id="@+id/add_mult"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/addbg"
+            android:contentDescription="Ajouter un element au portfolio"
+            android:src="@drawable/ic_add" />
+    </LinearLayout>
+
+</LinearLayout>

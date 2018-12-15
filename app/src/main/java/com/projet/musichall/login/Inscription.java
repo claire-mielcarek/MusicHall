@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -26,11 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.projet.musichall.BaseActivity;
 import com.projet.musichall.MainActivity;
 import com.projet.musichall.R;
-import com.projet.musichall.profil.ProfilActivity;
-
-import java.util.Date;
-
-
 
 
 public class Inscription extends BaseActivity {
@@ -144,7 +138,7 @@ public class Inscription extends BaseActivity {
                             startActivity(new Intent(context, MainActivity.class));
                         }
                     }else{
-                        Log.d("InscriptionMail", String.valueOf(task.getException()));// probleme lors de la creation du compte
+                        Log.d("InscriptionMail", String.valueOf(task.getException()));    // probleme lors de la creation du compte
                         ErrorDetected(0);
                     }
                 }
