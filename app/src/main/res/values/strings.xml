@@ -45,6 +45,91 @@
     <string name="nom_instrument">Nom_instrument</string>
     <string name="default_text">Default text</string>
 
+    <string name="discussions">Discussions</string>
+    <string name="rechercheTu">Qui recherches-tu?</string>
+    <string name="unGroupe">Un groupe</string>
+    <string name="desMusiciens">Des musiciens</string>
+
+    <string name="musicHall">MusicHall</string>
+    <string name="google">Google</string>
+    <string name="twitter">Twitter</string>
+    <string name="adresse_mail">Adresse mail</string>
+    <string name="adresse_mail2">Adresse mail           : </string>
+    <string name="mdp">Mot de passe</string>
+    <string name="mdpLong">Mot de Passe          : </string>
+    <string name="fauxMdp">*********</string>
+    <string name="connecter">Connecter</string>
+    <string name="inscrire">S\'inscrire</string>
+    <string name="connexion">Connexion</string>
+    <string name="déconnexion">Déconnexion</string>
+
+    <string name="imageDePresentation">Image de présentation</string>
+
+    <string name="votreMessage">Votre message</string>
+
+    <string name="photoDeProfil">Photo de profil</string>
+    <string name="prenomIci">Prénom ici</string>
+    <string name="nomIci">Nom ici</string>
+    <string name="informations">Informations</string>
+    <string name="informationsPrive">Informations privées</string>
+    <string name="informationsPublic">Informations public</string>
+    <string name="ville">Ville             : </string>
+    <string name="saintDenis">Saint-denis</string>
+
+    <string name="niveau">Niveau        : </string>
+    <string name="débutant">Débutant</string>
+    <string name="motivation">Motivation  : </string>
+    <string name="motiv">Motivation</string>
+    <string name="amateur">Amateur</string>
+    <string name="instruments">Instruments</string>
+    <string name="listenedMusicalStyles">Listened musical styles</string>
+    <string name="playedMusicalStyles">Played musical styles</string>
+    <string name="portfolio">Portfolio</string>
+    <string name="startConversation">Start conversation</string>
+
+    <string name="inscription">Inscription</string>
+    <string name="confirmMdp">Confirmation mot de passe</string>
+    <string name="informationSup">Informations supplémentaires</string>
+    <string name="prenom">prenom</string>
+    <string name="nom">nom</string>
+    <string name="date_de_naissance">Date de naissance  : </string>
+    <string name="pasDeDate">Pas de date de naissance</string>
+    <string name="formatDate">jj/mm/aaaa</string>
+    <string name="genre"> Genre          : </string>
+    <string name="femme">Femme</string>
+    <string name="homme">Homme</string>
+    <string name="inconnu">Inconnu</string>
+    <string name="professionnel">Professionnel</string>
+
+    <string name="ajoutElemPortfo">Ajouter un element au portfolio</string>
+    <string name="exampleMail">example@gmail.com</string>
+    <string name="changerMail">Changer votre adresse mail</string>
+    <string name="changerdeMail">Changement d\'adresse email</string>
+    <string name="changerMdp">Changer votre mot de passe</string>
+    <string name="changerdeMdp">Changement de mot de passe</string>
+    <string name="membreDepuis">Membre depuis      : </string>
+
+    <string name="Instruments_pratique">Instruments pratiqués</string>
+    <string name="genresEcoutes">Genres musicals écoutés</string>
+    <string name="genresEcoute">Genre écouté</string>
+    <string name="genresJoue">Genre joué</string>
+    <string name="genresJoues">Genres musicals joués</string>
+
+    <string name="nom_complet">Nom complet</string>
+    <string name="dateMembre">Date de membre</string>
+    <string name="amateurNivInter">Amateur de niveau Intermediaire</string>
+    <string name="niv">Niveau</string>
+    <string name="distance">A quelle distance ?</string>
+    <string name="zeroKm">0 km</string>
+    <string name="textDefault">Default Text</string>
+    <string name="pleaseWait">Please wait …</string>
+    <string name="intermédiaire">Intermédiaire</string>
+    <string name="avancé">Avancé</string>
+    <string name="expert">Expert</string>
+    <string name="maitre">Maître</string>
+
+
+
     <string-array name="instruments">
         <item name="batterie">Batterie</item>
         <item name="Cajon">Cajon</item>
@@ -117,7 +202,7 @@
     <string-array name="niveaux">
         <item name="Debutant">Débutant</item>
         <item name="Intermediaire">Intermediaire</item>
-        <item name="Avance">Avance</item>
+        <item name="Avance">Avancé</item>
         <item name="Expert">Expert</item>
         <item name="Maitre">Maître</item>
     </string-array>

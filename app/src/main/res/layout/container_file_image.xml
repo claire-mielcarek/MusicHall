@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        android:contentDescription="Image de presentation"/>
+        android:contentDescription="@string/imageDePresentation"/>
 
     <!--VideoView
         android:id="@+id/video"

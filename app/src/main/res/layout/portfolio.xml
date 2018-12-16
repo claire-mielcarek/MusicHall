@@ -55,7 +55,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@drawable/addbg"
-            android:contentDescription="Ajouter un element au portfolio"
+            android:contentDescription="@string/ajoutElemPortfo"
             android:src="@drawable/ic_add" />
     </LinearLayout>
 

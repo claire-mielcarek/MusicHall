@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/text_recherche"
+            android:text="@string/rechercheTu"
             android:textSize="30dp"/>
     </LinearLayout>
 
@@ -33,7 +33,7 @@
             android:id="@+id/buttonGroupes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/groupes"
+            android:hint="@string/unGroupe"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
             android:paddingLeft="10dp"
@@ -51,7 +51,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_below="@+id/buttonGroupes"
-            android:hint="@string/musiciens"
+            android:hint="@string/desMusiciens"
             android:textSize="20dp"
             style="@style/DefaultButton"/>
     </LinearLayout>

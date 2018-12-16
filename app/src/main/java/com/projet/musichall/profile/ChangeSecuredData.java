@@ -57,13 +57,13 @@ public class ChangeSecuredData extends BaseActivity {
 
 
         if (mail) {
-            titre.setText("Changement d'adresse email");
+            titre.setText(R.string.changerdeMail);
             mdp.setHint("Nouvelle adresse mail");
             mdp.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
             mdp_confirm.setHint("Confirmation de l'adresse");
             mdp_confirm.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         }else{
-            titre.setText("Changement de mot de passe");
+            titre.setText(R.string.changerdeMdp);
             mdp.setHint("Nouveau mot de passe");
             mdp_confirm.setHint("Confirmation du mot de passe");
         }

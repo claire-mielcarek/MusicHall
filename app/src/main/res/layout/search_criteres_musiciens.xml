@@ -27,7 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Instrument"
+                    android:text="@string/instruments"
                     />
 
                 <Spinner
@@ -51,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Niveau"
+                    android:text="@string/niv"
                     />
 
                 <Spinner
@@ -75,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Motivation"
+                    android:text="@string/motiv"
                     />
 
                 <RadioGroup
@@ -91,13 +91,13 @@
                         android:id="@+id/amateur"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Amateur"/>
+                        android:text="@string/amateur"/>
 
                     <RadioButton
                         android:id="@+id/professionel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Professionel"/>
+                        android:text="@string/professionnel"/>
 
                 </RadioGroup>
 
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Genre écouté"
+                    android:text="@string/genresEcoute"
                     />
 
                 <Spinner
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Genre joué"
+                    android:text="@string/genresJoue"
                     />
 
                 <Spinner
@@ -171,7 +171,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="A quelle distance ?"
+                        android:text="@string/distance"
                         />
 
                     <SeekBar
@@ -187,7 +187,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="0 km"
+                    android:text="@string/zeroKm"
                     />
             </LinearLayout>
 

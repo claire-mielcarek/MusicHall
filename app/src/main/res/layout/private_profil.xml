@@ -28,7 +28,7 @@
                             android:src="@drawable/ic_profil"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="3"
-                            android:contentDescription="Photo de profil"/>
+                            android:contentDescription="@string/photoDeProfil"/>
 
 
                         <LinearLayout
@@ -46,7 +46,7 @@
                                     android:paddingEnd="15dp"
                                     android:textSize="25sp"
                                     android:textStyle="bold"
-                                    android:text="Prénom ici"/>
+                                    android:text="@string/prenomIci"/>
 
                                 <TextView
                                     android:id="@+id/nom"
@@ -56,7 +56,7 @@
                                     android:paddingStart="15dp"
                                     android:paddingEnd="15dp"
                                     android:textSize="13sp"
-                                    android:text="Nom ici"/>
+                                    android:text="@string/nomIci"/>
 
                         </LinearLayout>
                 </LinearLayout>
@@ -70,7 +70,7 @@
                     android:layout_marginTop="15dp"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:text="Informations privées"/>
+                    android:text="@string/informationsPrive"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -90,7 +90,7 @@
                                     android:id="@+id/mail"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Adresse mail           : "
+                                    android:text="@string/adresse_mail2"
                                     android:textSize="13sp" />
 
                                 <TextView
@@ -99,7 +99,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginStart="10dp"
-                                    android:text="example@gmail.com"
+                                    android:text="@string/exampleMail"
                                     android:textSize="13sp" />
 
                                 <com.github.siyamed.shapeimageview.CircularImageView
@@ -108,7 +108,7 @@
                                     android:layout_height="25dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginStart="10dp"
-                                    android:contentDescription="Changer votre adresse mail"
+                                    android:contentDescription="@string/changerMail"
                                     android:src="@android:drawable/ic_menu_edit" />
 
                         </LinearLayout>
@@ -126,7 +126,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textSize="13sp"
-                                        android:text="Mot de Passe          : "/>
+                                        android:text="@string/mdpLong"/>
 
                                     <TextView
                                         android:id="@+id/editmdp"
@@ -135,7 +135,7 @@
                                         android:layout_marginLeft="10dp"
                                         android:layout_marginStart="10dp"
                                         android:textSize="13sp"
-                                        android:text="*********"/>
+                                        android:text="@string/fauxMdp"/>
 
                                     <com.github.siyamed.shapeimageview.CircularImageView
                                         android:id="@+id/edbutp"
@@ -144,7 +144,7 @@
                                         android:layout_marginLeft="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_gravity="center"
-                                        android:contentDescription="Changer votre mot de passe"
+                                        android:contentDescription="@string/changerMdp"
                                         android:src="@android:drawable/ic_menu_edit" />
                             </LinearLayout>
 
@@ -160,7 +160,7 @@
                                     android:id="@+id/entetenaissance"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Date de naissance : "
+                                    android:text="@string/date_de_naissance"
                                     android:textSize="13sp" />
 
                                 <TextView
@@ -170,7 +170,7 @@
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginStart="10dp"
                                     android:textSize="14sp"
-                                    android:text="Pas de date de naissance"
+                                    android:text="@string/pasDeDate"
                                     />
                         </LinearLayout>
 
@@ -187,7 +187,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textSize="13sp"
-                                    android:text="Membre depuis      : "/>
+                                    android:text="@string/membreDepuis"/>
 
                                 <TextView
                                     android:id="@+id/dateinscription"
@@ -214,7 +214,7 @@
                             android:paddingStart="7dp"
                             android:paddingEnd="7dp"
                             android:background="@drawable/button_connexion"
-                            android:text="Deconnexion"/>
+                            android:text="@string/déconnexion"/>
                 </LinearLayout>
 
         </LinearLayout>

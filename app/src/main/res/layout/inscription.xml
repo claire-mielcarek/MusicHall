@@ -13,7 +13,7 @@
         android:gravity="center_horizontal"
         android:textStyle="bold"
         android:textSize="40dp"
-        android:text="Inscription"/>
+        android:text="@string/inscription"/>
 
 
     <LinearLayout
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_bg"
                 android:inputType="text"
-                android:hint="Adresse mail"/>
+                android:hint="@string/adresse_mail"/>
 
             <EditText
                 android:id="@+id/mdp"
@@ -45,7 +45,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_bg"
                 android:inputType="textPassword"
-                android:hint="Mot de passe"/>
+                android:hint="@string/mdp"/>
 
             <EditText
                 android:id="@+id/mdp_confirm"
@@ -54,7 +54,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edit_text_bg"
                 android:inputType="textPassword"
-                android:hint="Confirmation mot de passe"/>
+                android:hint="@string/confirmMdp"/>
 
         </LinearLayout>
 
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_connexion"
                 android:onClick="try_inscription"
-                android:text="S'inscrire"/>
+                android:text="@string/inscrire"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -82,7 +82,7 @@
         android:gravity="center_horizontal"
         android:textStyle="bold"
         android:textSize="17sp"
-        android:text="Informations supplémentaires"/>
+        android:text="@string/informationSup"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -109,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_bg"
                         android:inputType="text"
-                        android:hint="Prénom"/>
+                        android:hint="@string/prenom"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -124,7 +124,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         android:background="@drawable/edit_text_bg"
-                        android:hint="Nom"/>
+                        android:hint="@string/nom"/>
 
                 </LinearLayout>
 
@@ -143,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
                     android:textSize="14sp"
-                    android:text="Date de naissance  : "/>
+                    android:text="@string/date_de_naissance"/>
 
 
                 <EditText
@@ -154,7 +154,7 @@
                     android:layout_marginStart="10dp"
                     android:background="@drawable/edit_text_bg"
                     android:inputType="date"
-                    android:hint="jj/mm/aaaa"/>
+                    android:hint="@string/formatDate"/>
 
             </LinearLayout>
 
@@ -170,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        android:text="Genre            : "/>
+                        android:text="@string/genre"/>
 
                     <RadioGroup
                         android:id="@+id/editgenre"
@@ -185,7 +185,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:buttonTint="#555555"
-                            android:text="Femme"
+                            android:text="@string/femme"
                             android:textSize="12sp"/>
 
                         <RadioButton
@@ -193,7 +193,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:buttonTint="#555555"
-                            android:text="Inconnu"
+                            android:text="@string/inconnu"
                             android:textSize="12sp"/>
 
                         <RadioButton
@@ -201,7 +201,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:buttonTint="#555555"
-                            android:text="Homme"
+                            android:text="@string/homme"
                             android:textSize="12sp"/>
 
                     </RadioGroup>
@@ -219,7 +219,7 @@
                     android:id="@+id/niveau"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Niveau          : "
+                    android:text="@string/niveau"
                     android:textSize="14sp" />
 
                 <LinearLayout
@@ -234,7 +234,7 @@
                         android:layout_weight="2"
                         android:gravity="center"
                         android:textSize="14sp"
-                        android:text="Débutant"
+                        android:text="@string/débutant"
                         />
 
 
@@ -262,7 +262,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:text="Motivation  : "/>
+                    android:text="@string/motivation"/>
 
                 <RadioGroup
                     android:id="@+id/choixmotivation"
@@ -277,14 +277,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="#444444"
-                        android:text="Amateur"/>
+                        android:text="@string/amateur"/>
 
                     <RadioButton
                         android:id="@+id/radiop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="#444444"
-                        android:text="Professionel"/>
+                        android:text="@string/professionnel"/>
                 </RadioGroup>
 
             </LinearLayout>

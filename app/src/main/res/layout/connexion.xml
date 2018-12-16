@@ -13,7 +13,7 @@
         android:layout_gravity="center_horizontal"
         android:textSize="40sp"
         android:src="@drawable/music_hall_logo"
-        android:text="MusicHall"/>
+        android:text="@string/musicHall"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:id="@+id/sign_google"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Google"
+                android:text="@string/google"
                 />
 
             <com.facebook.login.widget.LoginButton
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="connexionWithTwitter"
-            android:text="Twitter"
+            android:text="@string/twitter"
             />
 
     </LinearLayout>
@@ -79,7 +79,7 @@
                 android:background="@drawable/edit_text_bg"
                 android:gravity="left"
                 android:inputType="text"
-                android:hint="Adresse mail"/>
+                android:hint="@string/adresse_mail"/>
             <EditText
                 android:id="@+id/mdp"
                 android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                 android:background="@drawable/edit_text_bg"
                 android:gravity="left"
                 android:inputType="textPassword"
-                android:hint="Mot de passe"/>
+                android:hint="@string/mdp"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                 android:paddingEnd="7dp"
                 android:background="@drawable/button_connexion"
                 android:onClick="connexionWithMail"
-                android:text="Se connecter"/>
+                android:text="@string/connecter"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -115,7 +115,7 @@
             android:paddingEnd="7dp"
             android:background="@drawable/button_connexion"
             android:onClick="inscription"
-            android:text="S'inscrire"/>
+            android:text="@string/inscrire"/>
 
     </LinearLayout>
 

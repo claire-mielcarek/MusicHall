@@ -152,7 +152,8 @@ public class DiscussionActivity extends BaseActivity {
                 }*/
 
 
-                // On récupère le nom des interlocuteur avec qui le user courant parle à l'aide de la clef
+                // On récupère le nom des interlocuteur avec qui le user courant parle à l'aide de la clef de la discussion
+                //Sous forme PrenomSender1_NomSender1-PrenomReceveur1_NomReceveur2
                 for (DataSnapshot discussion : discussionOfUser.getChildren()) {
                     if (discussion.getKey().split("-")[0].equals(prenomSender + ("_") + nomSender)) {
                         nameDiscussion.add(discussion.getKey().split("-")[1].replace('_',' '));
