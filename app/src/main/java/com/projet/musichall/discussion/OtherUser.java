@@ -20,28 +20,30 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.projet.musichall.profile.IChangeUserData;
 import com.projet.musichall.profile.IResultConnectUser;
+import com.projet.musichall.profile.User;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 
-public class OtherUser {
+public class OtherUser implements Serializable{
     // admin data
     private String uid;
     private boolean loadingFinished;
     private boolean first;
 
     // Firebase reference
-    private DatabaseReference database;
-    private StorageReference storage;
+    private transient DatabaseReference database;
+    private transient StorageReference storage;
 
     // public data
     private String nom;
     private String prenom;
-    private Bitmap avatar;
+    private transient Bitmap avatar;
     private String ville;
     private String genre;
     private int niveau;
@@ -55,7 +57,7 @@ public class OtherUser {
 
     // portfolio
     private List<String> pathImages;
-    private List<Bitmap> images;
+    private transient List<Bitmap> images;
     private List<String> pathVideos;
     //private List<Bitmap> videos;
     private List<String> pathSounds;
@@ -215,7 +217,7 @@ public class OtherUser {
 
         // get Bitmap
         for (int i = 0; i<pathImages.size(); i++) {
-            DownloadPortfolioImages(images, pathImages.get(i), (i == pathImages.size()-1), interfaceForResult);
+            DownloadPortfolioImages(images, pathImages.get(i), i, (i == pathImages.size()-1), interfaceForResult);
         }
 
         Log.d("GET DATA USER", "Image portfolios OK");
@@ -228,7 +230,7 @@ public class OtherUser {
     }
 
     // download image to user's portfolio
-    private void DownloadPortfolioImages(final List<Bitmap> imagesToShow, String pictName, final boolean last, final IResultConnectUser interfaceForResult){    // get the images of portfolio
+    private void DownloadPortfolioImages(final List<Bitmap> imagesToShow, String pictName, final int position, final boolean last, final IResultConnectUser interfaceForResult){    // get the images of portfolio
         final File localFile;
         StorageReference ref = storage.child("images/portfolio/"+uid+"/"+pictName);
 
@@ -239,7 +241,10 @@ public class OtherUser {
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     Log.d("GET PORTFOLIO IMAGE", "Get portfolio image : success");
                     Bitmap bmp = BitmapFactory.decodeFile(localFile.getPath());
-                    imagesToShow.add(bmp);
+                    bmp = Bitmap.createScaledBitmap(bmp, User.WIDTH_IMAGE_LOW, User.HEIGHT_IMAGE_LOW, false);
+                    if (position < imagesToShow.size())   // to keep the order of images
+                        imagesToShow.add(position, bmp);
+                    else imagesToShow.add(imagesToShow.size(), bmp);
                     loadingFinished = last;  // notify that Firebase finished to load main data
                     if (last)
                         interfaceForResult.OnSuccess();

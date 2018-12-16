@@ -50,20 +50,14 @@ public class MyGridAdapter extends BaseAdapter/*RecyclerView.Adapter<MyRecyclerA
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (convertView == null) {
-            multimedia = new View(context);
+        // get multimedia container
+        multimedia = inflater.inflate(R.layout.container_file_image, null);
 
-            // get multimedia container
-            multimedia = inflater.inflate(R.layout.container_file_image, null);
-
-            if (multimedia != null) {
-                // set image or video or sound
-                imageView = multimedia.findViewById(R.id.image);
-                imageView.setImageBitmap(images.get(position));
-                imageView.setVisibility(View.VISIBLE);
-            }
-        } else {
-            multimedia = convertView;
+        if (multimedia != null) {
+            // set image or video or sound
+            imageView = multimedia.findViewById(R.id.image);
+            imageView.setImageBitmap(images.get(position));
+            imageView.setVisibility(View.VISIBLE);
         }
 
         return multimedia;
@@ -72,53 +66,5 @@ public class MyGridAdapter extends BaseAdapter/*RecyclerView.Adapter<MyRecyclerA
     public List<Bitmap> getImages() {
         return images;
     }
-
-    /*public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public ImageView image;
-        /*public VideoView video;
-        public MediaController son;
-
-        public MyViewHolder(View v) {
-            super(v);
-
-            this.image = v.findViewById(R.id.image);
-            /*this.video = v.findViewById(R.id.video);
-            this.son = v.findViewById(R.id.son);
-        }
-    }
-
-
-    public MyRecyclerAdapter(List<Bitmap> images/*, List<MediaStore.Video> videos, List<MediaActionSound> sons){
-        super();
-
-        this.images = images;
-        /*this.sons = sons;
-        this.videos = videos;
-    }
-
-
-    @NonNull
-    @Override
-    public MyRecyclerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.container_file_image, parent, false);
-
-        return new MyViewHolder(v);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
-        // choisir entre une image, une video ou une piste audio
-        holder.image.setImageBitmap(images.get(position));
-        holder.image.setVisibility(View.VISIBLE);
-        //holder.video.
-        //holder.son.
-    }
-
-
-    @Override
-    public int getItemCount() {
-        return images.size()/*+videos.size()+sons.size();
-    }*/
 
 }

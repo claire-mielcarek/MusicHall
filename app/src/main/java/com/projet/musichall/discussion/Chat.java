@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -45,49 +46,51 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+
 
 public class Chat extends BaseActivity {
-
-    TextView nom_interlocuteur;
-    TextView prenom_interlocuteur;
-    ListView listViewMessages;
-    EditText messageEnvoyer;
-
-
-    FloatingActionButton envoyer;
-
+    private TextView nom_interlocuteur;
+    private TextView prenom_interlocuteur;
+    private ListView listViewMessages;
+    private EditText messageEnvoyer;
+    private FloatingActionButton envoyer;
     private DatabaseReference data;
-    FirebaseUser user;
-
+    private FirebaseUser user;
 
     //Array list
-    ArrayList<String> listItems = new ArrayList<>();
-    ArrayAdapter<String> adapter;
+    private AdapterMessage adapter;
 
     private static int SIGN_IN_REQUEST_CODE = 1;
     //private FirebaseListAdapter<MessageChat> adapter;
-    RelativeLayout activity_main;
+    private RelativeLayout activity_main;
 
-    String nomUser;
-    String nomInterlocuteur;
-    String prenomInterlocuteur;
-    String[] chat;
-    Context context;
+    private String nomUser;
+    private String nomInterlocuteur;
+    private String prenomInterlocuteur;
+    private List<String> chat;
+    private Context context;
 
     //Pour récupérer la clef du User avec qui la personne parle
-    String keyUser2;
-    ArrayList testchat;
-    String nomSender;
-    String prenomSender;
+    private boolean ok;
+    private String key;
+    private String nomSender;
+    private String prenomSender;
 
-    boolean testDiscussion;
+    private boolean testDiscussion;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.discussion_chat);
 
-        listViewMessages = (ListView)findViewById(R.id.list_of_message);
+        // not passed by onDataChange yet
+        key = "";
+        ok = false;
+
+        listViewMessages = (ListView) findViewById(R.id.list_of_message);
         messageEnvoyer = (EditText) findViewById(R.id.input);
         envoyer = findViewById(R.id.fab);
 
@@ -104,8 +107,7 @@ public class Chat extends BaseActivity {
         Intent intent = getIntent();
 
         // Récupérer les informations de la personne avec qui on communique
-        if (intent!=null){
-            String str = "";
+        if (intent != null){
             if (intent.hasExtra("nom")){
                 nomInterlocuteur= intent.getStringExtra("nom");
                 nom_interlocuteur.setText(nomInterlocuteur);
@@ -114,25 +116,23 @@ public class Chat extends BaseActivity {
                 prenomInterlocuteur = intent.getStringExtra("prenom");
                 prenom_interlocuteur.setText(prenomInterlocuteur);
             }
-
         }
 
 
         Toast.makeText(this,"Vous êtes en discussion avec "+ prenomInterlocuteur, Toast.LENGTH_SHORT).show();
 
         //Fin de la récupération
-
-
-
         data.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                String conversationS, auteur;
 
                 //Récupération de la clef de la personne avec qui l'user parle.
-                String userId = dataSnapshot.child("Users").child(user.getUid()).getKey();
+                String userId = user.getUid();
                 DataSnapshot usersData = dataSnapshot.child("Users");
-                for (DataSnapshot user: usersData.getChildren()){
+                nomSender = String.valueOf(usersData.child(user.getUid()).child("nom").getValue());
+                prenomSender = String.valueOf(usersData.child(user.getUid()).child("prenom").getValue());
+                /*for (DataSnapshot user: usersData.getChildren()){*/
 
                    //Log.d("nom User" , String.valueOf(user.child("nom").getValue()));
                    //Log.d("nom User" , user.child("nom").getValue());
@@ -144,136 +144,125 @@ public class Chat extends BaseActivity {
                         Log.d("Clef de l'interlocuteur" , keyUser2);
                         }
                         */
-                        if(userId.equals(String.valueOf(user.getKey()))){
-                        nomSender = String.valueOf(user.child("nom").getValue());
-                        prenomSender = String.valueOf(user.child("prenom").getValue());
-                        }
-                }
+                        /*if(userId.equals(String.valueOf(user.getKey()))){*/
+                        /*}
+                }*/
 
                 // On récupère les messages liés à la conversation
-                int count = 0;
                 DataSnapshot discussionData = dataSnapshot.child("conversation");
-
                 for (DataSnapshot discussion : discussionData.getChildren()){
-                    Log.d("on arrive là", discussion.getKey());
+                    /*Log.d("on arrive là", discussion.getKey());
                     Log.d("et on test avec",prenomInterlocuteur +"_" + nomInterlocuteur + "-" +
-                            prenomSender +"_"+ nomSender);
-                    if(discussion.getKey().equals(prenomInterlocuteur +"_" + nomInterlocuteur + "-" +
-                            prenomSender +"_"+ nomSender) || discussion.getKey().equals((prenomSender +"_" + nomSender + "-" +
-                            prenomInterlocuteur +"_"+ nomInterlocuteur))){
+                            prenomSender +"_"+ nomSender);*/
+                    if(discussion.getKey().equals(prenomInterlocuteur +"_" + nomInterlocuteur + "-" + prenomSender +"_"+ nomSender)
+                        || discussion.getKey().equals((prenomSender +"_" + nomSender + "-" + prenomInterlocuteur +"_"+ nomInterlocuteur))){
                         // On récupère les données seulement de la bonne conversation parmis toutes celles de la table
-                        chat = new String[(int)discussion.getChildrenCount()];
+                        chat = new ArrayList<String>();
+
+                        // get the good key
+                        key = discussion.getKey();
+
                         for(DataSnapshot messageDiscussion : discussion.getChildren()) {
-                            chat[count] = String.valueOf(messageDiscussion.child("auteur").getValue());
-                            //chat[count] = String.valueOf(messageDiscussion.child("tempsDuMessage").getValue());
-                            chat[count] += " \n" + String.valueOf(messageDiscussion.child("message").getValue());
-                            Log.d("on a récupére", chat[count]);
-                            count = count + 1;
+                            auteur = String.valueOf(messageDiscussion.child("auteur").getValue());
+                            if (auteur.equals(prenomSender +" "+ nomSender) || auteur.equals(prenomSender +" "+ nomSender+":")){
+                                conversationS = "s,";
+                            }else{
+                                conversationS = "r,";
+                            }
+                            conversationS += auteur + ",";
+                            conversationS += String.valueOf(messageDiscussion.child("tempsDuMessage").getValue())+",";
+                            conversationS += String.valueOf(messageDiscussion.child("message").getValue());
+                            chat.add(conversationS);
+                            //Log.d("on a récupére", chat.get(chat.size()-1));
                         }
                     }
                 }
 
                 if(chat != null) {
-                    listItems = new ArrayList<>(Arrays.asList(chat));
-                    Log.d("on a ça dans la liste", String.valueOf(listItems));
+                    //Log.d("on a ça dans la liste", String.valueOf(chat));
 
-                    //make an array of the objects according to a layout design
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
-                            android.R.layout.simple_list_item_1, android.R.id.text1, chat);
-                    //set the adapter for listview
-
+                    // make an array of the objects according to a layout design
+                    adapter = new AdapterMessage(context, chat);
+                    // set the adapter for listview
                     listViewMessages.setAdapter(adapter);
 
-                    //Pour déplacer la listView directement au dernier message :
-                    listViewMessages.setSelection(listItems.size()-1);
+                    // Pour deplacer la listView directement au dernier message :
+                    listViewMessages.setSelection(chat.size()-1);
 
                     //int height = listViewMessages.getHeight();
                     //listViewMessages.scrollBy(height,);
                 }
 
 
+                // create default key if need
+                if (key.isEmpty()) key = prenomSender +"_" + nomSender + "-" + prenomInterlocuteur +"_"+ nomInterlocuteur;
 
+                // notify that messages can be sent because we have got the key
+                if (!ok)
+                    ok = true;
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w("DatabaseChange", "Failed to read values.", error.toException());
             }
-
-
-
         });
-
-
-
-
 
         envoyer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-
-
-
                 // Ajout de la notion de conversation de l'user avec la personne recherchée
-
-                //String keyUser = data.child("Users").child(user.getUid()).getKey();
-
-                //La clef de la conversation sera le nom interlocuteur + nom user
-
-                if(data.child("conversation").child(prenomInterlocuteur +"_" + nomInterlocuteur + "-" +
+                //String keyUser = data.child("Users").child(user.getUid()).getKey(
+                if (ok) {
+                    Log.d("CREATION DIALOGUE", "Key  " + key);
+                    //La clef de la conversation sera le nom interlocuteur + nom user
+                    //if(data.child("conversation").child(prenomSender +"_" + nomSender + "-" + prenomInterlocuteur +"_"+ nomInterlocuteur).getKey() != null){
+                    /*data.child("conversation").child(prenomInterlocuteur +"_" + nomInterlocuteur + "-" +
                         prenomSender +"_"+ nomSender).getKey().equals(prenomInterlocuteur +"_" + nomInterlocuteur + "-" +
-                        prenomSender +"_"+ nomSender) && data.child("conversation").child(prenomSender +"_" + nomSender + "-" +
-                        prenomInterlocuteur +"_"+ nomInterlocuteur).getKey() == null ){
-                    DatabaseReference newDiscussion = data.child("conversation").child(prenomInterlocuteur +"_" + nomInterlocuteur + "-" +
+                        prenomSender +"_"+ nomSender) && */
+
+                    DatabaseReference newDiscussion = data.child("conversation").child(key).push();
+                    EditText input = (EditText) findViewById(R.id.input);
+
+                    //Placer les éléments d'un message envoyé
+                    newDiscussion.child("message").setValue(input.getText().toString());
+                    newDiscussion.child("auteur").setValue(prenomSender + " " + nomSender);
+                    newDiscussion.child("tempsDuMessage").setValue(android.text.format.DateFormat
+                            .format("dd/MM/yyyy hh:mm", new java.util.Date()).toString());
+
+                    input.setText("");
+                    //newDiscussion.child("interlocuteur1").setValue(keyUser);
+                    //newDiscussion.child("interlocuteur2").setValue(keyUser2);
+                    //}else {
+                    /*DatabaseReference newDiscussion = data.child("conversation").child(prenomInterlocuteur +"_" + nomInterlocuteur + "-" +
                             prenomSender +"_"+ nomSender).push();
 
-                    //+String.valueOf(data.child("Users").child(user.getUid()).child("nom")));
-                    //DatabaseReference userName = data.child("Users").child(user.getUid()).child("nom");
-                    EditText input = (EditText)findViewById(R.id.input);
-
+                    EditText input = (EditText) findViewById(R.id.input);
 
                     //Placer les éléments d'un message envoyé
                     newDiscussion.child("message").setValue(input.getText().toString());
-                    newDiscussion.child("auteur").setValue(prenomSender + nomSender + " :");
-                    newDiscussion.child("tempsDuMessage").setValue(new Date().getTime());
+                    newDiscussion.child("auteur").setValue(prenomSender +" "+ nomSender);
+                    newDiscussion.child("tempsDuMessage").setValue(android.text.format.DateFormat
+                            .format("dd/MM/yyyy hh:mm", new java.util.Date()).toString());
 
                     //newDiscussion.child("interlocuteur1").setValue(keyUser);
                     //newDiscussion.child("interlocuteur2").setValue(keyUser2);
-                    input.setText("");
+                    input.setText("");*/
+                    //}
                 }
-                else {
-                    DatabaseReference newDiscussion = data.child("conversation").child(prenomSender +"_" + nomSender + "-" +
-                            prenomInterlocuteur +"_"+ nomInterlocuteur).push();
-
-                    EditText input = (EditText)findViewById(R.id.input);
-
-
-                    //Placer les éléments d'un message envoyé
-                    newDiscussion.child("message").setValue(input.getText().toString());
-                    newDiscussion.child("auteur").setValue(prenomSender +" "+ nomSender + " :");
-                    newDiscussion.child("tempsDuMessage").setValue(new Date().getTime());
-
-                    //newDiscussion.child("interlocuteur1").setValue(keyUser);
-                    //newDiscussion.child("interlocuteur2").setValue(keyUser2);
-                    input.setText("");
-                }
-
 
             }
         });
 
-
         displayChatMessage();
-
 
     }
 
     private void displayChatMessage(){
 
 
-        listViewMessages = (ListView)findViewById(R.id.list_of_message);
+        //listViewMessages = (ListView)findViewById(R.id.list_of_message);
 
     /*
         Query query = FirebaseDatabase.getInstance().getReference().child("conversation").child("message");
@@ -302,7 +291,7 @@ public class Chat extends BaseActivity {
 
             //}
             */
-        listViewMessages.setOnItemClickListener (new AdapterView.OnItemClickListener(){
+        /*listViewMessages.setOnItemClickListener (new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 
@@ -315,7 +304,7 @@ public class Chat extends BaseActivity {
                         "Position de l'item :" +itemPosition+" Element cliqué : " +itemValue, Toast.LENGTH_LONG)
                         .show();
             }
-        });
+        });*/
 
 
 

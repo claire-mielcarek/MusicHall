@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.projet.musichall">
 
@@ -20,6 +23,7 @@
         </activity>
         <activity android:name=".profile.ProfilActivity"/>
         <activity android:name=".profile.ChangeSecuredData"/>
+        <activity android:name=".profile.ImageWatcher"/>
         <activity android:name=".login.Connexion"/>
         <activity android:name=".login.Inscription"/>
         <activity android:name=".Search.RechercheActivity"/>

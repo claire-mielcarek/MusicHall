@@ -32,14 +32,14 @@ public class ProfilActivity extends BaseActivity {
 
     private ViewPager pager;
     private PagerAdapter adapter;
-    private User user;
+    //private User user;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.waiting);
+        setContentView(R.layout.activity_profil);
         actionBar.setTitle(R.string.profile);
 
         // connect to firebase
@@ -52,50 +52,23 @@ public class ProfilActivity extends BaseActivity {
         pager = null;
 
         if (fireUser != null) {
-            // instantiate a new user
-            user = User.InstantiateUser(User.Auth.MAIL);
-
-            user.attachUserToFirebase(true, new IResultConnectUser() {
-                @Override
-                public void OnSuccess(){  // if operation is a success so show user's informations
-                    Log.d("CRASH", "Bonjour " + fireUser);
-                    // define the real view for the activity
-                    setContentView(R.layout.activity_profil);
-
-                    // get viewpager and set its adapter
-                    pager = findViewById(R.id.viewpager);
-                    adapter = new FragmentSlideAdapter(getSupportFragmentManager());
-                    pager.setAdapter(adapter);
-                }
-
-                @Override
-                public void OnFailed() {
-                    Log.w("DatabaseChange", "Failed to read values.");
-                    // TODO message + return to connection
-                }
-             });
+            pager = findViewById(R.id.viewpager);
+            adapter = new FragmentSlideAdapter(getSupportFragmentManager());
+            pager.setAdapter(adapter);
         }else{
             // if not connected we redirect to connexion
             startActivity(new Intent(this, Connexion.class));
         }
-
-        // get all user's data
-        /*database.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("DatabaseChange", "Failed to read values.", databaseError.toException());
-            }
-        });*/
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 }
 

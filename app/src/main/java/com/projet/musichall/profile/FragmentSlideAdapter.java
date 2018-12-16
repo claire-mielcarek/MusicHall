@@ -1,8 +1,10 @@
 package com.projet.musichall.profile;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 
 public class FragmentSlideAdapter  extends FragmentPagerAdapter {
@@ -30,7 +32,6 @@ public class FragmentSlideAdapter  extends FragmentPagerAdapter {
     public int getCount() {
         return NUM_PAGES;
     }
-
 
     @Override
     public CharSequence getPageTitle(int position) {

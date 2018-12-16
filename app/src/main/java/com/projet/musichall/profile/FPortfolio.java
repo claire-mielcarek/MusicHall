@@ -15,11 +15,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -28,10 +32,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.projet.musichall.R;
+import com.projet.musichall.Utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 public class FPortfolio extends Fragment implements IChangeUserData {
@@ -93,6 +101,23 @@ public class FPortfolio extends Fragment implements IChangeUserData {
 
         // fill data for portfolio
         fillDataFromUser();
+
+        // implement to watch an image
+        portfolio.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                watchImage(user.getPathImages().get(position));
+            }
+        });
+
+        // implement to delete an image
+        portfolio.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                MyRemoveButton(position);
+                return true;
+            }
+        });
     }
 
     private void fillDataFromUser(){
@@ -102,9 +127,16 @@ public class FPortfolio extends Fragment implements IChangeUserData {
     }
 
 
+    private void watchImage(String name){
+        String path = "images/portfolio/"+firebaseUser.getUid()+"/"+name;
+        Intent i = new Intent(getContext(), ImageWatcher.class);
+        i.putExtra("path", path);
+
+        startActivity(i);
+    }
+
     public void MyButtonAdd(String titre) {
         final String[] choix = new String[]{"Image", "Vidéo", "Son"};
-        final AlertDialog box;
         final AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getContext());
         dlgAlert.setTitle(titre);
         dlgAlert.setIcon(android.R.drawable.ic_menu_add);
@@ -134,6 +166,48 @@ public class FPortfolio extends Fragment implements IChangeUserData {
         dlgAlert.create().show();
     }
 
+    public void MyRemoveButton(final int position) {
+        final AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getContext());
+        dlgAlert.setTitle("Do you really want to delete this image?");
+        dlgAlert.setIcon(android.R.drawable.ic_dialog_alert);
+
+        dlgAlert.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String tmp_name;
+                List<String> paths;
+                final DatabaseReference ref;
+                StorageReference store;
+
+                // change local data
+                ((MyGridAdapter) portfolio.getAdapter()).getImages().remove(position);
+                ((BaseAdapter) portfolio.getAdapter()).notifyDataSetChanged();
+
+                // change data on firebase
+                ref = database.child("Users").child(firebaseUser.getUid()).child("portfolio").child("images");
+                store = storageReference.child("images/portfolio/").child(firebaseUser.getUid());
+                if (ref.getKey() != null) {
+                    tmp_name = user.getPathImages().get(position);
+                    ref.child(user.getKeyImages().get(position)).removeValue();
+                    user.getKeyImages().remove(position);
+                    user.getPathImages().remove(position);
+                    if (!user.getPathImages().contains(tmp_name)){
+                        store.child(tmp_name).delete();
+                    }
+                }
+            }
+        });
+
+        dlgAlert.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        dlgAlert.create().show();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -146,11 +220,9 @@ public class FPortfolio extends Fragment implements IChangeUserData {
             }catch (FileNotFoundException e){
                 e.printStackTrace();
             }
-        }else if (requestCode == RC_VIDEO && resultCode == Activity.RESULT_OK){
+        }/*else if (requestCode == RC_VIDEO && resultCode == Activity.RESULT_OK){
 
-
-
-        }
+        }*/
     }
 
     private void UploadPortfolioImages(Bitmap bmp, final String name){    // add image to user's portfolio
@@ -161,18 +233,20 @@ public class FPortfolio extends Fragment implements IChangeUserData {
 
         ref = storageReference.child("images/portfolio/"+firebaseUser.getUid()+"/"+name);
 
-        bmp_tmp = Bitmap.createScaledBitmap(bmp, 256, 256, false);
+        bmp_tmp = Bitmap.createScaledBitmap(bmp, User.WIDTH_IMAGE_HIGH, User.HEIGHT_IMAGE_HIGH, false);
         arrayData = new ByteArrayOutputStream();
         bmp_tmp.compress(Bitmap.CompressFormat.JPEG, 100, arrayData);
         data = arrayData.toByteArray();
         ref.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Bitmap imageToShow;
                 database.child("Users").child(firebaseUser.getUid()).child("portfolio").child("images").push().setValue(name);
-                ((MyGridAdapter) portfolio.getAdapter()).getImages().add(bmp_tmp);   // add image to the grid view
+                imageToShow = Bitmap.createScaledBitmap(bmp_tmp, User.WIDTH_IMAGE_LOW, User.HEIGHT_IMAGE_LOW, false);
+                user.getImages().add(imageToShow);    // add image to user data and grid view at the same time
+                //((MyGridAdapter) portfolio.getAdapter()).getImages().add(bmp_tmp);
                 ((MyGridAdapter) portfolio.getAdapter()).notifyDataSetChanged();   // refresh the adapter
                 user.getPathImages().add(name);
-                user.getImages().add(bmp_tmp);
                 Log.d("SET PORTFOLIO IMAGE", "Set image portfolio : success  nombre bytes : "+taskSnapshot.getTotalByteCount());
             }
         }).addOnFailureListener(new OnFailureListener() {

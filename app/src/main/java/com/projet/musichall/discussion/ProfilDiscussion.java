@@ -8,9 +8,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,36 +30,38 @@ import com.projet.musichall.BaseActivity;
 import com.projet.musichall.R;
 import com.projet.musichall.Search.CriteresMusiciens;
 import com.projet.musichall.ShouldLogin;
+import com.projet.musichall.Utils;
 import com.projet.musichall.profile.IResultConnectUser;
+import com.projet.musichall.profile.ImageWatcher;
 import com.projet.musichall.profile.MyGridAdapter;
 import com.projet.musichall.profile.MyListAdapter;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 
 
 public class ProfilDiscussion extends BaseActivity {
     private DatabaseReference data;
-    FirebaseUser user;
-    CircularImageView avatar;
-    TextView prenom;
-    TextView nom;
-    TextView ville;
-    TextView genre;
-    TextView niveau;
-    TextView motivation;
-    ListView instrus;
-    ListView lstyles;
-    ListView pstyles;
-    GridView portfolio;
-    Button lancerDiscussion;
+    private FirebaseUser user;
+    private LinearLayout parentInstru;
+    private LinearLayout parentLstyles;
+    private LinearLayout parentPstyles;
+    private CircularImageView avatar;
+    private TextView prenom;
+    private TextView nom;
+    private TextView ville;
+    private TextView genre;
+    private TextView niveau;
+    private TextView motivation;
+    private GridView portfolio;
+    private Button lancerDiscussion;
 
-    private Intent intent;
-    Context context;
-    String nomS;
-    String prenomS;
-    String idS;
+    private Context context;
+    private String nomS;
+    private String prenomS;
+    private String idS;
 
     private OtherUser otherUser;
 
@@ -64,35 +69,47 @@ public class ProfilDiscussion extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.waiting);
+        Intent intent;
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         context = this;
         intent = getIntent();
-
-        // get user data
         idS = intent.getStringExtra("id");
-        otherUser = new OtherUser(idS);
-        otherUser.attachUserToFirebase(true, new IResultConnectUser() {
-            @Override
-            public void OnSuccess() {
-                setContentView(R.layout.discussion_profil);
-                getAllView();
-                fillPage();
-            }
 
-            @Override
-            public void OnFailed() {
-                // show message
-            }
-        });
+        if (savedInstanceState != null) {
+            otherUser = (OtherUser) savedInstanceState.getSerializable("otherUser");
+            setContentView(R.layout.discussion_profil);
+            getAllView();
+            fillPage();
+        }else{
+            // get user data
+            otherUser = new OtherUser(idS);
+            otherUser.attachUserToFirebase(true, new IResultConnectUser() {
+                @Override
+                public void OnSuccess() {
+                    setContentView(R.layout.discussion_profil);
+                    getAllView();
+                    fillPage();
+                }
+
+                @Override
+                public void OnFailed() {
+                    // show message and return to research activity
+                    Utils.MyMessageButton("Failed to load data of user.", context);
+                }
+            });
+        }
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     private void fillPage(){
-        MyListAdapter adapter_instru;
-        MyListAdapter adapter_ecouter;
-        MyListAdapter adapter_jouer;
         MyGridAdapter adapter_portfolio;
         //Log.d("TEST DISCUSSION", idS + "  " + otherUser.getPrenom() + " " + otherUser.getNom());
 
@@ -113,19 +130,47 @@ public class ProfilDiscussion extends BaseActivity {
         motivation.setText(otherUser.getMotivation());
 
         // Lists
-        adapter_instru = new MyListAdapter(this, otherUser.getInstruments());
-        instrus.setAdapter(adapter_instru);
-        adapter_ecouter = new MyListAdapter(this, otherUser.getListened_styles());
-        lstyles.setAdapter(adapter_ecouter);
-        adapter_jouer = new MyListAdapter(this, otherUser.getPlayed_styles());
-        pstyles.setAdapter(adapter_jouer);
+        displayList(parentInstru, otherUser.getInstruments());
+        displayList(parentLstyles, otherUser.getListened_styles());
+        displayList(parentPstyles, otherUser.getPlayed_styles());
 
         // Portfolio
         adapter_portfolio = new MyGridAdapter(this, otherUser.getImages());
         portfolio.setAdapter(adapter_portfolio);
+        portfolio.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                watchImage(otherUser.getPathImages().get(position));
+            }
+        });
+    }
+
+    private void displayList(LinearLayout parent, List<String> list){
+        TextView newchild;
+
+        for (int i = 0; i<list.size(); i++){
+            newchild = new TextView(context);
+            newchild.setText(list.get(i));
+
+            parent.addView(newchild);
+        }
+    }
+
+
+    private void watchImage(String name){
+        String path = "images/portfolio/"+idS+"/"+name;
+        Intent i = new Intent(context, ImageWatcher.class);
+        i.putExtra("path", path);
+
+        startActivity(i);
     }
 
     private void getAllView(){
+        // Linear layout
+        parentInstru = findViewById(R.id.pinstru);
+        parentLstyles = findViewById(R.id.plstyle);
+        parentPstyles = findViewById(R.id.ppstyle);
+        // text view and avatar
         avatar = findViewById(R.id.photo);
         prenom = (TextView) findViewById(R.id.prenom);
         nom = (TextView) findViewById(R.id.nom);
@@ -133,9 +178,7 @@ public class ProfilDiscussion extends BaseActivity {
         genre = findViewById(R.id.genre);
         niveau = findViewById(R.id.niveau);
         motivation = findViewById(R.id.motivation);
-        instrus = findViewById(R.id.instru);
-        lstyles = findViewById(R.id.ecouter);
-        pstyles = findViewById(R.id.jouer);
+        // grid view
         portfolio = findViewById(R.id.grid);
 
         lancerDiscussion = (Button) findViewById(R.id.lancerdiscussion);
@@ -147,7 +190,6 @@ public class ProfilDiscussion extends BaseActivity {
                     // Ajout de la notion de conversation de l'user avec la personne recherchée
                     // Ajout de la notion de conversation pour la personne recherchée (avec celui qui a débuté la discussion)
                     //DatabaseReference  newDiscussion2 = data.child("Users").child()
-
 
                     Intent i = new Intent(ProfilDiscussion.this, Chat.class);
                     i.putExtra("nom", nomS);
@@ -161,5 +203,10 @@ public class ProfilDiscussion extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("otherUser", otherUser);
+    }
 }
 

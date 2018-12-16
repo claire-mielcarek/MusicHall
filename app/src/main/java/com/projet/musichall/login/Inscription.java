@@ -25,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.projet.musichall.BaseActivity;
 import com.projet.musichall.MainActivity;
 import com.projet.musichall.R;
+import com.projet.musichall.Utils;
+
 
 
 public class Inscription extends BaseActivity {
@@ -134,7 +136,7 @@ public class Inscription extends BaseActivity {
                             database.child("Users").child(user.getUid()).child("prenom").setValue(prenom_value);
                             database.child("Users").child(user.getUid()).child("ville").setValue(ville);  // TODO utiliser la localisation
 
-                            // envoie vers l'application
+                            // send to menu
                             startActivity(new Intent(context, MainActivity.class));
                         }
                     }else{
@@ -213,22 +215,7 @@ public class Inscription extends BaseActivity {
             message = "Une erreur inconnue a été rencontré. Veuillez réessayer.";
         }
 
-        MyMessageButton(message);
-    }
-
-    public void MyMessageButton(String message) {
-        final AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-        dlgAlert.setTitle(message);
-        dlgAlert.setIcon(android.R.drawable.ic_dialog_alert);
-
-        dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        dlgAlert.create().show();
+        Utils.MyMessageButton(message, context);
     }
 
 }

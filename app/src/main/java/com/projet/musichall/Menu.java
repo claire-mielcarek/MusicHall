@@ -83,7 +83,7 @@ public class Menu extends AppCompatActivity {
                             case "profil":
                                 handler = new Handler();
                                 if (user != null){
-                                    launch_sound(R.raw.test_android);
+                                    //launch_sound(R.raw.drum);
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {

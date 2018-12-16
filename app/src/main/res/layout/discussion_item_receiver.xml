@@ -14,8 +14,9 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:padding="5dp"
-        android:background="@drawable/border_disc_sender">
+        android:background="@drawable/border_disc_receiver">
 
         <LinearLayout
             android:orientation="horizontal"

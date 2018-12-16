@@ -1,10 +1,13 @@
 package com.projet.musichall;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,13 +29,19 @@ import java.util.ArrayList;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.projet.musichall.login.Connexion;
+import com.projet.musichall.profile.IResultConnectUser;
+import com.projet.musichall.profile.ProfilActivity;
+import com.projet.musichall.profile.User;
+
 import com.projet.musichall.group.wall.AddPost;
+
 
 
 public class MainActivity extends BaseActivity {
     Context context;
     private FirebaseAuth auth;
-    private FirebaseUser user;
+    private FirebaseUser firebaseUser;
     ArrayList<Post> listItems = new ArrayList<>();
     PostAdapter adapter;
     ListView list;
@@ -60,13 +69,14 @@ public class MainActivity extends BaseActivity {
         // recupere l'objet permettant de gerer l'authantification d'un utilisateur
         auth = FirebaseAuth.getInstance();
         // recupere l'utilisateur pour savoir si celui-ci est connecte
-        user = auth.getCurrentUser();
+        firebaseUser = auth.getCurrentUser();
         Log.d("[ TEST MENU ]", "MainActivity onCreated done");
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        User user;
         Log.d("[HOME_ACTIVITY]", "onStart");
 
         if(!this.isAlreadyInstantiated) {
@@ -75,14 +85,41 @@ public class MainActivity extends BaseActivity {
 
             data = FirebaseDatabase.getInstance().getReference();
 
+            // load user data if connected
+            if (firebaseUser != null) {
+                // change view to inform user to wait
+                setContentView(R.layout.waiting);
 
-            list = findViewById(R.id.home_publications);
-            adapter = new PostAdapter(this, listItems);
+                // get user data
+                user = User.InstantiateUser(User.Auth.MAIL);
+                user.attachUserToFirebase(true, new IResultConnectUser() {
+                    @Override
+                    public void OnSuccess() {  // if operation is a success so show user's informations
+                        // redefine good layout
+                        setContentView(R.layout.activity_main);
+                        list = findViewById(R.id.home_publications);
+                        adapter = new PostAdapter(context, listItems);
+                        list.setAdapter(adapter);
+                        addPostListener();
+                        ((PostAdapter) list.getAdapter()).notifyDataSetChanged();
+                    }
 
+                    @Override
+                    public void OnFailed() {
+                        Log.w("DatabaseChange", "Failed to read values.");
 
-            addPostListener();
-
-            list.setAdapter(adapter);
+                        // show message for user then reload connection
+                        Utils.MyMessageButton("Read personal value has failed.", context);
+                    }
+                });
+            }else{
+                setContentView(R.layout.activity_main);
+                list = findViewById(R.id.home_publications);
+                adapter = new PostAdapter(context, listItems);
+                list.setAdapter(adapter);
+                addPostListener();
+                ((PostAdapter) list.getAdapter()).notifyDataSetChanged();
+            }
         }
     }
 
@@ -94,7 +131,7 @@ public class MainActivity extends BaseActivity {
 
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        DatabaseReference publication =data.child("Publications").child(dataSnapshot.getKey());
+                        DatabaseReference publication = data.child("Publications").child(dataSnapshot.getKey());
                         publication.addValueEventListener(new ValueEventListener() {
 
                             @Override
@@ -145,7 +182,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         super.onCreateOptionsMenu(menu);
-        if(user != null) {
+        if(firebaseUser != null) {
             menu.add(Menu.FIRST, ADD_POST, android.view.Menu.NONE, R.string.add_post).setIcon(R.drawable.ic_add).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         }
         return true;
@@ -158,7 +195,7 @@ public class MainActivity extends BaseActivity {
         switch (item.getItemId()) {
             case ADD_POST:
                 i = new Intent(this, AddPost.class);
-                i.putExtra("userId", user.getUid());
+                i.putExtra("userId", firebaseUser.getUid());
                 i.putExtra("groupId","public");
                 startActivity(i);
             break;

@@ -30,6 +30,7 @@ import com.projet.musichall.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 
 
 public class PrivateProfil extends Fragment implements IChangeUserData {

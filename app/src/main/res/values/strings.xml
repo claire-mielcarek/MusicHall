@@ -41,6 +41,9 @@
     <string name="recherche_musicien">Nom</string>
     <string name="signup">Sign up</string>
     <string name="signin">Sign in</string>
+    <string name="cont_dsc_image_watched">image selected</string>
+    <string name="nom_instrument">Nom_instrument</string>
+    <string name="default_text">Default text</string>
 
     <string-array name="instruments">
         <item name="batterie">Batterie</item>

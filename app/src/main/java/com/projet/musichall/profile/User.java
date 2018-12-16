@@ -20,14 +20,14 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 
 
-
-public class User {
+public class User implements Serializable{
     // define enum
     public enum Auth{
         GOOGLE,FACEBOOK,MAIL
@@ -45,6 +45,12 @@ public class User {
         DEBUTANT,INTERMEDIAIRE,AVANCE,EXPERT,MAITRE
     }
 
+    // macro to dimension correctly the images
+    public static final int WIDTH_IMAGE_LOW = 128;
+    public static final int HEIGHT_IMAGE_LOW = 128;
+    public static final int WIDTH_IMAGE_HIGH = 720;
+    public static final int HEIGHT_IMAGE_HIGH = 1024;
+
     // the only instance of User
     private static User user;
 
@@ -57,10 +63,10 @@ public class User {
     private Enum<Auth> type_auth;
 
     // Firebase reference
-    private FirebaseAuth auth;
-    private FirebaseUser fireUser;
-    private DatabaseReference database;
-    private StorageReference storage;
+    private transient FirebaseAuth auth;
+    private transient FirebaseUser fireUser;
+    private transient DatabaseReference database;
+    private transient StorageReference storage;
 
     // implement the system to change data for the classes implementing IChangeUserData
     List<IChangeUserData> register;
@@ -73,7 +79,7 @@ public class User {
     // public data
     private String nom;
     private String prenom;
-    private Bitmap avatar;
+    private transient Bitmap avatar;
     private String ville;
     private String genre;
     private int niveau;
@@ -87,7 +93,8 @@ public class User {
 
     // portfolio
     private List<String> pathImages;
-    private List<Bitmap> images;
+    private List<String> keyImages;
+    private transient List<Bitmap> images;
     private List<String> pathVideos;
     //private List<Bitmap> videos;
     private List<String> pathSounds;
@@ -133,6 +140,7 @@ public class User {
         listened_styles = new ArrayList<>();
         played_styles = new ArrayList<>();
         pathImages = new ArrayList<>();
+        keyImages = new ArrayList<>();
         images = new ArrayList<>();
         pathVideos = new ArrayList<>();
         // videos = new ArrayList<>();
@@ -148,13 +156,12 @@ public class User {
 
     // attach User to Firebase which fills data on runtime
     public void attachUserToFirebase(/*DataSnapshot dataSnapshot, StorageReference storage, */final boolean one_time, final IResultConnectUser interfaceForResult){
-
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // get user node
+                DataSnapshot dataUser = dataSnapshot.child("Users").child(uid);
+
                 if (!one_time||first) {
-                    DataSnapshot dataUser = dataSnapshot.child("Users").child(uid);
                     // get private user data
                     fillPrivateDataFromFirebase(/*storage, */dataUser);
                     // get public user data
@@ -174,6 +181,9 @@ public class User {
                     // this no more the first time
                     first = false;
                 }
+
+                // get key images
+                fillKeyImagesFromFireBase(dataUser);
             }
 
             @Override
@@ -286,13 +296,14 @@ public class User {
         while (it.hasNext()) {
             img = it.next();
             pathImages.add(String.valueOf(img.getValue()));
+            keyImages.add(img.getKey());
         }
 
         Log.d("GET DATA USER", "Path image portfolio OK");
 
         // get Bitmap
         for (int i = 0; i<pathImages.size(); i++) {
-            DownloadPortfolioImages(/*storage, */images, pathImages.get(i), (i == pathImages.size()-1), interfaceForResult);
+            DownloadPortfolioImages(/*storage, */images, pathImages.get(i), i, (i == pathImages.size()-1), interfaceForResult);
         }
 
         Log.d("GET DATA USER", "Image portfolios OK");
@@ -300,10 +311,12 @@ public class User {
         // get videos for the portfolio from firebase
 
 
+        if (pathImages.size() == 0)
+            interfaceForResult.OnSuccess();
     }
 
     // download image to user's portfolio
-    private void DownloadPortfolioImages(/*StorageReference storage, */final List<Bitmap> imagesToShow, String pictName, final boolean last, final IResultConnectUser interfaceForResult){    // get the images of portfolio
+    private void DownloadPortfolioImages(/*StorageReference storage, */final List<Bitmap> imagesToShow, String pictName, final int position, final boolean last, final IResultConnectUser interfaceForResult){    // get the images of portfolio
         final File localFile;
         StorageReference ref = storage.child("images/portfolio/"+uid+"/"+pictName);
 
@@ -314,7 +327,10 @@ public class User {
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     Log.d("GET PORTFOLIO IMAGE", "Get portfolio image : success");
                     Bitmap bmp = BitmapFactory.decodeFile(localFile.getPath());
-                    imagesToShow.add(bmp);
+                    bmp = Bitmap.createScaledBitmap(bmp, WIDTH_IMAGE_LOW, HEIGHT_IMAGE_LOW, false);
+                    if (position < imagesToShow.size())     // to keep the order of images
+                        imagesToShow.add(position, bmp);
+                    else imagesToShow.add(imagesToShow.size(), bmp);
                     loadingFinished = last;  // notify that Firebase finished to load main data
                     if (last)
                         interfaceForResult.OnSuccess();
@@ -325,6 +341,8 @@ public class User {
                     Log.d("GET PORTFOLIO IMAGE", "Get portfolio image : failed "+exception.getMessage());
                     loadingFinished = last; // notify that Firebase finished to load main data
                     interfaceForResult.OnFailed();
+                    if (last)
+                        interfaceForResult.OnSuccess();
                 }
             });
         } catch (IOException e) {
@@ -355,6 +373,19 @@ public class User {
         }
     }
 
+    // download key for portfolio images
+    private void fillKeyImagesFromFireBase(DataSnapshot dataUser){
+        DataSnapshot img;
+        Iterator<DataSnapshot> it = dataUser.child("portfolio").child("images").getChildren().iterator();
+
+        keyImages = new ArrayList<>();
+        while (it.hasNext()) {
+            img = it.next();
+            keyImages.add(img.getKey());
+        }
+
+        Log.d("GET USER DATA", "Get key images : success ");
+    }
 
     // getters
     public boolean isLoadingFinished() {
@@ -419,6 +450,10 @@ public class User {
 
     public List<String> getPathImages() {
         return pathImages;
+    }
+
+    public List<String> getKeyImages(){
+        return keyImages;
     }
 
     public List<Bitmap> getImages() {
@@ -531,7 +566,7 @@ public class User {
     }
 
     private void executeCallBackFunction(){
-        Log.d("PROBLEME USER", "call : "+call+" pass : "+pass);
+        //Log.d("PROBLEME USER", "call : "+call+" pass : "+pass);
         if (pass == 0){   // prevent the callback recurrence
             pass = (pass+1)%call;
             for (int i = 0; i < register.size(); i++) {

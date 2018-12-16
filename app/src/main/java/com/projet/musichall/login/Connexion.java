@@ -37,9 +37,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.projet.musichall.BaseActivity;
 import com.projet.musichall.R;
+import com.projet.musichall.Utils;
+import com.projet.musichall.profile.IResultConnectUser;
 import com.projet.musichall.profile.ProfilActivity;
-
-
+import com.projet.musichall.profile.User;
 
 
 public class Connexion extends BaseActivity {
@@ -62,8 +63,6 @@ public class Connexion extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
-
         // get the context
         changeData = getIntent().getBooleanExtra("ChangeData", false);
         mail = getIntent().getBooleanExtra("Mail", false);
@@ -75,6 +74,9 @@ public class Connexion extends BaseActivity {
         database = FirebaseDatabase.getInstance().getReference("Users");
         context = this;
         actionBar.setTitle(R.string.signin);
+
+
+        FacebookSdk.sdkInitialize(context);
 
         setContentView(R.layout.connexion);
 
@@ -100,7 +102,7 @@ public class Connexion extends BaseActivity {
             public void onSuccess(LoginResult loginResult) {
                 Log.d("Connexion Facebook", loginResult.getAccessToken().getUserId());
                 AuthCredential credential = FacebookAuthProvider.getCredential(loginResult.getAccessToken().getToken());
-                logInFirebase(credential);
+                logInFirebase(credential, User.Auth.FACEBOOK);
             }
 
             @Override
@@ -133,23 +135,21 @@ public class Connexion extends BaseActivity {
         });
     }
 
-    private void logInFirebase(AuthCredential credential){
+    private void logInFirebase(AuthCredential credential, final Enum<User.Auth> type){
 
         auth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("Connexion Facebook", "signInWithCredentialFacebook:success");
-                    user = auth.getCurrentUser();
-                    if (changeData)
-                        changeDataFunction(newData);
-                    startActivity(new Intent(context, ProfilActivity.class));
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w("Connexion Facebook", "signInWithCredentialFacebook:failure", task.getException());
-                    Toast.makeText(context, "Authentication failed.",Toast.LENGTH_SHORT).show();
-                }
+             if (task.isSuccessful()) {
+                 // Sign in success, update UI with the signed-in user's information
+                 Log.d("Connexion Credential", "signInWithCredential:success");
+                 user = auth.getCurrentUser();
+                 LoadDataAndStartActivity(type);
+             } else {
+                 // If sign in fails, display a message to the user.
+                 Log.w("Connexion Credential", "signInWithCredential:failure", task.getException());
+                 Toast.makeText(context, "Authentication failed.",Toast.LENGTH_SHORT).show();
+             }
             }
         });
     }
@@ -168,44 +168,24 @@ public class Connexion extends BaseActivity {
         auth.signInWithEmailAndPassword(mail, mdp).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    user = auth.getCurrentUser();
-                    Log.d("Connexion", "signInWithMail:success : "+user.getUid());
-                    // get all user's data
+             if (task.isSuccessful()){
+                 user = auth.getCurrentUser();
+                 Log.d("Connexion", "signInWithMail:success : "+user.getUid());
+                 LoadDataAndStartActivity(User.Auth.MAIL);
+             }else{
+                 // debug
+                 Log.d("Connexion", "signInWithMail:failed : "+task.getException());
+                 // changer la couleur des editText en rouge
+                 edit_mail.setBackgroundResource(R.drawable.error_edit_text_bg);
+                 edit_mdp.setBackgroundResource(R.drawable.error_edit_text_bg);
 
-                    if (changeData)
-                        changeDataFunction(newData);
-                    startActivity(new Intent(context, ProfilActivity.class));
-                }else{
-                    // debug
-                    Log.d("Connexion", "signInWithMail:failed : "+task.getException());
-                    // changer la couleur des editText en rouge
-                    edit_mail.setBackgroundResource(R.drawable.error_edit_text_bg);
-                    edit_mdp.setBackgroundResource(R.drawable.error_edit_text_bg);
+                 edit_mail.getBackground().setAlpha(50);
+                 edit_mdp.getBackground().setAlpha(50);
 
-                    edit_mail.getBackground().setAlpha(50);
-                    edit_mdp.getBackground().setAlpha(50);
-
-                    MyMessageButton("La connection a échoué. Vérifier vos informations.");
-                }
+                 Utils.MyMessageButton("La connection a échoué. Vérifier vos informations.", context);
+             }
             }
         });
-    }
-
-    // affiche une boite de dialogue
-    public void MyMessageButton(String message) {
-        final AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-        dlgAlert.setTitle(message);
-        dlgAlert.setIcon(android.R.drawable.ic_dialog_alert);
-
-        dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        dlgAlert.create().show();
     }
 
     public void changeDataFunction(final String value){
@@ -242,6 +222,33 @@ public class Connexion extends BaseActivity {
     public void inscription(View v){
         // rediriger vers l'activité d'inscription
         startActivity(new Intent(this, Inscription.class));
+        finish();
+    }
+
+    public void LoadDataAndStartActivity(Enum<User.Auth> type){
+        User user;
+        if (changeData)
+            changeDataFunction(newData);
+        user = User.InstantiateUser(type);
+
+        setContentView(R.layout.waiting);
+        user.attachUserToFirebase(true, new IResultConnectUser() {
+            @Override
+            public void OnSuccess(){  // if operation is a success so show user's informations
+                // start Profile Activity
+                startActivity(new Intent(context, ProfilActivity.class));
+                finish();
+            }
+
+            @Override
+            public void OnFailed() {
+                Log.w("DatabaseChange", "Failed to read values.");
+
+                // show message for user then reload connection
+                Utils.MyMessageButton("Read personal value has failed. Retry later please.", context);
+                startActivity(new Intent(context, Connexion.class));
+            }
+        });
     }
 
     @Override
@@ -261,25 +268,7 @@ public class Connexion extends BaseActivity {
                 assert account != null;
                 AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
                 Log.d("Connexion","Connexion a firebase avec un credential");
-                logInFirebase(credential);
-                /*auth.signInWithCredential(credential)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d("Connexion", "signInWithCredentialGoogle:success");
-                                    user = auth.getCurrentUser();
-                                    if (changeData)
-                                        changeDataFunction(newData);
-                                    startActivity(new Intent(context, ProfilActivity.class));
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w("Connexion", "signInWithCredentialGoogle:failure", task.getException());
-                                    Toast.makeText(context, "Authentication Failed.", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });*/
+                logInFirebase(credential, User.Auth.GOOGLE);
             }catch (ApiException e){
                 Log.w("Connexion", "Connexion Google failed", e);
             }

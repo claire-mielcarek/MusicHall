@@ -45,28 +45,24 @@ public class DiscussionActivity extends BaseActivity {
     private DatabaseReference mDatabase;
 
     //Array list
-    ArrayList<String> listItems = new ArrayList<>();
+    //List<String> listItems = new ArrayList<>();
     ArrayAdapter adapter;
-
     ArrayList<String> listItemsNoms;
     ArrayList<String> listItemsDates;
     ArrayList<String> listItemsInfos;
 
     private boolean first = true;
     //items to show in listview
-
-    String[] userWithDiscussion;
-
+    List<String> userWithDiscussion;
     String nomDiscussion;
-
     String nomSender;
     String prenomSender;
-
-    String[] nameDiscussion;
-
+    List<String> nameDiscussion;
     private String TAG;
-
     Context context;
+
+
+
 
 
     @Override
@@ -81,10 +77,7 @@ public class DiscussionActivity extends BaseActivity {
         boutonRecherche = (FloatingActionButton) findViewById(R.id.bouton_recherche);
         context = this;
 
-
-
         boutonRecherche.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 if (user != null) {
@@ -101,24 +94,17 @@ public class DiscussionActivity extends BaseActivity {
         //Fonction pour initialiser la list de recherche
         init();
 
-        //Méthode lorsque l'on clique sur un item recherché
-
-        listView.setOnItemClickListener (new AdapterView.OnItemClickListener(){
+        //Methode lorsque l'on clique sur un item recherche
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
-
-
                 String userName = adapterView.getItemAtPosition(position).toString();
                 String userFirstName = userName.split(" ")[0];
                 String userLastName = userName.split(" ")[1];
                 Intent intent = new Intent(DiscussionActivity.this, Chat.class);
-                intent.putExtra("nom",userLastName);
-                intent.putExtra("prenom",userFirstName);
+                intent.putExtra("nom", userLastName);
+                intent.putExtra("prenom", userFirstName);
                 startActivity(intent);
-
-
-
-
             }
         });
 
@@ -137,8 +123,7 @@ public class DiscussionActivity extends BaseActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 int counter = 0;
-                int count = 0;
-                String userId = dataSnapshot.child("Users").child(user.getUid()).getKey();
+                String userId = user.getUid();
 
                 DataSnapshot ref;
                 DataSnapshot ref2;
@@ -150,82 +135,61 @@ public class DiscussionActivity extends BaseActivity {
                 DataSnapshot discussionOfUser = dataSnapshot.child("conversation");
                 //DataSnapshot discussionOfUser = dataSnapshot.child("conversation").getKey()
 
-
-
                 //TODO revoir la taille alloué pour les strings
-                nameDiscussion = new String[(int) discussionOfUser.getChildrenCount()*50];
-
+                nameDiscussion = new ArrayList<>();
+                nomSender = String.valueOf(userSnapshot.child(user.getUid()).child("nom").getValue());
+                prenomSender = String.valueOf(userSnapshot.child(user.getUid()).child("prenom").getValue());
 
                 // On récupère le prénom et le nom du user courant
-                for (DataSnapshot user : userSnapshot.getChildren()) {
+                /*for (DataSnapshot user : userSnapshot.getChildren()) {
                     //ref = it.next();
 
                     if (userId.equals(String.valueOf(user.getKey()))) {
                         nomSender = String.valueOf(user.child("nom").getValue());
                         prenomSender = String.valueOf(user.child("prenom").getValue());
                         //Log.d("utilisateur courant est", prenomSender + ("_") + nomSender);
-
                     }
-                }
+                }*/
 
 
                 // On récupère le nom des interlocuteur avec qui le user courant parle à l'aide de la clef
                 for (DataSnapshot discussion : discussionOfUser.getChildren()) {
-
                     if (discussion.getKey().split("-")[0].equals(prenomSender + ("_") + nomSender)) {
-                        nameDiscussion[count] = discussion.getKey().split("-")[1];
-                        Log.d("nom de l'interlocuteur", nameDiscussion[count]);
-                        count = count + 1;
+                        nameDiscussion.add(discussion.getKey().split("-")[1].replace('_',' '));
+                        Log.d("nom de l'interlocuteur", nameDiscussion.get(nameDiscussion.size()-1));
                     }
                     if(discussion.getKey().split("-")[1].equals(prenomSender + ("_") + nomSender)){
-                        nameDiscussion[count] = discussion.getKey().split("-")[0];
-                        count = count + 1;
+                        nameDiscussion.add(discussion.getKey().split("-")[0].replace('_',' '));
                     }
-
-
                 }
-                //Initialisation de la string contenant les informations des users(avec une discussion)
-                userWithDiscussion = new String[count];
-                int finNameDiscussion = count;
-                count = 0;
+
+                // Initialisation de la string contenant les informations des users (avec une discussion)
+                //userWithDiscussion = new ArrayList<>();
+                //int count = 0;
                 //Testons maintenant les noms des interlocuteurs connu de l'utilisateur avec la table des users pour récupérer leurs infos
                 //Tant qu'il y a encore des noms qui n'ont pas été vérifiés on test
-                while (finNameDiscussion != 0){
-                    for (DataSnapshot user : userSnapshot.getChildren()) {
+                //while (finNameDiscussion != 0){
+                    /*for (DataSnapshot user : userSnapshot.getChildren()) {
                         if ((String.valueOf(user.child("prenom").getValue()) + "_" + String.valueOf(user.child("nom").getValue()))
-                                .equals(nameDiscussion[count])) {
-                            Log.d("son nom a été teste", String.valueOf(user.child("prenom").getValue()));
-                            userWithDiscussion[count] = String.valueOf(user.child("prenom").getValue());
-                            userWithDiscussion[count] += " " + String.valueOf(user.child("nom").getValue());
+                                .equals(nameDiscussion.get(count))) {
+                            //Log.d("son nom a été teste", String.valueOf(user.child("prenom").getValue()));
+                            userWithDiscussion.add(String.valueOf(user.child("prenom").getValue()) + " " + String.valueOf(user.child("nom").getValue()));
+                            count ++;
                             //TODO Voir les informations qu'on veut mettre plus tard
                             //userWithDiscussion[count] += "\n Habite à "+String.valueOf(user.child("ville").getValue());
-
                             //Log.d("On a récuperé ", userWithDiscussion[count]);
-
-                            count = count + 1;
-                            finNameDiscussion = finNameDiscussion-1;
+                            //finNameDiscussion = finNameDiscussion-1;
 
                         }
-                    }
-                }
+                    }*/
+                //}
 
-
-
-
-
-                listItems = new ArrayList<>(Arrays.asList(userWithDiscussion));
-                Log.d("on a dans la liste", String.valueOf(listItems));
+                Log.d("on a dans la liste", String.valueOf(nameDiscussion));
 
                 //make an array of the objects according to a layout design
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
-                        android.R.layout.simple_list_item_1, android.R.id.text1, userWithDiscussion);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, android.R.id.text1, nameDiscussion);
                 //set the adapter for listview
                 listView.setAdapter(adapter);
-
-
-
-
-
             }
 
 
