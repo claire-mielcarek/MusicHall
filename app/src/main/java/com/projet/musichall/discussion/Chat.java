@@ -183,6 +183,12 @@ public class Chat extends BaseActivity {
                     //set the adapter for listview
 
                     listViewMessages.setAdapter(adapter);
+
+                    //Pour déplacer la listView directement au dernier message :
+                    listViewMessages.setSelection(listItems.size()-1);
+
+                    //int height = listViewMessages.getHeight();
+                    //listViewMessages.scrollBy(height,);
                 }
 
 

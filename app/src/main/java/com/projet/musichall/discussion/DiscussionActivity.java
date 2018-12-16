@@ -117,16 +117,8 @@ public class DiscussionActivity extends BaseActivity {
                 startActivity(intent);
 
 
-                /*
-                //ListView Clicked item index
-                int itemPosition = position+1;
-                //ListView Clicked item value
-                String itemValue = (String) listView.getItemAtPosition(position);
-                //Show Toast
-                Toast.makeText(getApplicationContext(),
-                        "Position de l'item :" +itemPosition+" Element cliqué : " +itemValue, Toast.LENGTH_LONG)
-                        .show();
-                        */
+
+
             }
         });
 
@@ -206,6 +198,7 @@ public class DiscussionActivity extends BaseActivity {
                             userWithDiscussion[count] = String.valueOf(user.child("prenom").getValue());
                             userWithDiscussion[count] += " " + String.valueOf(user.child("nom").getValue());
                             //TODO Voir les informations qu'on veut mettre plus tard
+                            //userWithDiscussion[count] += "\n Habite à "+String.valueOf(user.child("ville").getValue());
 
                             //Log.d("On a récuperé ", userWithDiscussion[count]);
 
@@ -217,27 +210,6 @@ public class DiscussionActivity extends BaseActivity {
                 }
 
 
-
-                // Pour chacun des noms d'interlocuteur de l'utilisateur inscrit dans son onglet discussion
-                // Vérifier si le nom à afficher correspond
-
-
-
-                //  (String.valueOf(ref2.child("interlocuteur").getValue()))) {
-                // if(discussionTest.equals(discussionTest2)) {
-                //if(String.valueOf(ref.child("nom").getValue()).equals(String.valueOf(mDatabase.child("Users")
-                // .child(user.getUid()).child("conversation").getKey()))){
-
-                //userWithDiscussion[counter] = String.valueOf(user.child("prenom").getValue());
-                //userWithDiscussion[counter] += " " + String.valueOf(user.child("nom").getValue());
-                //userWithDiscussion[counter] += " " + String.valueOf(ref2.getKey());
-
-                //userWithDiscussion[counter] += " \n Ville : " + String.valueOf(ref.child("ville").getValue());
-                //userWithDiscussion[counter] += " \n Dernier message : "; //+ String.valueOf(ref.child("message").getValue());
-                //userWithDiscussion[counter] += " " + String.valueOf(ref.child("instrus").getValue());
-
-                //}
-                //}
 
 
 
