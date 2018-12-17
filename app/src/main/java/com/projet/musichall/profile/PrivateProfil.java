@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -97,6 +98,7 @@ public class PrivateProfil extends Fragment implements IChangeUserData {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivityForResult(i, RC_AVATAR);
             }
         });
@@ -112,7 +114,7 @@ public class PrivateProfil extends Fragment implements IChangeUserData {
             }
         });
 
-        com.github.siyamed.shapeimageview.CircularImageView editmail = root.findViewById(R.id.edbutm);
+        ImageView editmail = root.findViewById(R.id.edbutm);
         editmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +125,7 @@ public class PrivateProfil extends Fragment implements IChangeUserData {
             }
         });
 
-        com.github.siyamed.shapeimageview.CircularImageView editpass = root.findViewById(R.id.edbutp);
+        ImageView editpass = root.findViewById(R.id.edbutp);
         editpass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

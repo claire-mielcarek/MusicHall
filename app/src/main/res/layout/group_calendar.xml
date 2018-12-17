@@ -5,11 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".group.GroupActivity">
-
-    <com.projet.musichall.group.calendar.MyCalendar
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </com.projet.musichall.group.calendar.MyCalendar>
+        <com.projet.musichall.group.calendar.MyCalendar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.projet.musichall.group.calendar.MyCalendar>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>

@@ -8,6 +8,7 @@
     <string name="group_page1_add_post_button">Create the post</string>
     <string name="add">Add</string>
     <string name="create_group">Create the group</string>
+    <string name="add_group_name_title">Name of the group : </string>
     <string name="add_post">Create a post</string>
     <string name="load_more_content">Load More</string>
 
@@ -22,7 +23,8 @@
 
     <string name="add_group">Create a group</string>
     <string name="add_group_placeholder">Search a member</string>
-    <string name="add_group_name_placeholder">Name of the group</string>
+    <string name="add_group_name_placeholder">Name</string>
+    <string name="add_group_members">Members : </string>
 
 
     <string name="you_sould_login">You should be logged to have access to this functionnality</string>
@@ -46,6 +48,7 @@
     <string name="default_text">Default text</string>
 
     <string name="discussions">Discussions</string>
+    <string name="unknown">Unknown</string>
     <string name="rechercheTu">Qui recherches-tu?</string>
     <string name="unGroupe">Un groupe</string>
     <string name="desMusiciens">Des musiciens</string>

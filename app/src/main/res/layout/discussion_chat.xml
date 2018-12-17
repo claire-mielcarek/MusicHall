@@ -55,19 +55,4 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"/>
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/prenom_interlocuteur"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/nom_interlocuteur"
-        android:layout_toRightOf="@+id/prenom_interlocuteur"
-        android:layout_marginLeft="5dp"
-        />
-
 </RelativeLayout>

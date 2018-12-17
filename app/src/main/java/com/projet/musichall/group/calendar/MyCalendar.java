@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -295,40 +296,42 @@ public class MyCalendar extends LinearLayout {
     }
 
     public void onDayClick(View view) {
-        mListener.onDayClick(view);
+        if (view != null) {
+            Log.d("[CALENDAR]", "view is :  " + view.toString());
 
-        if (selectedDayButton != null) {
-            if (chosenDateYear == currentDateYear
-                    && chosenDateMonth == currentDateMonth
+            if (selectedDayButton != null) {
+                if (chosenDateYear == currentDateYear
+                        && chosenDateMonth == currentDateMonth
+                        && pickedDateDay == currentDateDay) {
+                    selectedDayButton.setBackgroundColor(getResources().getColor(R.color.pink));
+                    selectedDayButton.setTextColor(Color.WHITE);
+                } else {
+                    selectedDayButton.setBackgroundColor(Color.TRANSPARENT);
+                    if (selectedDayButton.getCurrentTextColor() != Color.RED) {
+                        selectedDayButton.setTextColor(getResources()
+                                .getColor(R.color.calendar_number));
+                    }
+                }
+            }
+            Log.d("[CALENDAR]", "on est là");
+            selectedDayButton = (Button) view;
+            if (selectedDayButton.getTag() != null) {
+                int[] dateArray = (int[]) selectedDayButton.getTag();
+                pickedDateDay = dateArray[0];
+                pickedDateMonth = dateArray[1];
+                pickedDateYear = dateArray[2];
+            }
+
+            if (pickedDateYear == currentDateYear
+                    && pickedDateMonth == currentDateMonth
                     && pickedDateDay == currentDateDay) {
                 selectedDayButton.setBackgroundColor(getResources().getColor(R.color.pink));
                 selectedDayButton.setTextColor(Color.WHITE);
             } else {
-                selectedDayButton.setBackgroundColor(Color.TRANSPARENT);
+                selectedDayButton.setBackgroundColor(getResources().getColor(R.color.grey));
                 if (selectedDayButton.getCurrentTextColor() != Color.RED) {
-                    selectedDayButton.setTextColor(getResources()
-                            .getColor(R.color.calendar_number));
+                    selectedDayButton.setTextColor(Color.WHITE);
                 }
-            }
-        }
-
-        selectedDayButton = (Button) view;
-        if (selectedDayButton.getTag() != null) {
-            int[] dateArray = (int[]) selectedDayButton.getTag();
-            pickedDateDay = dateArray[0];
-            pickedDateMonth = dateArray[1];
-            pickedDateYear = dateArray[2];
-        }
-
-        if (pickedDateYear == currentDateYear
-                && pickedDateMonth == currentDateMonth
-                && pickedDateDay == currentDateDay) {
-            selectedDayButton.setBackgroundColor(getResources().getColor(R.color.pink));
-            selectedDayButton.setTextColor(Color.WHITE);
-        } else {
-            selectedDayButton.setBackgroundColor(getResources().getColor(R.color.grey));
-            if (selectedDayButton.getCurrentTextColor() != Color.RED) {
-                selectedDayButton.setTextColor(Color.WHITE);
             }
         }
     }

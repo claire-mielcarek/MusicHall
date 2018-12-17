@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -71,6 +72,8 @@ public class DiscussionActivity extends BaseActivity {
 
         if (user != null) {
             setContentView(R.layout.activity_discussion);
+            ActionBar myBar = getMyActionBar();
+            myBar.setTitle(R.string.discussions);
             listView = (ListView)findViewById(R.id.liste_de_discussion);
             boutonRecherche = (FloatingActionButton) findViewById(R.id.bouton_recherche);
 

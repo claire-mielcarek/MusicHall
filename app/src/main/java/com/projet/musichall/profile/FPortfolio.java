@@ -139,7 +139,7 @@ public class FPortfolio extends Fragment implements IChangeUserData {
         final String[] choix = new String[]{"Image", "Vidéo", "Son"};
         final AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getContext());
         dlgAlert.setTitle(titre);
-        dlgAlert.setIcon(android.R.drawable.ic_menu_add);
+        dlgAlert.setIcon(R.drawable.ic_add);
 
         dlgAlert.setItems(choix, new DialogInterface.OnClickListener() {
             @Override
@@ -148,14 +148,17 @@ public class FPortfolio extends Fragment implements IChangeUserData {
                 switch (which) {
                     case 0:
                         i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         startActivityForResult(i, RC_IMAGE);
                         break;
                     case 1:
                         i = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+                        i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         startActivityForResult(i, RC_VIDEO);
                         break;
                     case 2:
-                        i = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);  // Audio.Media.EXTERNAL_CONTENT_URI
+                        i = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+                        i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);  // Audio.Media.EXTERNAL_CONTENT_URI
                         startActivityForResult(i, RC_SON);
                         break;
                 }

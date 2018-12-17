@@ -30,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projet.musichall.BaseActivity;
 import com.projet.musichall.R;
+import com.projet.musichall.discussion.ProfilDiscussion;
+import com.projet.musichall.group.GroupPublic;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,6 +51,7 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
     ArrayList<String> listItemsNoms;
     ArrayList<String> listItemsDates;
     ArrayList<String> listItemsInfos;
+    ArrayList<String> listIds;
     ResultPresentation adapter;
 
     Context context;
@@ -112,13 +115,14 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
                     listItemsNoms = new ArrayList<>();
                     listItemsDates = new ArrayList<>();
                     listItemsInfos = new ArrayList<>();
+                    listIds = new ArrayList<>();
 
                     // now apply search algorithm
                     groups = dataSnapshot.child("Groupes");
                     getResultFromFirebase(groups, info_current_user);
 
                     // make an array of the objects according to a layout design
-                    adapter = new ResultPresentation(context, listItemsNoms, listItemsDates, listItemsInfos, null);    //new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
+                    adapter = new ResultPresentation(context, listItemsNoms, listItemsDates, listItemsInfos, listIds);    //new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
                     // set the adapter for listview
                     listView.setAdapter(adapter);
 
@@ -130,6 +134,22 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+        listView.setOnItemClickListener (new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                String key = adapter.getIds().get(position);
+                String userName = adapter.getNoms().get(position);
+                /*parent.getNoms().get.toString();*/
+
+                Intent intent = new Intent(CriteresGroupe.this, GroupPublic.class);
+
+                intent.putExtra("id", key);
+                intent.putExtra("nom", userName);
+
+                startActivity(intent);
             }
         });
     }
@@ -155,28 +175,35 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
 
             // get user's data
             snom1 = String.valueOf(one_group.child("nom").getValue());
-            //sville1 = String.valueOf(one_group.child("ville").getValue());
-            smotivation1 = String.valueOf(one_group.child("motivation").getValue());
-            sniveau1 = String.valueOf(one_group.child("niveau").getValue());
-            sstyle1 = String.valueOf(one_group.child("style").getValue());
-            //memeInstru = !sinstru2.equals("Tout")? InChildrenValue(one_group.child("instrus"), sinstru2): true;
-            //memeMusiqueJouee = !sgenreJouee2.equals("Tout")? InChildrenValue(one_group.child("genreJoue"), sgenreJouee2): true;
+            if(snom1 != null) { // there is a group for the public publications, not made in a group, whose name is null
+                Log.d("[SEARCH_GROUP]", "nom du groupe : " + snom1);
+                Log.d("[SEARCh_GROUP]", "nom cherché : " + sname);
+                //sville1 = String.valueOf(one_group.child("ville").getValue());
+                smotivation1 = String.valueOf(one_group.child("motivation").getValue());
+                sniveau1 = String.valueOf(one_group.child("niveau").getValue());
+                sstyle1 = String.valueOf(one_group.child("style").getValue());
+                //memeInstru = !sinstru2.equals("Tout")? InChildrenValue(one_group.child("instrus"), sinstru2): true;
+                //memeMusiqueJouee = !sgenreJouee2.equals("Tout")? InChildrenValue(one_group.child("genreJoue"), sgenreJouee2): true;
 
-            cond_name = snom1.toLowerCase().matches(sname.toLowerCase()+"[a-zA-Z0-9]*");
-            /*cond_with_spinner = smotivation1.equals(smotivation2) && (!sniveau2.equals("Tout")? sniveau1.equals(sniveau2):true) && memeInstru && memeMusiqueJouee*/;
-            //cond_without_spinner = smotivation1.equals(smotivation2) && sniveau1.equals(sniveau2);
+                cond_name = sname.toLowerCase().matches("(.*)" + snom1.toLowerCase() + "[a-zA-Z0-9]*");
+                Log.d("[RECHERCHE]", "correspondance : "+cond_name);
+                /*cond_with_spinner = smotivation1.equals(smotivation2) && (!sniveau2.equals("Tout")? sniveau1.equals(sniveau2):true) && memeInstru && memeMusiqueJouee*/
+                ;
+                //cond_without_spinner = smotivation1.equals(smotivation2) && sniveau1.equals(sniveau2);
 
-            // get user's information if match with search name
-            if (cond_name && !sname.isEmpty()) {
-                resultat = snom1;
-                sort_name.add(resultat);
-                resultat = "Créer le " + String.valueOf(one_group.child("dateMembre").getValue());
-                sort_name.add(resultat);
-                resultat = "Groupe " + smotivation1;
-                resultat += " de " + sstyle1;
-                resultat += " et de niveau " + sniveau1;
-                sort_name.add(resultat);
-                Log.d("INFO RECHERCHE", "Nom : "+snom1);
+                // get user's information if match with search name
+                if (cond_name && !sname.isEmpty()) {
+                    resultat = snom1;
+                    sort_name.add(resultat);
+                    resultat = "Créer le " + String.valueOf(one_group.child("dateMembre").getValue());
+                    sort_name.add(resultat);
+                    resultat = "Groupe " + smotivation1;
+                    resultat += " de " + sstyle1;
+                    resultat += " et de niveau " + sniveau1;
+                    sort_name.add(resultat);
+                    listIds.add(one_group.getKey());
+                    Log.d("INFO RECHERCHE", "Nom : " + snom1);
+                }
             }
         }
 
@@ -184,8 +211,6 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
         // get results by type
         for (int i = 0; i<sort_name.size(); i+=3) {
             listItemsNoms.add(sort_name.get(i));
-            listItemsDates.add(sort_name.get(i+1));
-            listItemsInfos.add(sort_name.get(i+2));
         }
 
         Log.d("INFO RECHERCHE GROUPE", "Taille name : "+sort_name.size());

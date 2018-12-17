@@ -139,8 +139,7 @@ public class MainActivity extends BaseActivity {
                             public void onDataChange(@NonNull DataSnapshot post) {
                                 Log.d("[HOME_ACTIVITY]", "read a publication");
                                 Log.d("[HOME_ACTIVITY]", post.toString());
-                                if (post.child("groupe").getValue().toString().equals("public") &&
-                                        !postAlreadyHere.contains(post.getKey())){
+                                if (!postAlreadyHere.contains(post.getKey())){
                                     date = post.child("date").getValue().toString();
                                     String authorId = (String) post.child("author").getValue();
                                     text = (String) post.child("contenu").getValue();

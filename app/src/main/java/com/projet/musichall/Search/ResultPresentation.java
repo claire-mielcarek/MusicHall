@@ -53,8 +53,18 @@ public class ResultPresentation extends BaseAdapter {
 
                 //avatar.setImageBitmap(avatars.get(position%avatars.size()));
                 nom_complet.setText(noms.get(position));
-                date_membre.setText(dates_membre.get(position));
-                info.setText(infos.get(position));
+                if(dates_membre.size() == 0){ // pour un groupe, on n'a pas de date
+                    date_membre.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    date_membre.setText(dates_membre.get(position));
+                }
+                if(infos.size() == 0){
+                    info.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    info.setText(infos.get(position));
+                }
             }
         /*}else{
             list = convertView;

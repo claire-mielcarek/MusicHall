@@ -106,6 +106,7 @@ public class PublicProfil extends Fragment implements IChangeUserData {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivityForResult(i, RC_AVATAR);
             }
         });

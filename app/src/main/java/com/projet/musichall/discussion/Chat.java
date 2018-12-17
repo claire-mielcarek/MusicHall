@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -50,8 +51,6 @@ import java.util.List;
 
 
 public class Chat extends BaseActivity {
-    private TextView nom_interlocuteur;
-    private TextView prenom_interlocuteur;
     private ListView listViewMessages;
     private EditText messageEnvoyer;
     private FloatingActionButton envoyer;
@@ -98,9 +97,6 @@ public class Chat extends BaseActivity {
         //Pour récupérer Firebase
         user = FirebaseAuth.getInstance().getCurrentUser();
         data = FirebaseDatabase.getInstance().getReference();
-        // Pour récupérer l'information sur la personne avec qui le user parle
-        nom_interlocuteur = findViewById(R.id.nom_interlocuteur);
-        prenom_interlocuteur = findViewById(R.id.prenom_interlocuteur);
 
         context = this;
 
@@ -110,11 +106,22 @@ public class Chat extends BaseActivity {
         if (intent != null){
             if (intent.hasExtra("nom")){
                 nomInterlocuteur= intent.getStringExtra("nom");
-                nom_interlocuteur.setText(nomInterlocuteur);
             }
             if(intent.hasExtra("prenom")){
                 prenomInterlocuteur = intent.getStringExtra("prenom");
-                prenom_interlocuteur.setText(prenomInterlocuteur);
+            }
+            ActionBar myBar = getMyActionBar();
+            if( nomInterlocuteur != null && prenomInterlocuteur != null) {
+                myBar.setTitle(nomInterlocuteur + " " + prenomInterlocuteur);
+            }
+            else if(nomInterlocuteur != null){
+                myBar.setTitle(nomInterlocuteur);
+            }
+            else if(prenomInterlocuteur != null){
+                myBar.setTitle(prenomInterlocuteur);
+            }
+            else{
+                myBar.setTitle(R.string.unknown);
             }
         }
 

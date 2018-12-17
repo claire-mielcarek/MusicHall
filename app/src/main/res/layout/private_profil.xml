@@ -102,14 +102,14 @@
                                     android:text="@string/exampleMail"
                                     android:textSize="13sp" />
 
-                                <com.github.siyamed.shapeimageview.CircularImageView
+                                <ImageView
                                     android:id="@+id/edbutm"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginStart="10dp"
                                     android:contentDescription="@string/changerMail"
-                                    android:src="@android:drawable/ic_menu_edit" />
+                                    android:src="@drawable/ic_menu_edit" />
 
                         </LinearLayout>
 
@@ -137,15 +137,15 @@
                                         android:textSize="13sp"
                                         android:text="@string/fauxMdp"/>
 
-                                    <com.github.siyamed.shapeimageview.CircularImageView
+                                    <ImageView
                                         android:id="@+id/edbutp"
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
                                         android:layout_marginLeft="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_gravity="center"
                                         android:contentDescription="@string/changerMdp"
-                                        android:src="@android:drawable/ic_menu_edit" />
+                                        android:src="@drawable/ic_menu_edit" />
                             </LinearLayout>
 
                         <LinearLayout

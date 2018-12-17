@@ -1,5 +1,6 @@
 package com.projet.musichall.group;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -133,7 +134,7 @@ public class GroupActivity extends BaseActivity {
             case ADD_GROUP: //Adding a group
                 i = new Intent(GroupActivity.this, AddGroup.class);
                 i.putExtra("userId", user.getUid());
-                startActivity(i);
+                startActivityForResult(i, ADD_GROUP);
                 break;
             case WALL_ADD_POST:
                 if(currentGroupId != null) {
@@ -227,5 +228,21 @@ public class GroupActivity extends BaseActivity {
             }
         };
         data.addValueEventListener(this.groupListener);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.d("[GROUP]", "onActivityResult");
+        if (requestCode == ADD_GROUP){
+            if(resultCode == Activity.RESULT_OK){
+                String id = data.getStringExtra("newGroupId");
+                String name = data.getStringExtra("newGroupName");
+                groupsNames.add(name);
+                groupsIds.add(id);
+                Log.d("[GROUP_ADDED]", id);
+                Log.d("[GROUP_ADDED]", name);
+                invalidateOptionsMenu();
+            }
+        }
     }
 }

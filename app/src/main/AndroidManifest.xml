@@ -38,6 +38,7 @@
         <activity android:name=".group.wall.AddPost"/>
         <activity android:name=".Menu"/>
         <activity android:name=".ShouldLogin"/>
+        <activity android:name=".group.GroupPublic"/>
         <activity
         android:name="com.projet.musichall.BaseActivity"
         android:screenOrientation="portrait" android:configChanges="orientation|keyboardHidden"
