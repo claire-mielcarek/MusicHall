@@ -20,12 +20,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.projet.musichall.BaseActivity;
 import com.projet.musichall.MainActivity;
 import com.projet.musichall.R;
 import com.projet.musichall.Utils;
+import com.projet.musichall.profile.IResultConnectUser;
+import com.projet.musichall.profile.ProfilActivity;
+import com.projet.musichall.profile.User;
+
 
 
 
@@ -40,6 +47,8 @@ public class Inscription extends BaseActivity {
     private EditText prenom;
     private EditText nom;
     private EditText naissance;
+    private boolean probleme;
+    private boolean first;
 
 
 
@@ -92,6 +101,8 @@ public class Inscription extends BaseActivity {
 
     public void try_inscription(View v){
         int code = -1;
+        first = true;
+        probleme = false;
 
         mail = findViewById(R.id.mail);
         mdp = findViewById(R.id.mdp);
@@ -100,8 +111,8 @@ public class Inscription extends BaseActivity {
         nom = findViewById(R.id.nom);
         naissance = findViewById(R.id.dateNaissance);
 
-        String mail_value = mail.getText().toString();
-        String mdp_value = mdp.getText().toString();
+        final String mail_value = mail.getText().toString();
+        final String mdp_value = mdp.getText().toString();
         String mdp_confirm_value = mdp_confirm.getText().toString();
         final String prenom_value = prenom.getText().toString();
         final String nom_value = nom.getText().toString();
@@ -112,37 +123,35 @@ public class Inscription extends BaseActivity {
         final String niveau = ((TextView) findViewById(R.id.editniveau)).getText().toString();
         final String motivation = ((RadioButton) findViewById(((RadioGroup) findViewById(R.id.choixmotivation)).getCheckedRadioButtonId())).getText().toString();
         final String date_membre = android.text.format.DateFormat.format("dd/MM/yyyy", new java.util.Date()).toString();
-        final String ville ="Chicoutimi";
+        final String ville = "Chicoutimi";
 
         if (!mail_value.equals("") && !mdp_value.equals("") && !mdp_confirm_value.equals("") && !prenom_value.equals("") && !nom_value.equals("")
                 && !naissance_value.equals("") && mdp_value.equals(mdp_confirm_value)){
-            auth.createUserWithEmailAndPassword(mail_value, mdp_value).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
+            // check if first name and last name already exist
+            database.child("Users").addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    FirebaseUser user;
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    if (task.isSuccessful()){
-                        // enregistrer les informations dans la base de donnees
-                        user = auth.getCurrentUser();
-
-                        if (user != null) {
-                            database.child("Users").child(user.getUid()).child("dateMembre").setValue(date_membre);
-                            database.child("Users").child(user.getUid()).child("dateNaissance").setValue(naissance_value);
-                            database.child("Users").child(user.getUid()).child("genre").setValue(genre);
-                            database.child("Users").child(user.getUid()).child("mail").setValue(user.getEmail());
-                            database.child("Users").child(user.getUid()).child("motivation").setValue(motivation);
-                            database.child("Users").child(user.getUid()).child("niveau").setValue(niveau);
-                            database.child("Users").child(user.getUid()).child("nom").setValue(nom_value);
-                            database.child("Users").child(user.getUid()).child("prenom").setValue(prenom_value);
-                            database.child("Users").child(user.getUid()).child("ville").setValue(ville);  // TODO utiliser la localisation
-
-                            // send to menu
-                            startActivity(new Intent(context, MainActivity.class));
+                    if (first) {
+                        for (DataSnapshot firebaseUser : dataSnapshot.getChildren()) {
+                            if (prenom_value.equals(firebaseUser.child("prenom").getValue()) && nom_value.equals(firebaseUser.child("nom").getValue())) {
+                                ErrorDetected(8);
+                                probleme = true;
+                                break;
+                            }
                         }
-                    }else{
-                        Log.d("InscriptionMail", String.valueOf(task.getException()));    // probleme lors de la creation du compte
-                        ErrorDetected(0);
+
+                        if (!probleme)
+                            completeSignIn(mail_value, mdp_value, date_membre, naissance_value, genre, motivation, niveau, nom_value, prenom_value, ville);
+
+                        first = false;
                     }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    ErrorDetected(-1);
                 }
             });
 
@@ -166,7 +175,58 @@ public class Inscription extends BaseActivity {
             ErrorDetected(code);
         }
 
+    }
 
+
+    private void completeSignIn(String mail, String mdp, final String date_membre, final String naissance_value,
+                                final String genre, final String motivation, final String niveau, final String nom,
+                                final String prenom, final String ville){
+
+        auth.createUserWithEmailAndPassword(mail, mdp).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                FirebaseUser firebaseUser;
+
+                if (task.isSuccessful()){
+                    // enregistrer les informations dans la base de donnees
+                    firebaseUser = auth.getCurrentUser();
+
+                    if (firebaseUser != null) {
+                        database.child("Users").child(firebaseUser.getUid()).child("dateMembre").setValue(date_membre);
+                        database.child("Users").child(firebaseUser.getUid()).child("dateNaissance").setValue(naissance_value);
+                        database.child("Users").child(firebaseUser.getUid()).child("genre").setValue(genre);
+                        database.child("Users").child(firebaseUser.getUid()).child("mail").setValue(firebaseUser.getEmail());
+                        database.child("Users").child(firebaseUser.getUid()).child("motivation").setValue(motivation);
+                        database.child("Users").child(firebaseUser.getUid()).child("niveau").setValue(niveau);
+                        database.child("Users").child(firebaseUser.getUid()).child("nom").setValue(nom);
+                        database.child("Users").child(firebaseUser.getUid()).child("prenom").setValue(prenom);
+                        database.child("Users").child(firebaseUser.getUid()).child("ville").setValue(ville);
+
+                        setContentView(R.layout.waiting);
+
+                        // get data of user from firebase
+                        User user = User.InstantiateUser(User.Auth.MAIL);
+                        user.attachUserToFirebase(true, new IResultConnectUser() {
+                            @Override
+                            public void OnSuccess() {
+                                // send to profile
+                                startActivity(new Intent(context, ProfilActivity.class));
+                                finish();
+                            }
+
+                            @Override
+                            public void OnFailed() {
+                                //Utils.MyMessageButton("Problems to read data", context);
+                                finish();
+                            }
+                        });
+                    }
+                }else{
+                    Log.d("InscriptionMail", String.valueOf(task.getException()));    // probleme lors de la creation du compte
+                    ErrorDetected(0);
+                }
+            }
+        });
     }
 
     public void ErrorDetected(int code){
@@ -211,6 +271,12 @@ public class Inscription extends BaseActivity {
             mdp_confirm.setBackgroundResource(R.drawable.error_edit_text_bg);
             mdp.getBackground().setAlpha(50);
             mdp_confirm.getBackground().setAlpha(50);
+        }else if (code == 8){
+            message = "Le nom et prenom existe déjà.";
+            prenom.setBackgroundResource(R.drawable.error_edit_text_bg);
+            nom.setBackgroundResource(R.drawable.error_edit_text_bg);
+            prenom.getBackground().setAlpha(50);
+            nom.getBackground().setAlpha(50);
         }else{
             message = "Une erreur inconnue a été rencontré. Veuillez réessayer.";
         }

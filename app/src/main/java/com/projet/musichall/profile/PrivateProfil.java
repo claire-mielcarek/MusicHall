@@ -108,6 +108,7 @@ public class PrivateProfil extends Fragment implements IChangeUserData {
                 auth.signOut();
                 user = User.deleteCurrentUser();  // delete data of current user
                 startActivity(new Intent(getContext(), MainActivity.class));
+                getActivity().finish();
             }
         });
 
@@ -118,6 +119,7 @@ public class PrivateProfil extends Fragment implements IChangeUserData {
                 Intent i = new Intent(getContext(), ChangeSecuredData.class);
                 i.putExtra("Mail", true);
                 startActivity(i);
+                getActivity().finish();
             }
         });
 
@@ -128,6 +130,7 @@ public class PrivateProfil extends Fragment implements IChangeUserData {
                 Intent i = new Intent(getContext(), ChangeSecuredData.class);
                 i.putExtra("Mail", false);
                 startActivity(i);
+                getActivity().finish();
             }
         });
 
@@ -142,7 +145,8 @@ public class PrivateProfil extends Fragment implements IChangeUserData {
         date_inscription.setText(user.getDate_Inscription());   // set date inscription
 
         // get avatar's image
-        mAvatar.setImageBitmap(user.getAvatar());  // set avatar
+        if (user.getAvatar() != null)
+            mAvatar.setImageBitmap(user.getAvatar());  // set avatar
     }
 
     @Override

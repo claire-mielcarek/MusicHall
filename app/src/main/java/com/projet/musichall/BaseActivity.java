@@ -18,6 +18,9 @@ import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
+
+
 public class BaseActivity extends AppCompatActivity {
 
     public ActionBar actionBar;
@@ -26,7 +29,6 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar);
         actionBar = getSupportActionBar();
@@ -64,6 +66,7 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.action_open_menu:
                 i = new Intent(BaseActivity.this, com.projet.musichall.Menu.class);
                 startActivity(i);
+                //finish();
                 break;
             /*case R.id.action_logout:
                 if (baseUser != null){

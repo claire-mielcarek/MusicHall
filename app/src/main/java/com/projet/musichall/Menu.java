@@ -152,22 +152,18 @@ public class Menu extends AppCompatActivity {
                                 }, 1000);
                                 break;
                             case "discussion":
-                                if(user == null) {
-                                }
-                                else {
-                                    handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Intent i = new Intent(Menu.this, DiscussionActivity.class);
-                                            Menu.this.finish();
-                                            startActivity(i);
-                                        }
-                                    }, 1000);
-                                }
+                                handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent i = new Intent(Menu.this, DiscussionActivity.class);
+                                        Menu.this.finish();
+                                        startActivity(i);
+                                    }
+                                }, 1000);
                                 break;
                             default:
-                                Toast.makeText(Menu.this, "Tu as choisi "+arrayName[index], Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(Menu.this, "Tu as choisi "+arrayName[index], Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }

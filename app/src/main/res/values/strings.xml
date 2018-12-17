@@ -127,7 +127,9 @@
     <string name="avancé">Avancé</string>
     <string name="expert">Expert</string>
     <string name="maitre">Maître</string>
-
+    <string name="debutant">Débutant</string>
+    <string name="intermediaire">Intermédiaire</string>
+    <string name="avance">Avancé</string>
 
 
     <string-array name="instruments">

@@ -25,41 +25,36 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-
-        textView = (TextView) findViewById(R.id.text_recherche);
-        musiciens = (Button) findViewById(R.id.buttonMusiciens);
-        groupes = (Button) findViewById(R.id.buttonGroupes);
+        setContentView(R.layout.you_have_to_be_logged);
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        if (user != null) {
+            setContentView(R.layout.activity_search);
 
-        musiciens.setOnClickListener(new View.OnClickListener() {
+            textView = (TextView) findViewById(R.id.text_recherche);
+            musiciens = (Button) findViewById(R.id.buttonMusiciens);
+            groupes = (Button) findViewById(R.id.buttonGroupes);
 
-            @Override
-           public void onClick(View v) {
-                if (user != null) {
+            musiciens.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
                     Intent intent = new Intent(SearchActivity.this, CriteresMusiciens.class);
                     startActivity(intent);
-                }else{
-                    Intent intent = new Intent(SearchActivity.this, ShouldLogin.class);
-                    startActivity(intent);
+                    finish();
                 }
-            }
-        });
+            });
 
-        groupes.setOnClickListener(new View.OnClickListener() {
+            groupes.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                if (user != null){
+                @Override
+                public void onClick(View v) {
                     Intent intent = new Intent(SearchActivity.this, CriteresGroupe.class);
                     startActivity(intent);
-                }else{
-                    Intent intent = new Intent(SearchActivity.this, ShouldLogin.class);
-                    startActivity(intent);
+                    finish();
                 }
-            }
-        });
+            });
+        }
     }
 
 }

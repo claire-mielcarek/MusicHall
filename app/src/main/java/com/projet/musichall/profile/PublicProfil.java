@@ -115,15 +115,15 @@ public class PublicProfil extends Fragment implements IChangeUserData {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (progress >= 0 && progress <= 20){
-                    niveau.setText("Débutant");
+                    niveau.setText(R.string.debutant);
                 }else if (progress >= 21 && progress <= 40){
-                    niveau.setText("Intermédiaire");
+                    niveau.setText(R.string.intermediaire);
                 }else if (progress >= 41 && progress <= 60){
-                    niveau.setText("Avancé");
+                    niveau.setText(R.string.avance);
                 }else if (progress >= 61 && progress <= 80){
-                    niveau.setText("Expert");
+                    niveau.setText(R.string.expert);
                 }else if (progress >= 81 && progress <= 100){
-                    niveau.setText("Maitre");
+                    niveau.setText(R.string.maitre);
                 }
             }
 
@@ -273,7 +273,8 @@ public class PublicProfil extends Fragment implements IChangeUserData {
         }
 
         // get avatar's image
-        mAvatar.setImageBitmap(user.getAvatar());  // set avatar
+        if (user.getAvatar() != null)
+            mAvatar.setImageBitmap(user.getAvatar());  // set avatar
     }
 
     @Override

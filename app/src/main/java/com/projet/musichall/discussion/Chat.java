@@ -119,7 +119,7 @@ public class Chat extends BaseActivity {
         }
 
 
-        Toast.makeText(this,"Vous êtes en discussion avec "+ prenomInterlocuteur, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"Vous êtes en discussion avec "+ prenomInterlocuteur, Toast.LENGTH_SHORT).show();
 
         //Fin de la récupération
         data.addValueEventListener(new ValueEventListener() {

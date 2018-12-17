@@ -43,17 +43,12 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
     private boolean first = true;
     private boolean ok = false;
 
-    /*RadioGroup motivation;
-    Spinner spinnerInstruments;
-    Spinner spinnerJoue;
-    Spinner spinnerNiveau;*/
     EditText search_name;
 
     //Array list
     ArrayList<String> listItemsNoms;
     ArrayList<String> listItemsDates;
     ArrayList<String> listItemsInfos;
-    //List<String> liste_temp;
     ResultPresentation adapter;
 
     Context context;
@@ -78,91 +73,7 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
         // connexion a la base de donnee
         user = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance().getReference();
-
-        // initialisation des widgets
-        //spinnerInstruments = findViewById(R.id.instruments);
-        //liste_temp = ToList(getResources().getStringArray(R.array.instruments));
-        //liste_temp.add(0, "Tout");
-        //final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, liste_temp);    //createFromResource(this, R.array.instruments, android.R.layout.simple_spinner_item);
-        //adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        /*spinnerInstruments.setAdapter(adapter1);
-        spinnerInstruments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String val = String.valueOf(parent.getItemAtPosition(position));
-                if (ok) {
-                    if (user != null) {
-                        database.child("Users").child(user.getUid()).child("info_recherche").child("groupe").child("instru").setValue(val);
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
-
-        /*spinnerJoue = findViewById(R.id.musiqueJouee);
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, liste_temp);        //ArrayAdapter.createFromResource(this, R.array.genres, android.R.layout.simple_spinner_item );
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerJoue.setAdapter(adapter3);
-        spinnerJoue.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String val = String.valueOf(parent.getItemAtPosition(position));
-                if (ok) {
-                    if (user != null) {
-                        database.child("Users").child(user.getUid()).child("info_recherche").child("groupe").child("musique_jouee").setValue(val);
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
-
-        /*spinnerNiveau = findViewById(R.id.niveau);
-        liste_temp = ToList(getResources().getStringArray(R.array.niveaux));
-        liste_temp.add(0, "Tout");
-        final ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, liste_temp);     // ArrayAdapter.createFromResource(this, R.array.genres, android.R.layout.simple_spinner_item );
-        adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerNiveau.setAdapter(adapter4);
-        spinnerNiveau.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String val = String.valueOf(parent.getItemAtPosition(position));
-                if (ok) {
-                    if (user != null) {
-                        database.child("Users").child(user.getUid()).child("info_recherche").child("groupe").child("niveau").setValue(val);
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
-
-
-
-        //motivation = (RadioGroup) findViewById(R.id.motivation);
         search_name = findViewById(R.id.search_name);
-
-        /*motivation.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                String select = checkedId == R.id.amateur?"Amateur":"Professionel";
-                if (ok) {
-                    if (user != null) {
-                        database.child("Users").child(user.getUid()).child("info_recherche").child("groupe").child("motivation").setValue(select);
-                    }
-                }
-            }
-        });*/
 
         search_name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -188,6 +99,7 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 DataSnapshot groups, info_current_user;
+
                 if (user != null) {
                     // get first data to search users
                     info_current_user = dataSnapshot.child("Users").child(user.getUid()).child("info_recherche").child("groupe");
@@ -223,16 +135,6 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
     }
 
     private void getDataFromFirebase(DataSnapshot current_user){
-        /*motivation.clearCheck();
-        if (String.valueOf(current_user.child("motivation").getValue()).equals("Amateur"))
-            motivation.check(R.id.amateur);
-        else motivation.check(R.id.professionel);
-        if (current_user.child("instru").exists())
-            spinnerInstruments.setSelection(getPositionSpinner(spinnerInstruments, String.valueOf(current_user.child("instru").getValue())));
-        if (current_user.child("niveau").exists())
-            spinnerNiveau.setSelection(getPositionSpinner(spinnerNiveau, String.valueOf(current_user.child("niveau").getValue())));
-        if (current_user.child("genre_jouee").exists())
-            spinnerJoue.setSelection(getPositionSpinner(spinnerJoue, String.valueOf(current_user.child("genre_jouee").getValue())));*/
         if (current_user.child("nom").exists())
             search_name.setText(String.valueOf(current_user.child("nom").getValue()));
     }
@@ -242,16 +144,11 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
         DataSnapshot one_group;
         Iterator<DataSnapshot> it = groups.getChildren().iterator();
         String snom1, smotivation1, sniveau1, sstyle1, resultat;
-        //boolean memeMusiqueJouee, memeInstru;
-        boolean cond_name/*, cond_with_spinner, cond_without_spinner*/;
-        String sname/*, smotivation2, sniveau2, sgenreJouee2, sinstru2*/;
+        boolean cond_name;
+        String sname;
 
         // get search data of current user    // TODO faire recherche avec ville
         sname = String.valueOf(current_user.child("nom").getValue());
-        /*smotivation2 = String.valueOf(current_user.child("motivation").getValue());
-        sniveau2 = String.valueOf(current_user.child("niveau").getValue());
-        sgenreJouee2 = String.valueOf(current_user.child("genre_jouee").getValue());
-        sinstru2 = String.valueOf(current_user.child("instru").getValue());*/
 
         while (it.hasNext()) {
             one_group = it.next();
@@ -291,57 +188,21 @@ public class CriteresGroupe extends BaseActivity implements AdapterView.OnItemSe
             listItemsInfos.add(sort_name.get(i+2));
         }
 
-
         Log.d("INFO RECHERCHE GROUPE", "Taille name : "+sort_name.size());
         Log.d("INFO RECHERCHE GROUPE", "Taille name : "+listItemsNoms.size());
         Log.d("INFO RECHERCHE GROUPE", "Taille dates: "+listItemsDates.size());
         Log.d("INFO RECHERCHE GROUPE", "Taille infos: "+listItemsInfos.size());
     }
 
-    // usesull function
-    /*private boolean InChildrenValue(DataSnapshot listvalue, String value){
-        Iterator<DataSnapshot> it = listvalue.getChildren().iterator();
-        DataSnapshot ref;
-
-        while (it.hasNext()) {
-            ref = it.next();
-            if (value.equals(ref.getValue()))
-                return true;
-        }
-
-        return false;
-    }
-
-    private int getPositionSpinner(Spinner spin, String value){
-        for (int i=0;i<spin.getCount();i++){
-            if (spin.getItemAtPosition(i).toString().equalsIgnoreCase(value)){
-                return i;
-            }
-        }
-
-        return 0;
-    }*/
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
-    /*private List<String> ToList(String [] tab){
-        List<String> resultat = new ArrayList<>();
-
-        for (int i = 0; i<tab.length; i++){
-            resultat.add(tab[i]);
-        }
-
-        return resultat;
-    }*/
 }
 
 

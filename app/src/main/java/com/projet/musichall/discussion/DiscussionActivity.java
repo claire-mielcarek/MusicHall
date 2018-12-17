@@ -34,79 +34,77 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class DiscussionActivity extends BaseActivity {
 
-    FirebaseUser user;
-    ListView listView;
-    FloatingActionButton boutonRecherche;
-    //Firebase variable
-    //Mettre plus tard pour la recherche auto
-    //private FirebaseAuth rech;
+
+
+public class DiscussionActivity extends BaseActivity {
+    private FirebaseUser user;
+    private ListView listView;
+    private FloatingActionButton boutonRecherche;
     private DatabaseReference mDatabase;
 
-    //Array list
-    //List<String> listItems = new ArrayList<>();
-    ArrayAdapter adapter;
-    ArrayList<String> listItemsNoms;
-    ArrayList<String> listItemsDates;
-    ArrayList<String> listItemsInfos;
+    // Array list for user info
+    /*private ArrayAdapter adapter;
+    private ArrayList<String> listItemsNoms;
+    private ArrayList<String> listItemsDates;
+    private ArrayList<String> listItemsInfos;*/
 
     private boolean first = true;
     //items to show in listview
-    List<String> userWithDiscussion;
-    String nomDiscussion;
-    String nomSender;
-    String prenomSender;
-    List<String> nameDiscussion;
+    private String nomDiscussion;
+    private String nomSender;
+    private String prenomSender;
+    private List<String> nameDiscussion;
     private String TAG;
-    Context context;
-
-
+    private Context context;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_discussion);
-
+        setContentView(R.layout.you_have_to_be_logged);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase= FirebaseDatabase.getInstance().getReference();
-        listView = (ListView)findViewById(R.id.liste_de_discussion);
-        boutonRecherche = (FloatingActionButton) findViewById(R.id.bouton_recherche);
         context = this;
 
-        boutonRecherche.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (user != null) {
+        if (user != null) {
+            setContentView(R.layout.activity_discussion);
+            listView = (ListView)findViewById(R.id.liste_de_discussion);
+            boutonRecherche = (FloatingActionButton) findViewById(R.id.bouton_recherche);
+
+            boutonRecherche.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //if (user != null) {
                     Intent intent = new Intent(DiscussionActivity.this, CriteresMusiciens.class);
                     startActivity(intent);
-                }else{
-                    Intent intent = new Intent(DiscussionActivity.this, ShouldLogin.class);
+                    finish();
+                }
+            });
+
+
+            //Fonction pour initialiser la list de recherche
+            init();
+
+            //Methode lorsque l'on clique sur un item recherche
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                    String userName = adapterView.getItemAtPosition(position).toString();
+                    String userFirstName = userName.split(" ")[0];
+                    String userLastName = userName.split(" ")[1];
+                    Intent intent = new Intent(DiscussionActivity.this, Chat.class);
+                    intent.putExtra("nom", userLastName);
+                    intent.putExtra("prenom", userFirstName);
                     startActivity(intent);
                 }
-            }
-        });
+            });
+        }else{
+            Log.d("TEST", "DISCUSSION!");
 
-
-        //Fonction pour initialiser la list de recherche
-        init();
-
-        //Methode lorsque l'on clique sur un item recherche
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
-                String userName = adapterView.getItemAtPosition(position).toString();
-                String userFirstName = userName.split(" ")[0];
-                String userLastName = userName.split(" ")[1];
-                Intent intent = new Intent(DiscussionActivity.this, Chat.class);
-                intent.putExtra("nom", userLastName);
-                intent.putExtra("prenom", userFirstName);
-                startActivity(intent);
-            }
-        });
+        }
 
 
     }
@@ -139,17 +137,6 @@ public class DiscussionActivity extends BaseActivity {
                 nameDiscussion = new ArrayList<>();
                 nomSender = String.valueOf(userSnapshot.child(user.getUid()).child("nom").getValue());
                 prenomSender = String.valueOf(userSnapshot.child(user.getUid()).child("prenom").getValue());
-
-                // On récupère le prénom et le nom du user courant
-                /*for (DataSnapshot user : userSnapshot.getChildren()) {
-                    //ref = it.next();
-
-                    if (userId.equals(String.valueOf(user.getKey()))) {
-                        nomSender = String.valueOf(user.child("nom").getValue());
-                        prenomSender = String.valueOf(user.child("prenom").getValue());
-                        //Log.d("utilisateur courant est", prenomSender + ("_") + nomSender);
-                    }
-                }*/
 
 
                 // On récupère le nom des interlocuteur avec qui le user courant parle à l'aide de la clef de la discussion
@@ -200,11 +187,6 @@ public class DiscussionActivity extends BaseActivity {
                 throw databaseError.toException();
             }
         });
-
-
-
-
-
 
 
     }

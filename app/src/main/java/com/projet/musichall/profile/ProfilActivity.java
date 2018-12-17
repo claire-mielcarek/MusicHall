@@ -23,6 +23,8 @@ import com.projet.musichall.R;
 import com.projet.musichall.login.Connexion;
 
 
+
+
 public class ProfilActivity extends BaseActivity {
     // Firebase reference
     private FirebaseAuth auth;

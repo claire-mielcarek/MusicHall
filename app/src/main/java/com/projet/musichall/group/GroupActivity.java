@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
+
 public class GroupActivity extends BaseActivity {
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -60,35 +62,40 @@ public class GroupActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group);
+        setContentView(R.layout.you_have_to_be_logged);
         ActionBar myBar = getMyActionBar();
         myBar.setTitle(R.string.group);
 
-        tabId = WALL_ID;
-        currentGroupId = null;
-        groupsNames = new ArrayList<>();
-        groupsIds = new ArrayList<>();
-
-        viewPager = findViewById(R.id.viewpager);
-        viewPager.setOffscreenPageLimit(3);
-
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        data = FirebaseDatabase.getInstance().getReference();
-        addGroupListener();
 
-        // Get the ViewPager and set it's PagerAdapter so that it can display items
-        //Detect when the current Fragment changed
-        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                if(position != tabId){
-                    tabId = position;
-                    invalidateOptionsMenu();
+        if (user != null) {
+            setContentView(R.layout.activity_group);
+
+            tabId = WALL_ID;
+            currentGroupId = null;
+            groupsNames = new ArrayList<>();
+            groupsIds = new ArrayList<>();
+
+            viewPager = findViewById(R.id.viewpager);
+            viewPager.setOffscreenPageLimit(3);
+
+            data = FirebaseDatabase.getInstance().getReference();
+            addGroupListener();
+
+            // Get the ViewPager and set it's PagerAdapter so that it can display items
+            //Detect when the current Fragment changed
+            viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                    if(position != tabId){
+                        tabId = position;
+                        invalidateOptionsMenu();
+                    }
                 }
-            }
-        });
+            });
+        }
 
     }
 

@@ -38,6 +38,7 @@ import com.projet.musichall.group.wall.AddPost;
 
 
 
+
 public class MainActivity extends BaseActivity {
     Context context;
     private FirebaseAuth auth;

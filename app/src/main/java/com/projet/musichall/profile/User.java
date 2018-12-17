@@ -156,6 +156,7 @@ public class User implements Serializable{
 
     // attach User to Firebase which fills data on runtime
     public void attachUserToFirebase(/*DataSnapshot dataSnapshot, StorageReference storage, */final boolean one_time, final IResultConnectUser interfaceForResult){
+        // get data from firebase
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -191,6 +192,13 @@ public class User implements Serializable{
                 Log.w("DatabaseChange", "Failed to read values.", databaseError.toException());
             }
         });
+
+        // get location from a provider
+        AttachLocationWithProvider();
+    }
+
+    private void AttachLocationWithProvider(){
+
     }
 
     // get private data from firebase
